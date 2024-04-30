@@ -9,31 +9,16 @@ import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Slide from "@mui/material/Slide";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import useScrollTrigger from "@mui/material/useScrollTrigger";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import "../navbar.css";
+import { blue } from "@mui/material/colors";
 
-const paginas = ["Usuario", "Cliente", "Maquina", "Recaudacion", "Factura"];
+const paginas = ["Usuario", "Maquina", "Cliente", "Recaudacion", "Factura"];
 const settings = ["Perfil", "Ajustes", "Cerrar sesión"];
-
-//funcion para ocultar el navbar cuando se desliza hacia abajo en la pagina
-function HideOnScroll(props) {
-  const { children, window } = props;
-  const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
-  });
-
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  );
-}
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -62,14 +47,11 @@ function Navbar() {
 
   return (
     <React.Fragment>
-      <HideOnScroll>
-        <AppBar position="sticky">
-          <Container maxWidth="xl">
+        <AppBar position="fixed">
+          <Container maxWidth="l">
             <Toolbar>
               <Box sx={{ display: "flex", alignItems: "center" }}>
-                <QueryStatsSharpIcon
-                  sx={{ display: { xs: "none", md: "flex" }, mr: 1, ml: -3 }}
-                />
+                <QueryStatsSharpIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1, ml: -3 }}/>
                 <Tooltip title="Inicio" arrow TransitionComponent={Zoom}>
                   <Typography
                     variant="h6"
@@ -141,10 +123,7 @@ function Navbar() {
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Opciones" arrow TransitionComponent={Zoom}>
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/2.jpg"
-                    />
+                    <Avatar sx={{ bgcolor: blue[900] }}>G</Avatar> 
                   </IconButton>
                 </Tooltip>
                 <Menu
@@ -173,9 +152,9 @@ function Navbar() {
             </Toolbar>
           </Container>
         </AppBar>
-      </HideOnScroll>
-      <Toolbar />
+        <Toolbar />
     </React.Fragment>
   );
 }
+
 export default Navbar;
