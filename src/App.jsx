@@ -7,6 +7,7 @@ import { ListaUsuario } from "./components/usuario/ListaUsuario";
 import Navbar from "./components/Navbar";
 import { UsuarioAdd } from "./components/usuario/UsuarioAdd";
 import { UsuarioEdit } from "./components/usuario/UsuarioEdit";
+import { Index } from "./components/inicio/Index";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" />
+          <Route path="/" element={<Index />} />
           <Route path="/usuario" element={<ListaUsuario />} />
           <Route path="/usuario/add" element={<UsuarioAdd />} />
           <Route path="/usuario/edit" element={<UsuarioEdit />} />

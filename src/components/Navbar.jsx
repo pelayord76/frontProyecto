@@ -18,7 +18,7 @@ import "../navbar.css";
 import { blue } from "@mui/material/colors";
 
 const paginas = ["Usuario", "Maquina", "Cliente", "Recaudacion", "Factura"];
-const settings = ["Perfil", "Ajustes", "Cerrar sesión"];
+const settings = ["Ajustes", "Cerrar sesión"];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
