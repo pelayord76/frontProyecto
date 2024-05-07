@@ -7,11 +7,11 @@ export const ListaUsuario = () => {
   const navigate = useNavigate();
 
    const handleAdd = () => {
-     navigate("/usuario/add", { replace: true });
+     navigate("/usuario/add/", { replace: true });
    };
 
    const handleEdit = (id) => {
-     navigate("/usuario/edit" + id, { replace: true });
+     navigate("/usuario/edit/" + id, { replace: true });
    };
 
    const handleDelete = (id) => {
@@ -19,7 +19,7 @@ export const ListaUsuario = () => {
        id: id,
      };
      fetch(
-       "https://cors-anywhere.herokuapp.com/http://localhost:4040/usuario/delete",
+       "https://localhost:4040/usuario/del" + id,
        {
          method: "DELETE",
          headers: {
@@ -32,7 +32,7 @@ export const ListaUsuario = () => {
    };
 
   useEffect(() => {
-    fetch("https://cors-anywhere.herokuapp.com/http://localhost:4040/usuario")
+    fetch("http://localhost:4040/usuario")
       .then((res) => res.json())
       .then((result) => {
         setusuarios(result);
