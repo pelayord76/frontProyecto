@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import { UsuarioAdd } from "./components/usuario/UsuarioAdd";
 import { UsuarioEdit } from "./components/usuario/UsuarioEdit";
 import { Index } from "./components/inicio/Index";
+import { FooterC } from "./components/Footer";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/recaudacion" element={<ListaRecaudaciones />} />
           <Route path="/factura" element={<ListaFacturas />} />
         </Routes>
+        <FooterC/>
       </BrowserRouter>
     </>
   );
