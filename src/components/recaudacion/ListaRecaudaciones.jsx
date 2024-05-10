@@ -1,5 +1,21 @@
+import { useEffect, useState } from "react";
+
 export const ListaRecaudaciones = () => {
-  return (
-    <div>ListaRecaudaciones</div>
-  )
-}
+  const [recaudaciones, setRecaudaciones] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("http://localhost:4040/recaudacion", {
+        headers: {
+          Accept: "application/json",
+        },
+      });
+      const data = await response.json();
+      setRecaudaciones(data);
+      console.log(data);
+    };
+    fetchData();
+  }, []);
+
+  return <div>ListaRecaudaciones</div>;
+};

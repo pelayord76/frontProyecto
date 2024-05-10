@@ -1,14 +1,28 @@
-import { Button, ButtonGroup, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import { useEffect, useState } from "react";
+import {
+  Avatar,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Typography,
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PersonIcon from "@mui/icons-material/Person";
+import DeleteIcon from "@mui/icons-material/Delete";
+import "../../listaUsuario.css";
+import { Button } from "flowbite-react";
 
 export const ListaUsuario = () => {
   const [usuarios, setusuarios] = useState([]);
   const navigate = useNavigate();
+  const [dense, setDense] = React.useState(false);
 
-   const handleAdd = () => {
-     navigate("/usuario/add/", { replace: true });
-   };
+  const handleAdd = () => {
+    navigate("/usuario/add/", { replace: true });
+  };
 
   //  const handleEdit = (id) => {
   //    navigate("/usuario/edit/" + id, { replace: true });
@@ -32,42 +46,44 @@ export const ListaUsuario = () => {
   //  };
 
   useEffect(() => {
-    fetch("http://localhost:4040/usuario")
-      .then((res) => res.json())
-      .then((result) => {
-        setusuarios(result);
+    const fetchData = async () => {
+      const response = await fetch("http://localhost:4040/usuario", {
+        headers: {
+          Accept: "application/json",
+        },
       });
+      const data = await response.json();
+      setusuarios(data);
+      console.log(data);
+    };
+    fetchData();
   }, []);
 
   return (
-    <TableContainer>
-      <Button onClick={handleAdd}>Crear Usuario</Button>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Nombre</TableCell>
-            <TableCell>Email</TableCell>
-            {/* <TableCell>Acción</TableCell> */}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {usuarios.map((usuario) => (
-            <TableRow key={usuario.id}>
-              <TableCell>{usuario.id}</TableCell>
-              <TableCell>{usuario.nombre}</TableCell>
-              <TableCell>{usuario.email}</TableCell>
-              {/* <ButtonGroup
-                color="primary"
-                aria-label="outlined primary button group"
-              >
-                <Button color="warning" onClick={() => handleEdit(usuario.id)}>Editar</Button>
-                <Button color="danger" onClick={() => handleDelete(usuario.id)}>Borrar</Button>
-              </ButtonGroup> */}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Grid item xs={12} md={6} sx={{mx: 'auto', width: 700}}>
+      <Button>Crear usuario</Button>
+      <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+        Usuarios
+      </Typography>
+      <List dense={dense}>
+        {usuarios.map((usuario) => (
+          <ListItem
+            key={usuario.id}
+            secondaryAction={
+              <IconButton edge="end" aria-label="delete">
+                <DeleteIcon />
+              </IconButton>
+            }
+          >
+            <ListItemAvatar>
+              <Avatar>
+                <PersonIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={usuario.nombre} secondary={usuario.email} />
+          </ListItem>
+        ))}
+      </List>
+    </Grid>
   );
 };
