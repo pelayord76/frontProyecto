@@ -10,26 +10,26 @@ export const ListaUsuario = () => {
      navigate("/usuario/add/", { replace: true });
    };
 
-   const handleEdit = (id) => {
-     navigate("/usuario/edit/" + id, { replace: true });
-   };
+  //  const handleEdit = (id) => {
+  //    navigate("/usuario/edit/" + id, { replace: true });
+  //  };
 
-   const handleDelete = (id) => {
-     var data = {
-       id: id,
-     };
-     fetch(
-       "https://localhost:4040/usuario/del" + id,
-       {
-         method: "DELETE",
-         headers: {
-           Accept: "application/form-data",
-           "Content-Type": "application/json",
-         },
-         body: JSON.stringify(data),
-       }
-     );
-   };
+  //  const handleDelete = (id) => {
+  //    var data = {
+  //      id: id,
+  //    };
+  //    fetch(
+  //      "https://localhost:4040/usuario/del" + id,
+  //      {
+  //        method: "DELETE",
+  //        headers: {
+  //          Accept: "application/form-data",
+  //          "Content-Type": "application/json",
+  //        },
+  //        body: JSON.stringify(data),
+  //      }
+  //    );
+  //  };
 
   useEffect(() => {
     fetch("http://localhost:4040/usuario")
@@ -48,7 +48,7 @@ export const ListaUsuario = () => {
             <TableCell>ID</TableCell>
             <TableCell>Nombre</TableCell>
             <TableCell>Email</TableCell>
-            <TableCell>Acción</TableCell>
+            {/* <TableCell>Acción</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -57,13 +57,13 @@ export const ListaUsuario = () => {
               <TableCell>{usuario.id}</TableCell>
               <TableCell>{usuario.nombre}</TableCell>
               <TableCell>{usuario.email}</TableCell>
-              <ButtonGroup
+              {/* <ButtonGroup
                 color="primary"
                 aria-label="outlined primary button group"
               >
                 <Button color="warning" onClick={() => handleEdit(usuario.id)}>Editar</Button>
                 <Button color="danger" onClick={() => handleDelete(usuario.id)}>Borrar</Button>
-              </ButtonGroup>
+              </ButtonGroup> */}
             </TableRow>
           ))}
         </TableBody>
