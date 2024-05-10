@@ -17,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/usuario" element={<ListaUsuario />} />
+          <Route path="/usuario/:id" element={<ListaUsuario />} />
           <Route path="/usuario/add" element={<UsuarioAdd />} />
           <Route path="/usuario/edit" element={<UsuarioEdit />} />
           <Route path="/cliente" element={<ListaCliente />} />
@@ -24,7 +25,6 @@ function App() {
           <Route path="/recaudacion" element={<ListaRecaudaciones />} />
           <Route path="/factura" element={<ListaFacturas />} />
         </Routes>
-        
       </BrowserRouter>
     </>
   );

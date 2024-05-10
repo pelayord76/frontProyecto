@@ -12,10 +12,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import { blue } from "@mui/material/colors";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import "../navbar.css";
-import { blue } from "@mui/material/colors";
 
 const paginas = ["Usuario", "Maquina", "Cliente", "Recaudacion", "Factura"];
 const settings = ["Ajustes", "Cerrar sesión"];

@@ -1,19 +1,18 @@
+import DeleteIcon from "@mui/icons-material/Delete";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import {
   Avatar,
   Grid,
-  IconButton,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
   Typography,
 } from "@mui/material";
+import Button from "@mui/material/Button";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PersonIcon from "@mui/icons-material/Person";
-import DeleteIcon from "@mui/icons-material/Delete";
 import "../../listaUsuario.css";
-import { Button } from "flowbite-react";
 
 export const ListaUsuario = () => {
   const [usuarios, setusuarios] = useState([]);
@@ -21,29 +20,30 @@ export const ListaUsuario = () => {
   const [dense, setDense] = React.useState(false);
 
   const handleAdd = () => {
-    navigate("/usuario/add/", { replace: true });
+    navigate("/usuario/add", { replace: true });
   };
 
   //  const handleEdit = (id) => {
   //    navigate("/usuario/edit/" + id, { replace: true });
   //  };
 
-  //  const handleDelete = (id) => {
-  //    var data = {
-  //      id: id,
-  //    };
-  //    fetch(
-  //      "https://localhost:4040/usuario/del" + id,
-  //      {
-  //        method: "DELETE",
-  //        headers: {
-  //          Accept: "application/form-data",
-  //          "Content-Type": "application/json",
-  //        },
-  //        body: JSON.stringify(data),
-  //      }
-  //    );
-  //  };
+  const handleDelete = (id) => {
+    var data = {
+      id: id,
+    };
+    fetch("https://localhost:4040/usuario/del/" + id, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/form-data",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  };
+
+  const handleUsuario = (id) => {
+    navigate("/usuario/" + id, { replace: true });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,27 +60,35 @@ export const ListaUsuario = () => {
   }, []);
 
   return (
-    <Grid item xs={12} md={6} sx={{mx: 'auto', width: 700}}>
-      <Button>Crear usuario</Button>
+    <Grid item xs={12} md={6} sx={{ mx: "auto", width: 700 }}>
       <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
         Usuarios
       </Typography>
+      <Button variant="outlined" startIcon={<PersonAddIcon />}>
+        Crear usuario
+      </Button>
       <List dense={dense}>
         {usuarios.map((usuario) => (
           <ListItem
             key={usuario.id}
             secondaryAction={
-              <IconButton edge="end" aria-label="delete">
-                <DeleteIcon />
-              </IconButton>
+              <Button
+                variant="outlined"
+                startIcon={<DeleteIcon />}
+                onClick={handleDelete(usuario.id)}
+              >
+                Borrar
+              </Button>
             }
           >
             <ListItemAvatar>
-              <Avatar>
-                <PersonIcon />
-              </Avatar>
+              <Avatar>{usuario.nombre.charAt(0).toUpperCase()}</Avatar>
             </ListItemAvatar>
-            <ListItemText primary={usuario.nombre} secondary={usuario.email} />
+            <ListItemText
+              primary={usuario.nombre}
+              secondary={usuario.email}
+              onClick={handleUsuario(usuario.id)}
+            />
           </ListItem>
         ))}
       </List>
