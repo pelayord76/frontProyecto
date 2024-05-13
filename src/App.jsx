@@ -24,6 +24,9 @@ function App() {
           <Route path="/maquina" element={<ListaMaquina />} />
           <Route path="/recaudacion" element={<ListaRecaudaciones />} />
           <Route path="/factura" element={<ListaFacturas />} />
+          <Route path="/perfil" element={<Index />} />
+          <Route path="/ajustes" element={<Index />} />
+          <Route path="/cerrarSesion" element={<Index />} />
         </Routes>
       </BrowserRouter>
     </>

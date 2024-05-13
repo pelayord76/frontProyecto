@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import "../navbar.css";
 
 const paginas = ["Usuario", "Maquina", "Cliente", "Recaudacion", "Factura"];
-const settings = ["Ajustes", "Cerrar sesión"];
+const settings = ["Perfil", "Ajustes", "Cerrar sesión"];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -45,114 +45,125 @@ function Navbar() {
     handleCloseNavMenu();
   };
 
+  const handleSettings = (setting) => {
+    if (setting === "Cerrar sesión") {
+      navigate("/cerrarSesion");
+    } else {
+      navigate(`/${setting.toLowerCase()}`);
+    }
+    handleCloseUserMenu();
+  };
+
   return (
     <React.Fragment>
-        <AppBar position="fixed">
-          <Container maxWidth="l">
-            <Toolbar>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <QueryStatsSharpIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1, ml: -3 }}/>
-                <Tooltip title="Inicio" arrow TransitionComponent={Zoom}>
-                  <Typography
-                    variant="h6"
-                    noWrap
-                    component="a"
-                    href="/"
-                    sx={{
-                      mr: 5,
-                      display: { xs: "none", md: "flex" },
-                      fontFamily: "monospace",
-                      fontWeight: 700,
-                      letterSpacing: ".2rem",
-                      color: "inherit",
-                      textDecoration: "none",
-                    }}
-                  >
-                    RfsAdmin
-                  </Typography>
-                </Tooltip>
-              </Box>
-              <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-                <IconButton
-                  size="large"
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleOpenNavMenu}
-                  color="inherit"
-                >
-                  <MenuIcon />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorElNav}
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  open={Boolean(anchorElNav)}
-                  onClose={handleCloseNavMenu}
+      <AppBar position="fixed">
+        <Container maxWidth="l">
+          <Toolbar>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <QueryStatsSharpIcon
+                sx={{ display: { xs: "none", md: "flex" }, mr: 1, ml: -3 }}
+              />
+              <Tooltip title="Inicio" arrow TransitionComponent={Zoom}>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="a"
+                  href="/"
                   sx={{
-                    display: { xs: "block", md: "none" },
+                    mr: 5,
+                    display: { xs: "none", md: "flex" },
+                    fontFamily: "monospace",
+                    fontWeight: 700,
+                    letterSpacing: ".2rem",
+                    color: "inherit",
+                    textDecoration: "none",
                   }}
                 >
-                  {paginas.map((pagina) => (
-                    <MenuItem key={pagina} onClick={() => handlePagina(pagina)}>
-                      <Typography textAlign="center">{pagina}</Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </Box>
-              <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+                  RfsAdmin
+                </Typography>
+              </Tooltip>
+            </Box>
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: "block", md: "none" },
+                }}
+              >
                 {paginas.map((pagina) => (
-                  <Button
-                    key={pagina}
-                    onClick={() => handlePagina(pagina)}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    {pagina}
-                  </Button>
+                  <MenuItem key={pagina} onClick={() => handlePagina(pagina)}>
+                    <Typography textAlign="center">{pagina}</Typography>
+                  </MenuItem>
                 ))}
-              </Box>
-
-              <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="Opciones" arrow TransitionComponent={Zoom}>
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar sx={{ bgcolor: blue[900] }}>G</Avatar> 
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
+              </Menu>
+            </Box>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              {paginas.map((pagina) => (
+                <Button
+                  key={pagina}
+                  onClick={() => handlePagina(pagina)}
+                  sx={{ my: 2, color: "white", display: "block" }}
                 >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </Box>
-            </Toolbar>
-          </Container>
-        </AppBar>
-        <Toolbar />
+                  {pagina}
+                </Button>
+              ))}
+            </Box>
+
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Opciones" arrow TransitionComponent={Zoom}>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar sx={{ bgcolor: blue[900] }}>G</Avatar>
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={() => handleSettings(setting)}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <Toolbar />
     </React.Fragment>
   );
 }

@@ -12,38 +12,37 @@ import {
 import Button from "@mui/material/Button";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../listaUsuario.css";
 
 export const ListaUsuario = () => {
   const [usuarios, setusuarios] = useState([]);
   const navigate = useNavigate();
   const [dense, setDense] = React.useState(false);
 
-  const handleAdd = () => {
-    navigate("/usuario/add", { replace: true });
-  };
+  // const handleAdd = () => {
+  //   navigate("/usuario/add", { replace: true });
+  // };
 
-  //  const handleEdit = (id) => {
-  //    navigate("/usuario/edit/" + id, { replace: true });
-  //  };
+  //   const handleEdit = (id) => {
+  //     navigate("/usuario/edit/" + id, { replace: true });
+  //   };
 
-  const handleDelete = (id) => {
-    var data = {
-      id: id,
-    };
-    fetch("https://localhost:4040/usuario/del/" + id, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/form-data",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-  };
+  // const handleDelete = async (id) => {
+  //   var data = {
+  //     id: id,
+  //   };
+  //   await fetch("https://localhost:4040/usuario/del/" + id, {
+  //     method: "DELETE",
+  //     headers: {
+  //       Accept: "application/form-data",
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(data),
+  //   });
+  // };
 
-  const handleUsuario = (id) => {
-    navigate("/usuario/" + id, { replace: true });
-  };
+  // const handleUsuario = (id) => {
+  //   navigate("/usuario/" + id, { replace: true });
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,7 +74,6 @@ export const ListaUsuario = () => {
               <Button
                 variant="outlined"
                 startIcon={<DeleteIcon />}
-                onClick={handleDelete(usuario.id)}
               >
                 Borrar
               </Button>
@@ -84,11 +82,7 @@ export const ListaUsuario = () => {
             <ListItemAvatar>
               <Avatar>{usuario.nombre.charAt(0).toUpperCase()}</Avatar>
             </ListItemAvatar>
-            <ListItemText
-              primary={usuario.nombre}
-              secondary={usuario.email}
-              onClick={handleUsuario(usuario.id)}
-            />
+            <ListItemText primary={usuario.nombre} secondary={usuario.email} />
           </ListItem>
         ))}
       </List>
