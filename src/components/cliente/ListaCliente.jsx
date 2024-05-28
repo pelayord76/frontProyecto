@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+// import DataGridCliente from "./DataGrid";
 
 export const ListaCliente = () => {
   const [clientes, setClientes] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://localhost:4040/cliente", {
+      const response = await fetch("http://localhost:4040/rfsAdmin/cliente", {
         headers: {
           Accept: "application/json",
         },
@@ -17,5 +18,5 @@ export const ListaCliente = () => {
     fetchData();
   }, []);
 
-  return <div>ListaCliente</div>;
+  return <></>/*<DataGridCliente/>*/;
 };

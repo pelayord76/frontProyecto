@@ -30,7 +30,7 @@ export const ListaUsuario = () => {
   //   var data = {
   //     id: id,
   //   };
-  //   await fetch("https://localhost:4040/usuario/del/" + id, {
+  //   await fetch("https://localhost:4040/rfsAdmin/usuario/del/" + id, {
   //     method: "DELETE",
   //     headers: {
   //       Accept: "application/form-data",
@@ -46,7 +46,7 @@ export const ListaUsuario = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://localhost:4040/usuario", {
+      const response = await fetch("http://localhost:4040/rfsAdmin/usuario", {
         headers: {
           Accept: "application/json",
         },
@@ -71,10 +71,7 @@ export const ListaUsuario = () => {
           <ListItem
             key={usuario.id}
             secondaryAction={
-              <Button
-                variant="outlined"
-                startIcon={<DeleteIcon />}
-              >
+              <Button variant="outlined" startIcon={<DeleteIcon />}>
                 Borrar
               </Button>
             }

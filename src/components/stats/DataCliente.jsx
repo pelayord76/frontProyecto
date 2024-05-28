@@ -34,11 +34,14 @@ export function DataCliente() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://localhost:4040/cliente/data/ingresos", {
-        headers: {
-          Accept: "application/json",
-        },
-      });
+      const response = await fetch(
+        "http://localhost:4040/rfsAdmin/cliente/data/ingresos",
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
       const data = await response.json();
       // Transforma los datos a la estructura correcta (array de arrays)
       const transformedData = data.map((item) => [

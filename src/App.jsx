@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import { UsuarioAdd } from "./components/usuario/UsuarioAdd";
 import { UsuarioEdit } from "./components/usuario/UsuarioEdit";
 import { Index } from "./components/inicio/Index";
+import { Stats } from "./components/stats/Stats";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/perfil" element={<Index />} />
           <Route path="/ajustes" element={<Index />} />
           <Route path="/cerrarSesion" element={<Index />} />
+          <Route path="/estadisticas" element={<Stats />} />
         </Routes>
       </BrowserRouter>
     </>

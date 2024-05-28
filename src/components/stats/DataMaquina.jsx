@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 
-export function DataJuego() {
-  const [clientes, setClientes] = useState([["Local", "Cantidad Recaudada"]]);
+export function DataMaquina() {
+  const [clientes, setClientes] = useState([["Maquina", "Cantidad Recaudada"]]);
 
   const options = {
-    title: "Distribución ",
+    title: "Distribución de ingresos por máquina",
     pieHole: 0.4,
     is3D: false,
     colors: [
@@ -35,7 +35,7 @@ export function DataJuego() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        "http://localhost:4040/cliente/data/juego",
+        "http://localhost:4040/rfsAdmin/maquina/data/ingresos",
         {
           headers: {
             Accept: "application/json",
@@ -45,21 +45,21 @@ export function DataJuego() {
       const data = await response.json();
       // Transforma los datos a la estructura correcta (array de arrays)
       const transformedData = data.map((item) => [
-        item.local,
-        item.porcentajeDeJuego,
+        item.nombre,
+        item.cantidadRecaudada,
       ]);
-      setClientes([["Local", "Porcentaje de juego"], ...transformedData]); // Limpia el estado antes de agregar los nuevos datos para que no se ejecute dos veces el fetch
+      setClientes([["Maquina", "Cantidad Recaudada"], ...transformedData]); // Limpia el estado antes de agregar los nuevos datos para que no se ejecute dos veces el fetch
     };
     fetchData();
   }, []);
 
   return (
     <Chart
-      chartType="Bar"
-      width="100%"
-      height="400px"
+      chartType="PieChart"
       data={clientes}
       options={options}
+      width={"100%"}
+      height={"400px"}
     />
   );
 }

@@ -5,7 +5,7 @@ export const ListaFacturas = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://localhost:4040/factura", {
+      const response = await fetch("http://localhost:4040/rfsAdmin/factura", {
         headers: {
           Accept: "application/json",
         },

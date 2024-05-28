@@ -6,7 +6,7 @@ const [maquinas, setMaquinas] = useState([]);
 
 useEffect(() => {
   const fetchData = async () => {
-    const response = await fetch("http://localhost:4040/maquina", {
+    const response = await fetch("http://localhost:4040/rfsAdmin/maquina", {
       headers: {
         Accept: "application/json",
       },
