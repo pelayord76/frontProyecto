@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ListaCliente } from "./components/cliente/ListaCliente";
 import { ListaFacturas } from "./components/factura/ListaFacturas";
-import { ListaMaquina } from "./components/maquina/ListaMaquina";
+import { Maquina } from "./components/maquina/Maquina";
 import { ListaRecaudaciones } from "./components/recaudacion/ListaRecaudaciones";
 import { ListaUsuario } from "./components/usuario/ListaUsuario";
 import Navbar from "./components/Navbar";
@@ -22,7 +22,7 @@ function App() {
           <Route path="/usuario/add" element={<UsuarioAdd />} />
           <Route path="/usuario/edit" element={<UsuarioEdit />} />
           <Route path="/cliente" element={<ListaCliente />} />
-          <Route path="/maquina" element={<ListaMaquina />} />
+          <Route path="/maquina" element={<Maquina />} />
           <Route path="/recaudacion" element={<ListaRecaudaciones />} />
           <Route path="/factura" element={<ListaFacturas />} />
           <Route path="/perfil" element={<Index />} />

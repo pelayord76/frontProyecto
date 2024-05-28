@@ -2,13 +2,8 @@
 
 /* Definición de colores */
 :root {
-    --color-primary: #0000FF;
-    --color-secondary: #1515E8;
-    --color-header-bg: #2626D1;
-    --color-header-text: #E6C017;
     --color-row-even-bg: #2e8fff;
     --color-row-odd-bg: #156ad8;
-    --color-cell-border: #99883D;
     --color-row-hover-bg: #3B3BA2;
     --color-row-text: #FFFFFF;
     /* Texto en blanco */
@@ -17,24 +12,23 @@
 /* Estilos para la tabla */
 .data-grid {
     font-family: 'Roboto', sans-serif;;
-    color: var(--color-row-text);
+    /* color: var(--color-row-text); */
 }
 
 .data-grid-header {
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
-    color: var(--color-header-text);
 }
 
 .data-grid-row {
-    background-color: var(--color-row-odd-bg);
-    color: var(--color-row-text);
+    /* background-color: var(--color-row-odd-bg);
+    color: var(--color-row-text); */
 }
 
 .data-grid-row:nth-child(even) {
-    background-color: var(--color-row-even-bg);
+    /* background-color: var(--color-row-even-bg); */
 }
 
 .data-grid-row:hover {
-    background-color: var(--color-row-hover-bg);
+    /* background-color: var(--color-row-hover-bg); */
 }

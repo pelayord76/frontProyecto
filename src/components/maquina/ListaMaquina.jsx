@@ -1,28 +1,16 @@
 import { useEffect, useState } from "react";
 import "react-data-grid/lib/styles.css";
 import DataGrid from "react-data-grid";
-import "./dataGrid.css"; // Importa el archivo CSS
+import "../../dataGrid.css"; // Importa el archivo CSS
 
 const columns = [
-  { key: "id", name: "ID", headerCellClass: "rdg-header-filter" }, // Agrega la clase para el header filter
-  { key: "nombre", name: "Nombre", headerCellClass: "rdg-header-filter" }, // Agrega la clase para el header filter
-  {
-    key: "fechaVencimientoLicencia",
-    name: "Licencia hasta",
-    headerCellClass: "rdg-header-filter",
-  }, // Agrega la clase para el header filter
-  {
-    key: "almacenada",
-    name: "En almacén",
-    headerCellClass: "rdg-header-filter",
-  }, // Agrega la clase para el header filter
-  {
-    key: "fechaAlmacenamiento",
-    name: "Desde",
-    headerCellClass: "rdg-header-filter",
-  }, // Agrega la clase para el header filter
-  { key: "tipoMaquina", name: "Tipo", headerCellClass: "rdg-header-filter" }, // Agrega la clase para el header filter
-  { key: "local", name: "Cliente", headerCellClass: "rdg-header-filter" }, // Agrega la clase para el header filter
+  { key: "id", name: "ID" },
+  { key: "nombre", name: "Nombre" },
+  { key: "fechaVencimientoLicencia", name: "Licencia hasta" },
+  { key: "almacenada", name: "En almacén" },
+  { key: "fechaAlmacenamiento", name: "Desde" },
+  { key: "tipoMaquina", name: "Tipo" },
+  { key: "local", name: "Cliente" },
 ];
 
 export const ListaMaquina = () => {
@@ -49,7 +37,6 @@ export const ListaMaquina = () => {
       }));
 
       setMaquinas(maquinasAplanadas);
-      console.log(maquinasAplanadas);
     };
     fetchData();
   }, []);
@@ -61,10 +48,10 @@ export const ListaMaquina = () => {
         columns={columns}
         rows={maquinas}
         direction={"ltr"}
-        rowClass={(row) => "data-grid-row"}
-        headerRowHeight={35}
-        rowHeight={30}
-        style={{ margin: "1%" }}
+        rowClass={() => "data-grid-row"}
+        headerRowHeight={40}
+        rowHeight={35}
+        style={{ margin: "1%", height: "50%" }} // Ajustar ancho mínimo y total
       />
     </div>
   );
