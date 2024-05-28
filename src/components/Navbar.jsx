@@ -17,7 +17,7 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import "../navbar.css";
 
-const paginas = ["Usuario", "Maquina", "Cliente", "Recaudacion", "Factura"];
+const paginas = ["Usuario", "Maquina", "Cliente", "Recaudacion", "Factura", "Estadisticas"];
 const settings = ["Perfil", "Ajustes", "Cerrar sesión"];
 
 function Navbar() {
