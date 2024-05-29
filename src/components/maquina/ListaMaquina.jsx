@@ -1,78 +1,178 @@
-import { useEffect, useState } from "react";
-import "react-data-grid/lib/styles.css";
-import DataGrid from "react-data-grid";
-import "../../dataGrid.css"; // Importa el archivo CSS
 import { useNavigate } from "react-router-dom";
-import { ActionButtons } from "../botones/ActionButtons";
+import {
+  Button,
+  ButtonGroup,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TablePagination,
+} from "@mui/material";
+import { useEffect, useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 export const ListaMaquina = () => {
   const [maquinas, setMaquinas] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const navigate = useNavigate();
 
-  const handleEdit = (id) => {
-    console.log("Editar", id);
-    navigate("/maquina/" + id, { replace: true });
+  const handleCreate = () => {
+    navigate("/create/", { replace: true });
+  };
+
+  const handleUpdate = (id) => {
+    navigate("/update/" + id, { replace: true });
   };
 
   const handleDelete = (id) => {
-    console.log("Borrar", id);
-    // Implementar la lógica de borrado aquí
+    var data = {
+      id: id,
+    };
+    fetch("http://localhost:4040/rfsAdmin/maquina/delete", {
+      method: "DELETE",
+      headers: {
+        Accept: "application/form-data",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
   };
 
-  const columns = [
-    { key: "id", name: "ID:" },
-    { key: "nombre", name: "Nombre:" },
-    { key: "fechaVencimientoLicencia", name: "Licencia hasta:" },
-    { key: "almacenada", name: "En almacén?" },
-    { key: "fechaAlmacenamiento", name: "En almacén desde:" },
-    { key: "tipoMaquina", name: "Tipo:" },
-    { key: "local", name: "Cliente:" },
-    {
-      key: "accion",
-      name: "Acciones:",
-      formatter: ({ row }) => (
-        <ActionButtons row={row} onEdit={handleEdit} onDelete={handleDelete} />
-      ),
-    },
-  ];
-
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("http://localhost:4040/rfsAdmin/maquina", {
-        headers: {
-          Accept: "application/json",
-        },
+    fetch("http://localhost:4040/rfsAdmin/maquina")
+      .then((res) => res.json())
+      .then((result) => {
+        setMaquinas(result);
       });
-      const data = await response.json();
-
-      // Aplanar la estructura del JSON y agregar un ID
-      const maquinasAplanadas = data.map((maquina, index) => ({
-        id: index + 1, // Asignar un ID basado en el índice
-        nombre: maquina.nombre,
-        fechaVencimientoLicencia: maquina.fechaVencimientoLicencia,
-        almacenada: maquina.almacenada ? "Sí" : "No", // Convertir booleano a texto
-        fechaAlmacenamiento: maquina.fechaAlmacenamiento || "N/A", // Mostrar "N/A" si es null
-        tipoMaquina: maquina.tipoMaquina,
-        local: maquina.cliente.local,
-      }));
-
-      setMaquinas(maquinasAplanadas);
-    };
-    fetchData();
   }, []);
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const cellStyle = {
+    color: "#FFFFFF",
+    textAlign: "center",
+    verticalAlign: "middle",
+  };
+
+  const headerCellStyle = {
+    ...cellStyle,
+    fontWeight: "bold",
+  };
+
   return (
-    <div className="data-grid-container">
-      <DataGrid
-        className="data-grid"
-        columns={columns}
-        rows={maquinas}
-        direction={"ltr"}
-        rowClass={() => "data-grid-row"}
-        headerRowHeight={40}
-        rowHeight={35}
-        style={{ margin: "1%", height: "50%" }} // Ajustar ancho mínimo y total
-      />
-    </div>
+    <TableContainer
+      style={{
+        margin: "2%",
+        maxWidth: "96%",
+        overflowX: "auto",
+      }}
+    >
+      <Button variant="outlined" onClick={handleCreate}>
+        Añadir Maquina
+      </Button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginBottom: "10px",
+        }}
+      >
+        <TablePagination
+          rowsPerPageOptions={[10, 15, 20, 25]}
+          count={maquinas.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          labelRowsPerPage="Filas por página"
+          labelDisplayedRows={({ from, to, count }) =>
+            `${from}-${to} de ${count}`
+          }
+          color="#FFFFFF"
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          style={{ color: "#FFFFFF" }}
+        />
+      </div>
+      <Table
+        style={{
+          fontFamily: "sans-serif",
+          color: "#FFFFFF",
+          width: "100%",
+          tableLayout: "fixed",
+        }}
+      >
+        <TableHead>
+          <TableRow style={{ backgroundColor: "#1E1E1E" }}>
+            <TableCell style={headerCellStyle}>ID:</TableCell>
+            <TableCell style={headerCellStyle}>Nombre:</TableCell>
+            <TableCell style={headerCellStyle}>Licencia hasta:</TableCell>
+            <TableCell style={headerCellStyle}>En almacén?</TableCell>
+            <TableCell style={headerCellStyle}>En almacén desde:</TableCell>
+            <TableCell style={headerCellStyle}>Tipo:</TableCell>
+            <TableCell style={headerCellStyle}>Cliente:</TableCell>
+            <TableCell style={headerCellStyle}>Acción:</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {maquinas
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map((maquina) => (
+              <TableRow
+                key={maquina.id}
+                style={{
+                  backgroundColor: "#2E2E2E",
+                }}
+              >
+                <TableCell style={cellStyle}>{maquina.id}</TableCell>
+                <TableCell style={cellStyle}>{maquina.nombre}</TableCell>
+                <TableCell style={cellStyle}>
+                  {maquina.fechaVencimientoLicencia || "N/A"}
+                </TableCell>
+                <TableCell style={cellStyle}>
+                  {maquina.almacenada ? "Sí" : "No"}
+                </TableCell>
+                <TableCell style={cellStyle}>
+                  {maquina.fechaAlmacenamiento || "N/A"}
+                </TableCell>
+                <TableCell style={cellStyle}>{maquina.tipoMaquina}</TableCell>
+                <TableCell style={cellStyle}>
+                  {maquina.cliente?.local || "N/A"}
+                </TableCell>
+                <TableCell style={cellStyle}>
+                  <ButtonGroup>
+                    <IconButton
+                      aria-label="edit"
+                      color="warning"
+                      size="small"
+                      onClick={() => handleUpdate(maquina.id)}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      aria-label="delete"
+                      color="error"
+                      size="small"
+                      onClick={() => handleDelete(maquina.id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </ButtonGroup>
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };

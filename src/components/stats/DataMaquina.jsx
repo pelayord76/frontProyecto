@@ -1,4 +1,3 @@
-import { pickersArrowSwitcherClasses } from "@mui/x-date-pickers/internals";
 import { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 
@@ -36,10 +35,11 @@ export function DataMaquina() {
       color: "#FFFFFF",
     },
     legend: {
+      position: "none",
       textStyle: {
         color: "#FFFFFF",
-      }
-    }
+      },
+    },
   };
 
   useEffect(() => {
