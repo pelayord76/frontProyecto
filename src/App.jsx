@@ -9,6 +9,7 @@ import { UsuarioAdd } from "./components/usuario/UsuarioAdd";
 import { UsuarioEdit } from "./components/usuario/UsuarioEdit";
 import { Index } from "./components/inicio/Index";
 import { Stats } from "./components/stats/Stats";
+import { MaquinaDetalle } from "./components/maquina/MaquinaDetalle";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/usuario/edit" element={<UsuarioEdit />} />
           <Route path="/cliente" element={<ListaCliente />} />
           <Route path="/maquina" element={<Maquina />} />
+          <Route path="/maquina/:id" element={<MaquinaDetalle />} />
           <Route path="/recaudacion" element={<ListaRecaudaciones />} />
           <Route path="/factura" element={<ListaFacturas />} />
           <Route path="/perfil" element={<Index />} />

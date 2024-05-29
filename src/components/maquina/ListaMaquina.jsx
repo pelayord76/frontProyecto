@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
   ButtonGroup,
@@ -33,14 +33,25 @@ export const ListaMaquina = () => {
     var data = {
       id: id,
     };
-    fetch("http://localhost:4040/rfsAdmin/maquina/delete", {
+    fetch(`http://localhost:4040/rfsAdmin/maquina/${id}`, {
       method: "DELETE",
       headers: {
         Accept: "application/form-data",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    });
+    })
+      .then(() => {
+        // Después de eliminar exitosamente, actualiza la lista de máquinas
+        fetch("http://localhost:4040/rfsAdmin/maquina")
+          .then((res) => res.json())
+          .then((result) => {
+            setMaquinas(result);
+          });
+      })
+      .catch((error) => {
+        console.error("Error al eliminar la máquina:", error);
+      });
   };
 
   useEffect(() => {
@@ -79,16 +90,17 @@ export const ListaMaquina = () => {
         overflowX: "auto",
       }}
     >
-      <Button variant="outlined" onClick={handleCreate}>
-        Añadir Maquina
-      </Button>
       <div
         style={{
           display: "flex",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
+          alignItems: "center",
           marginBottom: "10px",
         }}
       >
+        <Button variant="outlined" onClick={handleCreate}>
+          Añadir Maquina
+        </Button>
         <TablePagination
           rowsPerPageOptions={[10, 15, 20, 25]}
           count={maquinas.length}
@@ -134,8 +146,22 @@ export const ListaMaquina = () => {
                   backgroundColor: "#2E2E2E",
                 }}
               >
-                <TableCell style={cellStyle}>{maquina.id}</TableCell>
-                <TableCell style={cellStyle}>{maquina.nombre}</TableCell>
+                <TableCell style={cellStyle}>
+                  <Link
+                    to={`/maquina/${maquina.id}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    {maquina.id}
+                  </Link>
+                </TableCell>
+                <TableCell style={cellStyle}>
+                  <Link
+                    to={`/maquina/${maquina.id}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    {maquina.nombre}
+                  </Link>
+                </TableCell>
                 <TableCell style={cellStyle}>
                   {maquina.fechaVencimientoLicencia || "N/A"}
                 </TableCell>
