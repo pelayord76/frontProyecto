@@ -1,18 +1,12 @@
-/* styles.css */
-
-/* Definición de colores */
 :root {
     --color-row-even-bg: #2e8fff;
     --color-row-odd-bg: #156ad8;
     --color-row-hover-bg: #3B3BA2;
     --color-row-text: #FFFFFF;
-    /* Texto en blanco */
 }
 
-/* Estilos para la tabla */
 .data-grid {
-    font-family: 'Roboto', sans-serif;;
-    /* color: var(--color-row-text); */
+    font-family: 'Roboto', sans-serif;
 }
 
 .data-grid-header {
@@ -20,15 +14,20 @@
     font-weight: bold;
 }
 
-.data-grid-row {
-    /* background-color: var(--color-row-odd-bg);
-    color: var(--color-row-text); */
+.action-buttons {
+    display: flex;
+    gap: 5px;
 }
 
-.data-grid-row:nth-child(even) {
-    /* background-color: var(--color-row-even-bg); */
+.action-buttons button {
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: var(--color-row-text);
+    border: none;
+    border-radius: 3px;
 }
 
-.data-grid-row:hover {
-    /* background-color: var(--color-row-hover-bg); */
+.action-buttons button:hover {
+    background-color: #0056b3;
 }

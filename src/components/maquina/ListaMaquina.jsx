@@ -2,19 +2,39 @@ import { useEffect, useState } from "react";
 import "react-data-grid/lib/styles.css";
 import DataGrid from "react-data-grid";
 import "../../dataGrid.css"; // Importa el archivo CSS
-
-const columns = [
-  { key: "id", name: "ID" },
-  { key: "nombre", name: "Nombre" },
-  { key: "fechaVencimientoLicencia", name: "Licencia hasta" },
-  { key: "almacenada", name: "En almacén" },
-  { key: "fechaAlmacenamiento", name: "Desde" },
-  { key: "tipoMaquina", name: "Tipo" },
-  { key: "local", name: "Cliente" },
-];
+import { useNavigate } from "react-router-dom";
+import { ActionButtons } from "../botones/ActionButtons";
 
 export const ListaMaquina = () => {
   const [maquinas, setMaquinas] = useState([]);
+  const navigate = useNavigate();
+
+  const handleEdit = (id) => {
+    console.log("Editar", id);
+    navigate("/maquina/" + id, { replace: true });
+  };
+
+  const handleDelete = (id) => {
+    console.log("Borrar", id);
+    // Implementar la lógica de borrado aquí
+  };
+
+  const columns = [
+    { key: "id", name: "ID:" },
+    { key: "nombre", name: "Nombre:" },
+    { key: "fechaVencimientoLicencia", name: "Licencia hasta:" },
+    { key: "almacenada", name: "En almacén?" },
+    { key: "fechaAlmacenamiento", name: "En almacén desde:" },
+    { key: "tipoMaquina", name: "Tipo:" },
+    { key: "local", name: "Cliente:" },
+    {
+      key: "accion",
+      name: "Acciones:",
+      formatter: ({ row }) => (
+        <ActionButtons row={row} onEdit={handleEdit} onDelete={handleDelete} />
+      ),
+    },
+  ];
 
   useEffect(() => {
     const fetchData = async () => {
