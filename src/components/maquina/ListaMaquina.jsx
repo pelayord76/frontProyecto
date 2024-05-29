@@ -42,7 +42,6 @@ export const ListaMaquina = () => {
       body: JSON.stringify(data),
     })
       .then(() => {
-        // Después de eliminar exitosamente, actualiza la lista de máquinas
         fetch("http://localhost:4040/rfsAdmin/maquina")
           .then((res) => res.json())
           .then((result) => {
