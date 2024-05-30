@@ -30,6 +30,16 @@ export function DataCliente() {
       "#3F3F73",
       "#807440",
     ],
+    backgroundColor: "#000000",
+    titleTextStyle: {
+      color: "#FFFFFF",
+    },
+    legend: {
+      position: "none",
+      textStyle: {
+        color: "#FFFFFF",
+      },
+    },
   };
 
   useEffect(() => {

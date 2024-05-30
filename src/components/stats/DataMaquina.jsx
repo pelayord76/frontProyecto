@@ -30,7 +30,7 @@ export function DataMaquina() {
       "#3F3F73",
       "#807440",
     ],
-    backgroundColor: "#0d0e23",
+    backgroundColor: "#000000",
     titleTextStyle: {
       color: "#FFFFFF",
     },

@@ -1,17 +1,17 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import { ListaCliente } from "./components/cliente/ListaCliente";
 import { ListaFacturas } from "./components/factura/ListaFacturas";
+import { Index } from "./components/inicio/Index";
 import { Maquina } from "./components/maquina/Maquina";
+import { MaquinaDetalle } from "./components/maquina/MaquinaDetalle";
+import { MaquinaCreate } from "./components/maquina/MaquinaCreate";
+import { MaquinaUpdate } from "./components/maquina/MaquinaUpdate";
 import { ListaRecaudaciones } from "./components/recaudacion/ListaRecaudaciones";
+import { Stats } from "./components/stats/Stats";
 import { ListaUsuario } from "./components/usuario/ListaUsuario";
-import Navbar from "./components/Navbar";
 import { UsuarioAdd } from "./components/usuario/UsuarioAdd";
 import { UsuarioEdit } from "./components/usuario/UsuarioEdit";
-import { Index } from "./components/inicio/Index";
-import { Stats } from "./components/stats/Stats";
-import { MaquinaDetalle } from "./components/maquina/MaquinaDetalle";
-import { MaquinaForm } from "./components/maquina/MaquinaForm";
-import { MaquinaUpdate } from "./components/maquina/MaquinaUpdate";
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
 
           <Route path="/maquina" element={<Maquina />} />
           <Route path="/maquina/:id" element={<MaquinaDetalle />} />
-          <Route path="/maquina/add" element={<MaquinaForm />} />
+          <Route path="/maquina/add" element={<MaquinaCreate />} />
           <Route path="/maquina/edit/:id" element={<MaquinaUpdate />} />
 
           <Route path="/recaudacion" element={<ListaRecaudaciones />} />
@@ -40,7 +40,7 @@ function App() {
           <Route path="/perfil" element={<Index />} />
           <Route path="/ajustes" element={<Index />} />
           <Route path="/cerrarSesion" element={<Index />} />
-          
+
           <Route path="/estadisticas" element={<Stats />} />
         </Routes>
       </BrowserRouter>

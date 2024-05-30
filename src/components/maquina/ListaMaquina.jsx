@@ -1,4 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import UnlinkIcon from "@mui/icons-material/LinkOff"; // Icono para desvincular
 import {
   Button,
   ButtonGroup,
@@ -8,13 +10,11 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
   TablePagination,
+  TableRow,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import UnlinkIcon from "@mui/icons-material/LinkOff"; // Icono para desvincular
+import { Link, useNavigate } from "react-router-dom";
 
 export const ListaMaquina = () => {
   const [maquinas, setMaquinas] = useState([]);

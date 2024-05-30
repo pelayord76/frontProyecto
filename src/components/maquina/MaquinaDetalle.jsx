@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button, ButtonGroup, TextField, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export const MaquinaDetalle = () => {
   const { id } = useParams();
@@ -20,8 +21,12 @@ export const MaquinaDetalle = () => {
       });
   }, [id]);
 
-  const handleUpdate = () => {
-    navigate(`/update/${id}`, { replace: true });
+  const handleUpdate = (id) => {
+    navigate(`/maquina/edit/${id}`, { replace: true });
+  };
+
+  const handleBack = () => {
+    navigate(`/maquina`, { replace: true });
   };
 
   const handleDelete = () => {
@@ -60,7 +65,7 @@ export const MaquinaDetalle = () => {
         gutterBottom
         style={{ color: "#FFFFFF", marginTop: "1%" }}
       >
-        Detalles de la Máquina
+        Detalles de la máquina
       </Typography>
       <TextField
         label="Nombre"
@@ -138,9 +143,18 @@ export const MaquinaDetalle = () => {
         <ButtonGroup>
           <Button
             variant="contained"
+            color="info"
+            startIcon={<ArrowBackIcon />}
+            onClick={() => handleBack()}
+            style={{ marginRight: "5%", borderRadius: "5px" }}
+          >
+            Volver
+          </Button>
+          <Button
+            variant="contained"
             color="warning"
             startIcon={<EditIcon />}
-            onClick={handleUpdate}
+            onClick={() => handleUpdate(maquina.id)}
             style={{ marginRight: "5%", borderRadius: "5px" }}
           >
             Editar
@@ -149,7 +163,7 @@ export const MaquinaDetalle = () => {
             variant="contained"
             color="error"
             startIcon={<DeleteIcon />}
-            onClick={handleDelete}
+            onClick={() => handleDelete(maquina.id)}
             style={{ borderRadius: "5px" }}
           >
             Eliminar
