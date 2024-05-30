@@ -14,6 +14,7 @@ import {
 import { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import UnlinkIcon from "@mui/icons-material/LinkOff"; // Icono para desvincular
 
 export const ListaMaquina = () => {
   const [maquinas, setMaquinas] = useState([]);
@@ -22,11 +23,11 @@ export const ListaMaquina = () => {
   const navigate = useNavigate();
 
   const handleCreate = () => {
-    navigate("/create/", { replace: true });
+    navigate("/maquina/add", { replace: true });
   };
 
   const handleUpdate = (id) => {
-    navigate("/update/" + id, { replace: true });
+    navigate("/maquina/edit/" + id, { replace: true });
   };
 
   const handleDelete = (id) => {
@@ -50,6 +51,26 @@ export const ListaMaquina = () => {
       })
       .catch((error) => {
         console.error("Error al eliminar la máquina:", error);
+      });
+  };
+
+  const handleUnlink = (id) => {
+    fetch(`http://localhost:4040/rfsAdmin/maquina/cliente/${id}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then(() => {
+        fetch("http://localhost:4040/rfsAdmin/maquina")
+          .then((res) => res.json())
+          .then((result) => {
+            setMaquinas(result);
+          });
+      })
+      .catch((error) => {
+        console.error("Error al desvincular el cliente de la máquina:", error);
       });
   };
 
@@ -168,11 +189,21 @@ export const ListaMaquina = () => {
                   {maquina.almacenada ? "Sí" : "No"}
                 </TableCell>
                 <TableCell style={cellStyle}>
-                  {maquina.fechaAlmacenamiento || "N/A"}
+                  {maquina.fechaAlmacenada || "N/A"}
                 </TableCell>
                 <TableCell style={cellStyle}>{maquina.tipoMaquina}</TableCell>
                 <TableCell style={cellStyle}>
                   {maquina.cliente?.local || "N/A"}
+                  {maquina.cliente && (
+                    <IconButton
+                      aria-label="unlink"
+                      color="info"
+                      size="small"
+                      onClick={() => handleUnlink(maquina.id)}
+                    >
+                      <UnlinkIcon />
+                    </IconButton>
+                  )}
                 </TableCell>
                 <TableCell style={cellStyle}>
                   <ButtonGroup>

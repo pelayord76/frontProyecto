@@ -10,6 +10,8 @@ import { UsuarioEdit } from "./components/usuario/UsuarioEdit";
 import { Index } from "./components/inicio/Index";
 import { Stats } from "./components/stats/Stats";
 import { MaquinaDetalle } from "./components/maquina/MaquinaDetalle";
+import { MaquinaForm } from "./components/maquina/MaquinaForm";
+import { MaquinaUpdate } from "./components/maquina/MaquinaUpdate";
 
 function App() {
   return (
@@ -18,18 +20,27 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Index />} />
+
           <Route path="/usuario" element={<ListaUsuario />} />
           <Route path="/usuario/:id" element={<ListaUsuario />} />
           <Route path="/usuario/add" element={<UsuarioAdd />} />
-          <Route path="/usuario/edit" element={<UsuarioEdit />} />
+          <Route path="/usuario/edit/:1" element={<UsuarioEdit />} />
+
           <Route path="/cliente" element={<ListaCliente />} />
+
           <Route path="/maquina" element={<Maquina />} />
           <Route path="/maquina/:id" element={<MaquinaDetalle />} />
+          <Route path="/maquina/add" element={<MaquinaForm />} />
+          <Route path="/maquina/edit/:id" element={<MaquinaUpdate />} />
+
           <Route path="/recaudacion" element={<ListaRecaudaciones />} />
+
           <Route path="/factura" element={<ListaFacturas />} />
+
           <Route path="/perfil" element={<Index />} />
           <Route path="/ajustes" element={<Index />} />
           <Route path="/cerrarSesion" element={<Index />} />
+          
           <Route path="/estadisticas" element={<Stats />} />
         </Routes>
       </BrowserRouter>
