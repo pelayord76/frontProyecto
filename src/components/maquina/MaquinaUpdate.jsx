@@ -22,41 +22,30 @@ export const MaquinaUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [nombre, setNombre] = useState("");
-  const [fechaVencimientoLicencia, setFechaVencimientoLicencia] = useState("");
+  const [fechaVencimientoLicencia, setFechaVencimientoLicencia] = useState(null);
   const [almacenada, setAlmacenada] = useState(false);
-  const [fechaAlmacenada, setFechaAlmacenada] = useState("");
+  const [fechaAlmacenada, setFechaAlmacenada] = useState(null);
   const [tipoMaquina, setTipoMaquina] = useState("");
   const [idCliente, setIdCliente] = useState("");
   const [local, setLocal] = useState("");
   const [locales, setLocales] = useState([]);
-
-  const handleFechaVencimientoChange = (fecha) => {
-    const fechaFormateada = fecha ? fecha.format("YYYY-MM-DD") : "";
-    setFechaVencimientoLicencia(fechaFormateada);
-  };
-
-  const handleFechaAlmacenadaChange = (fecha) => {
-    const fechaFormateada = fecha ? fecha.format("YYYY-MM-DD") : "";
-    setFechaAlmacenada(fechaFormateada);
-  };
 
   const handleBack = () => {
     navigate(`/maquina/${id}`, { replace: true });
   };
 
   const handleSubmit = () => {
-    let fechaAlmacenadaCheck = null;
-    if (!almacenada) {
-      fechaAlmacenadaCheck = fechaAlmacenada
-        ? dayjs(fechaAlmacenada).format("YYYY-MM-DD")
-        : null;
-    }
-
     const data = {
       nombre: nombre,
-      fechaVencimientoLicencia: fechaVencimientoLicencia || null,
+      fechaVencimientoLicencia: fechaVencimientoLicencia
+        ? fechaVencimientoLicencia.toISOString()
+        : null,
       almacenada: almacenada,
-      fechaAlmacenada: fechaAlmacenadaCheck,
+      fechaAlmacenada: almacenada
+        ? fechaAlmacenada
+          ? fechaAlmacenada.toISOString()
+          : null
+        : null,
       tipoMaquina: tipoMaquina,
       idCliente: idCliente,
     };
@@ -71,8 +60,7 @@ export const MaquinaUpdate = () => {
       },
       body: JSON.stringify(data),
     });
-    // navigate("/maquina", { replace: true });
-    // window.location.reload();
+    navigate("/maquina", { replace: true });
   };
 
   useEffect(() => {
@@ -118,7 +106,6 @@ export const MaquinaUpdate = () => {
         color: "#FFFFFF",
         borderRadius: "8px",
         marginTop: "5%",
-        marginBottom: "5%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -148,28 +135,18 @@ export const MaquinaUpdate = () => {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           label="Licencia hasta"
-          onChange={(e) => handleFechaVencimientoChange(e)}
-          format="DD-MM-YYYY"
-          sx={{
-            "& .MuiInputLabel-root::before": {
-              color: "#FFFFFF",
-            },
-            "& .MuiIconButton-root": {
-              color: "#FFFFFF",
-            },
-            "& .MuiInputBase-root": {
-              color: "#FFFFFF",
-            },
-            marginTop: "2%",
-            marginBottom: "1px",
-          }}
-          textField={
+          value={fechaVencimientoLicencia}
+          onChange={(newValue) => setFechaVencimientoLicencia(newValue)}
+          renderInput={(params) => (
             <TextField
+              {...params}
               margin="normal"
               focused
-              InputProps={{ style: { color: "#FFFFFF" } }}
+              InputProps={{
+                style: { color: "#FFFFFF" },
+              }}
             />
-          }
+          )}
         />
       </LocalizationProvider>
       <FormControlLabel
@@ -184,36 +161,26 @@ export const MaquinaUpdate = () => {
         style={{
           color: "#FFFFFF",
           margin: "normal",
-          marginTop: "1%",
-          marginBottom: "2%",
         }}
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
-          disabled={!almacenada}
           label="En almacén desde"
-          onChange={(e) => handleFechaAlmacenadaChange(e)}
-          format="DD-MM-YYYY"
-          sx={{
-            "& .MuiIconButton-root": {
-              color: "#FFFFFF",
-            },
-            "& .MuiInputBase-root": {
-              color: "#FFFFFF",
-            },
-            marginTop: "2%",
-            marginBottom: "1px",
-          }}
-          textField={
+          value={fechaAlmacenada}
+          onChange={(newValue) => setFechaAlmacenada(newValue)}
+          disabled={!almacenada}
+          renderInput={(params) => (
             <TextField
+              {...params}
               margin="normal"
               focused
-              InputProps={{ style: { color: "#FFFFFF" } }}
+              InputProps={{
+                style: { color: "#FFFFFF" },
+              }}
             />
-          }
+          )}
         />
       </LocalizationProvider>
-
       <InputLabel
         id="tipoMaquina-label"
         sx={{ color: "#1976d2", marginTop: "2%", marginBottom: "1px" }}
