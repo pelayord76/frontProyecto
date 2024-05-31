@@ -55,6 +55,7 @@ export const MaquinaDetalle = () => {
         color: "#FFFFFF",
         borderRadius: "8px",
         marginTop: "5%",
+        marginBottom: "5%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",

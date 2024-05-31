@@ -22,31 +22,41 @@ export const MaquinaUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [nombre, setNombre] = useState("");
-  const [fechaVencimientoLicencia, setFechaVencimientoLicencia] =
-    useState(null);
+  const [fechaVencimientoLicencia, setFechaVencimientoLicencia] = useState("");
   const [almacenada, setAlmacenada] = useState(false);
-  const [fechaAlmacenada, setFechaAlmacenada] = useState(null);
+  const [fechaAlmacenada, setFechaAlmacenada] = useState("");
   const [tipoMaquina, setTipoMaquina] = useState("");
   const [idCliente, setIdCliente] = useState("");
   const [local, setLocal] = useState("");
   const [locales, setLocales] = useState([]);
+
+  const handleFechaVencimientoChange = (fecha) => {
+    const fechaFormateada = fecha ? fecha.format("YYYY-MM-DD") : "";
+    setFechaVencimientoLicencia(fechaFormateada);
+  };
+
+  const handleFechaAlmacenadaChange = (fecha) => {
+    const fechaFormateada = fecha ? fecha.format("YYYY-MM-DD") : "";
+    setFechaAlmacenada(fechaFormateada);
+  };
 
   const handleBack = () => {
     navigate(`/maquina/${id}`, { replace: true });
   };
 
   const handleSubmit = () => {
+    let fechaAlmacenadaCheck = null;
+    if (!almacenada) {
+      fechaAlmacenadaCheck = fechaAlmacenada
+        ? dayjs(fechaAlmacenada).format("YYYY-MM-DD")
+        : null;
+    }
+
     const data = {
       nombre: nombre,
-      fechaVencimientoLicencia: fechaVencimientoLicencia
-        ? fechaVencimientoLicencia.toISOString()
-        : null,
+      fechaVencimientoLicencia: fechaVencimientoLicencia || null,
       almacenada: almacenada,
-      fechaAlmacenada: almacenada
-        ? fechaAlmacenada
-          ? fechaAlmacenada.toISOString()
-          : null
-        : null,
+      fechaAlmacenada: fechaAlmacenadaCheck,
       tipoMaquina: tipoMaquina,
       idCliente: idCliente,
     };
@@ -61,7 +71,8 @@ export const MaquinaUpdate = () => {
       },
       body: JSON.stringify(data),
     });
-    navigate("/maquina", { replace: true });
+    // navigate("/maquina", { replace: true });
+    // window.location.reload();
   };
 
   useEffect(() => {
@@ -107,6 +118,7 @@ export const MaquinaUpdate = () => {
         color: "#FFFFFF",
         borderRadius: "8px",
         marginTop: "5%",
+        marginBottom: "5%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -136,18 +148,28 @@ export const MaquinaUpdate = () => {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           label="Licencia hasta"
-          value={fechaVencimientoLicencia}
-          onChange={(newValue) => setFechaVencimientoLicencia(newValue)}
-          renderInput={(params) => (
+          onChange={(e) => handleFechaVencimientoChange(e)}
+          format="DD-MM-YYYY"
+          sx={{
+            "& .MuiInputLabel-root::before": {
+              color: "#FFFFFF",
+            },
+            "& .MuiIconButton-root": {
+              color: "#FFFFFF",
+            },
+            "& .MuiInputBase-root": {
+              color: "#FFFFFF",
+            },
+            marginTop: "2%",
+            marginBottom: "1px",
+          }}
+          textField={
             <TextField
-              {...params}
               margin="normal"
               focused
-              InputProps={{
-                style: { color: "#FFFFFF" },
-              }}
+              InputProps={{ style: { color: "#FFFFFF" } }}
             />
-          )}
+          }
         />
       </LocalizationProvider>
       <FormControlLabel
@@ -162,26 +184,36 @@ export const MaquinaUpdate = () => {
         style={{
           color: "#FFFFFF",
           margin: "normal",
+          marginTop: "1%",
+          marginBottom: "2%",
         }}
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
-          label="En almacén desde"
-          value={fechaAlmacenada}
-          onChange={(newValue) => setFechaAlmacenada(newValue)}
           disabled={!almacenada}
-          renderInput={(params) => (
+          label="En almacén desde"
+          onChange={(e) => handleFechaAlmacenadaChange(e)}
+          format="DD-MM-YYYY"
+          sx={{
+            "& .MuiIconButton-root": {
+              color: "#FFFFFF",
+            },
+            "& .MuiInputBase-root": {
+              color: "#FFFFFF",
+            },
+            marginTop: "2%",
+            marginBottom: "1px",
+          }}
+          textField={
             <TextField
-              {...params}
               margin="normal"
               focused
-              InputProps={{
-                style: { color: "#FFFFFF" },
-              }}
+              InputProps={{ style: { color: "#FFFFFF" } }}
             />
-          )}
+          }
         />
       </LocalizationProvider>
+
       <InputLabel
         id="tipoMaquina-label"
         sx={{ color: "#1976d2", marginTop: "2%", marginBottom: "1px" }}
