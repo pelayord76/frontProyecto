@@ -1,34 +1,59 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import DoneIcon from "@mui/icons-material/Done";
-import { Button, ButtonGroup, TextField, Typography } from "@mui/material";
+import SaveIcon from "@mui/icons-material/Save";
+import {
+  Button,
+  ButtonGroup,
+  Checkbox,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export const MaquinaUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [nombre, setnombre] = useState("");
-  const [fechaVencimientoLicencia, setfechaVencimientoLicencia] = useState("");
-  const [almacenada, setalmacenada] = useState("");
-  const [fechaAlmacenada, setfechaAlmacenada] = useState("");
-  const [tipoMaquina, settipoMaquina] = useState("");
-  const [idCliente, setidCliente] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [fechaVencimientoLicencia, setFechaVencimientoLicencia] =
+    useState(null);
+  const [almacenada, setAlmacenada] = useState(false);
+  const [fechaAlmacenada, setFechaAlmacenada] = useState(null);
+  const [tipoMaquina, setTipoMaquina] = useState("");
+  const [idCliente, setIdCliente] = useState("");
+  const [local, setLocal] = useState("");
+  const [locales, setLocales] = useState([]);
 
   const handleBack = () => {
     navigate(`/maquina/${id}`, { replace: true });
   };
 
   const handleSubmit = () => {
-    var data = {
+    const data = {
       nombre: nombre,
-      fechaVencimientoLicencia: fechaVencimientoLicencia,
+      fechaVencimientoLicencia: fechaVencimientoLicencia
+        ? fechaVencimientoLicencia.toISOString()
+        : null,
       almacenada: almacenada,
-      fechaAlmacenada: fechaAlmacenada,
+      fechaAlmacenada: almacenada
+        ? fechaAlmacenada
+          ? fechaAlmacenada.toISOString()
+          : null
+        : null,
       tipoMaquina: tipoMaquina,
       idCliente: idCliente,
     };
 
-    fetch(`http://localhost:4040/rfsAdmin/maquina/edit/${id}`, {
+    console.log(data);
+
+    fetch(`http://localhost:4040/rfsAdmin/maquina/${id}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -43,17 +68,34 @@ export const MaquinaUpdate = () => {
     fetch(`http://localhost:4040/rfsAdmin/maquina/${id}`)
       .then((res) => res.json())
       .then((result) => {
-        setnombre(result.nombre);
-        setfechaVencimientoLicencia(result.fechaVencimientoLicencia);
-        setalmacenada(almacenada);
-        setfechaAlmacenada(result.fechaAlmacenada);
-        settipoMaquina(result.tipoMaquina);
-        setidCliente(result.cliente?.id);
+        setNombre(result.nombre);
+        setFechaVencimientoLicencia(
+          result.fechaVencimientoLicencia
+            ? dayjs(result.fechaVencimientoLicencia)
+            : null
+        );
+        setAlmacenada(result.almacenada || false);
+        setFechaAlmacenada(
+          result.fechaAlmacenada ? dayjs(result.fechaAlmacenada) : null
+        );
+        setTipoMaquina(result.tipoMaquina);
+        if (result.cliente) {
+          setIdCliente(result.cliente.id);
+          setLocal(result.cliente.local);
+        }
       })
       .catch((error) => {
         console.error("Error al obtener los detalles de la máquina:", error);
       });
   }, [id]);
+
+  useEffect(() => {
+    fetch("http://localhost:4040/rfsAdmin/cliente/clientes")
+      .then((res) => res.json())
+      .then((result) => {
+        setLocales(result);
+      });
+  }, []);
 
   return (
     <div
@@ -84,83 +126,113 @@ export const MaquinaUpdate = () => {
         required
         label="Nombre"
         value={nombre}
-        onChange={(e) => setnombre(e.target.value)}
+        onChange={(e) => setNombre(e.target.value)}
         margin="normal"
         focused
         InputProps={{
           style: { color: "#FFFFFF" },
         }}
       />
-      <TextField
-        autoComplete="fechaVencimientoLicencia"
-        name="fechaVencimientoLicencia"
-        variant="outlined"
-        required
-        label="Licencia hasta"
-        value={fechaVencimientoLicencia}
-        onChange={(e) => setfechaVencimientoLicencia(e.target.value)}
-        margin="normal"
-        focused
-        InputProps={{
-          style: { color: "#FFFFFF" },
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
+          label="Licencia hasta"
+          value={fechaVencimientoLicencia}
+          onChange={(newValue) => setFechaVencimientoLicencia(newValue)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              margin="normal"
+              focused
+              InputProps={{
+                style: { color: "#FFFFFF" },
+              }}
+            />
+          )}
+        />
+      </LocalizationProvider>
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={almacenada}
+            onChange={(e) => setAlmacenada(e.target.checked)}
+            style={{ color: "#1976d2" }}
+          />
+        }
+        label="En almacén?"
+        style={{
+          color: "#FFFFFF",
+          margin: "normal",
         }}
       />
-      <TextField
-        autoComplete="almacenada"
-        name="almacenada"
-        variant="outlined"
-        required
-        label="En almacén"
-        value={almacenada}
-        onChange={(e) => setalmacenada(e.target.value)}
-        margin="normal"
-        focused
-        InputProps={{
-          style: { color: "#FFFFFF" },
-        }}
-      />
-      <TextField
-        autoComplete="fechaAlmacenada"
-        name="fechaAlmacenada"
-        variant="outlined"
-        required
-        label="En almacén desde"
-        value={fechaAlmacenada}
-        onChange={(e) => setfechaAlmacenada(e.target.value)}
-        margin="normal"
-        focused
-        InputProps={{
-          style: { color: "#FFFFFF" },
-        }}
-      />
-      <TextField
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
+          label="En almacén desde"
+          value={fechaAlmacenada}
+          onChange={(newValue) => setFechaAlmacenada(newValue)}
+          disabled={!almacenada}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              margin="normal"
+              focused
+              InputProps={{
+                style: { color: "#FFFFFF" },
+              }}
+            />
+          )}
+        />
+      </LocalizationProvider>
+      <InputLabel
+        id="tipoMaquina-label"
+        sx={{ color: "#1976d2", marginTop: "2%", marginBottom: "1px" }}
+      >
+        Tipo
+      </InputLabel>
+      <Select
         autoComplete="tipoMaquina"
         name="tipoMaquina"
         variant="outlined"
         required
-        label="Tipo"
         value={tipoMaquina}
-        onChange={(e) => settipoMaquina(e.target.value)}
-        margin="normal"
-        focused
-        InputProps={{
-          style: { color: "#FFFFFF" },
+        onChange={(e) => setTipoMaquina(e.target.value)}
+        sx={{
+          color: "#FFFFFF",
+          marginBottom: "2%",
+          border: "2px solid #1976d2",
+          "& .MuiSvgIcon-root": {
+            color: "white",
+          },
         }}
-      />
-      <TextField
+      >
+        <MenuItem value={"BILLETES"}>Billetes</MenuItem>
+        <MenuItem value={"MONEDAS"}>Monedas</MenuItem>
+      </Select>
+      <InputLabel
+        id="local-label"
+        sx={{ color: "#1976d2", marginTop: "2%", marginBottom: "1px" }}
+      >
+        Local
+      </InputLabel>
+      <Select
         autoComplete="idCliente"
-        name="idCliente"
-        variant="outlined"
-        required
-        label="Cliente"
+        labelId="local-label"
         value={idCliente}
-        onChange={(e) => setidCliente(e.target.value)}
-        margin="normal"
-        focused
-        InputProps={{
-          style: { color: "#FFFFFF" },
+        onChange={(e) => setIdCliente(e.target.value)}
+        sx={{
+          color: "#FFFFFF",
+          marginBottom: "2%",
+          border: "2px solid #1976d2",
+          "& .MuiSvgIcon-root": {
+            color: "white",
+          },
         }}
-      />
+      >
+        {locales.map((local) => (
+          <MenuItem key={local.id} value={local.id}>
+            {local.local}
+          </MenuItem>
+        ))}
+      </Select>
       <div
         style={{
           display: "flex",
@@ -181,7 +253,8 @@ export const MaquinaUpdate = () => {
           <Button
             variant="contained"
             color="success"
-            startIcon={<DoneIcon />}
+            startIcon={<SaveIcon />}
+            onClick={handleSubmit}
             style={{ marginRight: "5%", borderRadius: "5px" }}
           >
             Guardar
