@@ -117,6 +117,7 @@ export const MaquinaCreate = () => {
               }}
             />
           )}
+          sx={{ marginTop: "2%" }}
         />
       </LocalizationProvider>
       <FormControlLabel
@@ -131,6 +132,8 @@ export const MaquinaCreate = () => {
         style={{
           color: "#FFFFFF",
           margin: "normal",
+          marginTop: "2%",
+          marginBottom: "1%",
         }}
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -149,6 +152,7 @@ export const MaquinaCreate = () => {
               }}
             />
           )}
+          sx={{ marginTop: "2%" }}
         />
       </LocalizationProvider>
       <InputLabel

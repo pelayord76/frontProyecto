@@ -22,7 +22,8 @@ export const MaquinaUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [nombre, setNombre] = useState("");
-  const [fechaVencimientoLicencia, setFechaVencimientoLicencia] = useState(null);
+  const [fechaVencimientoLicencia, setFechaVencimientoLicencia] =
+    useState(null);
   const [almacenada, setAlmacenada] = useState(false);
   const [fechaAlmacenada, setFechaAlmacenada] = useState(null);
   const [tipoMaquina, setTipoMaquina] = useState("");
@@ -147,6 +148,7 @@ export const MaquinaUpdate = () => {
               }}
             />
           )}
+          sx={{ marginTop: "2%" }}
         />
       </LocalizationProvider>
       <FormControlLabel
@@ -161,6 +163,8 @@ export const MaquinaUpdate = () => {
         style={{
           color: "#FFFFFF",
           margin: "normal",
+          marginTop: "2%",
+          marginBottom:"1%"
         }}
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -179,6 +183,7 @@ export const MaquinaUpdate = () => {
               }}
             />
           )}
+          sx={{ marginTop: "2%" }}
         />
       </LocalizationProvider>
       <InputLabel
