@@ -12,7 +12,6 @@ export const ListaFacturas = () => {
       });
       const data = await response.json();
       setFacturas(data);
-      console.log(data);
     };
     fetchData();
   }, []);

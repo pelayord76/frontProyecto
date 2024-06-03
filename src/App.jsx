@@ -37,6 +37,9 @@ function App() {
           <Route path="/usuario/edit/:1" element={<UsuarioEdit />} />
 
           <Route path="/cliente" element={<ListaCliente />} />
+          <Route path="/cliente/:id" />
+          <Route path="/cliente/add" />
+          <Route path="/cliente/edit/:1" />
 
           <Route path="/maquina" element={<Maquina />} />
           <Route path="/maquina/:id" element={<MaquinaDetalle />} />
@@ -44,8 +47,14 @@ function App() {
           <Route path="/maquina/edit/:id" element={<MaquinaUpdate />} />
 
           <Route path="/recaudacion" element={<ListaRecaudaciones />} />
+          <Route path="/recaudacion/:id" />
+          <Route path="/recaudacion/add" />
+          <Route path="/recaudacion/edit/:1" />
 
           <Route path="/factura" element={<ListaFacturas />} />
+          <Route path="/factura/:id" />
+          <Route path="/factura/add" />
+          <Route path="/factura/edit/:1" />
 
           <Route path="/perfil" element={<Index />} />
           <Route path="/ajustes" element={<Index />} />

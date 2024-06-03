@@ -11,13 +11,14 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-export const ListaRecaudaciones = () => {
+export const MaquinaRecaudaciones = () => {
+  const { id } = useParams();
   const [recaudaciones, setRecaudaciones] = useState([]);
-  const [local, setLocal] = useState({});
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export const ListaRecaudaciones = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `http://localhost:4040/rfsAdmin/recaudacion`,
+        `http://localhost:4040/rfsAdmin/maquina/${id}/recaudacion`,
         {
           headers: {
             Accept: "application/json",
@@ -36,34 +37,7 @@ export const ListaRecaudaciones = () => {
       setRecaudaciones(data);
     };
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchLocal = async (id) => {
-      try {
-        const response = await fetch(
-          `http://localhost:4040/rfsAdmin/recaudacion/${id}/local`,
-          {
-            headers: {
-              Accept: "application/json",
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Error al obtener el local");
-        }
-        const data = await response.json();
-        setLocal(data);
-      } catch (error) {
-        console.error("Error al obtener el local:", error);
-        setLocal({}); // Manejo de error: establecer local como un objeto vacío
-      }
-    };
-
-    recaudaciones.forEach((recaudacion) => {
-      fetchLocal(recaudacion.id);
-    });
-  }, [recaudaciones]);
+  }, [id]);
 
   const handleCreateRecaudacion = () => {
     navigate(`/recaudacion/add`, { replace: true });
@@ -109,8 +83,9 @@ export const ListaRecaudaciones = () => {
           <Button variant="outlined" onClick={handleCreateRecaudacion}>
             Añadir recaudación
           </Button>
+          <Typography>Recaudaciones de la máquina:</Typography>
           <TablePagination
-            rowsPerPageOptions={[10, 15, 20, 25]}
+            rowsPerPageOptions={[5, 10, 15, 20]}
             count={recaudaciones.length}
             rowsPerPage={rowsPerPage}
             page={page}
@@ -136,13 +111,8 @@ export const ListaRecaudaciones = () => {
             <TableRow style={{ backgroundColor: "#1E1E1E" }}>
               <TableCell style={headerCellStyle}>ID:</TableCell>
               <TableCell style={headerCellStyle}>Total Recaudado:</TableCell>
-              <TableCell style={headerCellStyle}>Pasos de entrada:</TableCell>
-              <TableCell style={headerCellStyle}>Pasos de salida:</TableCell>
               <TableCell style={headerCellStyle}>% de juego:</TableCell>
-              <TableCell style={headerCellStyle}>Tasa:</TableCell>
               <TableCell style={headerCellStyle}>Fecha:</TableCell>
-              <TableCell style={headerCellStyle}>Máquina:</TableCell>
-              <TableCell style={headerCellStyle}>Local:</TableCell>
               <TableCell style={headerCellStyle}>Acción:</TableCell>
             </TableRow>
           </TableHead>
@@ -165,29 +135,17 @@ export const ListaRecaudaciones = () => {
                     </Link>
                   </TableCell>
                   <TableCell style={cellStyle}>
-                    {recaudacion.cantidadRecaudada}€
-                  </TableCell>
-                  <TableCell style={cellStyle}>
-                    {recaudacion.pasosEntrada}
-                  </TableCell>
-                  <TableCell style={cellStyle}>
-                    {recaudacion.pasosSalida}
+                    <Link
+                      to={`/recaudacion/${recaudacion.id}`}
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      {recaudacion.cantidadRecaudada}€
+                    </Link>
                   </TableCell>
                   <TableCell style={cellStyle}>
                     {recaudacion.porcentajeJuego}%
                   </TableCell>
-                  <TableCell style={cellStyle}>
-                    {recaudacion.tasaRecaudacion}€
-                  </TableCell>
                   <TableCell style={cellStyle}>{recaudacion.fecha}</TableCell>
-                  <TableCell style={cellStyle}>
-                    {recaudacion.maquina.nombre}
-                  </TableCell>
-
-                  <TableCell style={cellStyle}>
-                    {local[recaudacion.id] ? local[recaudacion.id].local : ""}
-                  </TableCell>
-
                   <TableCell style={cellStyle}>
                     <ButtonGroup>
                       <IconButton

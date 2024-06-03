@@ -13,7 +13,6 @@ export const ListaCliente = () => {
       });
       const data = await response.json();
       setClientes(data);
-      console.log(data);
     };
     fetchData();
   }, []);

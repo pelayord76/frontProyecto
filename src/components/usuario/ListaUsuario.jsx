@@ -53,7 +53,6 @@ export const ListaUsuario = () => {
       });
       const data = await response.json();
       setusuarios(data);
-      console.log(data);
     };
     fetchData();
   }, []);

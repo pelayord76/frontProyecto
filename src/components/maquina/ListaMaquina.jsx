@@ -1,6 +1,6 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import UnlinkIcon from "@mui/icons-material/LinkOff"; // Icono para desvincular
+import UnlinkIcon from "@mui/icons-material/LinkOff";
 import {
   Button,
   ButtonGroup,
