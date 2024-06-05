@@ -152,8 +152,18 @@ export const ListaRecaudaciones = () => {
                     {recaudacion.tasaRecaudacion}€
                   </TableCell>
                   <TableCell style={cellStyle}>{recaudacion.fecha}</TableCell>
+
                   <TableCell style={cellStyle}>
-                    {recaudacion.maquina.nombre}
+                    {recaudacion.maquina ? (
+                      <Link
+                        to={`/maquina/${recaudacion.maquina.id}`}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        {recaudacion.maquina.nombre}
+                      </Link>
+                    ) : (
+                      <span>{recaudacion.maquina.cliente?.local || "N/A"}</span>
+                    )}
                   </TableCell>
 
                   <TableCell style={cellStyle}>

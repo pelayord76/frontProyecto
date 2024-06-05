@@ -5,29 +5,31 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Button, ButtonGroup, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { MaquinaRecaudaciones } from "./MaquinaRecaudaciones";
-import "./maquina.css";
+import "../maquina/maquina.css";
 
-export const MaquinaDetalle = () => {
+export const RecaudacionDetalle = () => {
   const { id } = useParams();
-  const [maquina, setMaquina] = useState(null);
+  const [recaudacion, setRecaudacion] = useState(null);
   const [minId, setMinId] = useState(null);
   const [maxId, setMaxId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:4040/rfsAdmin/maquina/${id}`)
+    fetch(`http://localhost:4040/rfsAdmin/recaudacion/${id}`)
       .then((res) => res.json())
       .then((result) => {
-        setMaquina(result);
+        setRecaudacion(result);
       })
       .catch((error) => {
-        console.error("Error al obtener los detalles de la máquina:", error);
+        console.error(
+          "Error al obtener los detalles de la recaudación:",
+          error
+        );
       });
   }, [id]);
 
   useEffect(() => {
-    fetch("http://localhost:4040/rfsAdmin/maquina")
+    fetch("http://localhost:4040/rfsAdmin/recaudacion")
       .then((res) => res.json())
       .then((result) => {
         const ids = result.map((m) => m.id);
@@ -35,20 +37,20 @@ export const MaquinaDetalle = () => {
         setMaxId(Math.max(...ids));
       })
       .catch((error) => {
-        console.error("Error al obtener los IDs de las máquinas:", error);
+        console.error("Error al obtener los IDs de las recaudaciones:", error);
       });
   }, []);
 
   const handleUpdate = (id) => {
-    navigate(`/maquina/edit/${id}`, { replace: true });
+    navigate(`/recaudacion/edit/${id}`, { replace: true });
   };
 
   const handleBack = () => {
-    navigate(`/maquina`, { replace: true });
+    navigate(`/recaudacion`, { replace: true });
   };
 
   const handleDelete = () => {
-    fetch(`http://localhost:4040/rfsAdmin/maquina/${id}`, {
+    fetch(`http://localhost:4040/rfsAdmin/recaudacion/${id}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -56,19 +58,19 @@ export const MaquinaDetalle = () => {
       },
     })
       .then(() => {
-        navigate("/maquina", { replace: true });
+        navigate("/recaudacion", { replace: true });
       })
       .catch((error) => {
-        console.error("Error al eliminar la máquina:", error);
+        console.error("Error al eliminar la recaudación:", error);
       });
   };
 
   const handleSiguiente = () => {
-    navigate(`/maquina/${parseInt(id) + 1}`, { replace: true });
+    navigate(`/recaudacion/${parseInt(id) + 1}`, { replace: true });
   };
 
   const handleAnterior = () => {
-    navigate(`/maquina/${parseInt(id) - 1}`, { replace: true });
+    navigate(`/recaudacion/${parseInt(id) - 1}`, { replace: true });
   };
 
   return (
@@ -102,12 +104,12 @@ export const MaquinaDetalle = () => {
           gutterBottom
           style={{ color: "#FFFFFF", marginTop: "1%" }}
         >
-          Detalles de la máquina
+          Detalles de la recaudación
         </Typography>
 
         <TextField
-          label="Nombre"
-          value={maquina?.nombre || "N/A"}
+          label="Local"
+          value={recaudacion?.maquina?.cliente || "N/A"}
           fullWidth
           margin="normal"
           focused
@@ -118,8 +120,8 @@ export const MaquinaDetalle = () => {
         />
 
         <TextField
-          label="Cliente"
-          value={maquina?.cliente?.local || "N/A"}
+          label="Máquina"
+          value={recaudacion?.maquina?.nombre || "N/A"}
           fullWidth
           margin="normal"
           focused
@@ -130,8 +132,8 @@ export const MaquinaDetalle = () => {
         />
 
         <TextField
-          label="Licencia hasta"
-          value={maquina?.fechaVencimientoLicencia || "N/A"}
+          label="Cantidad recaudada"
+          value={recaudacion?.cantidadRecaudada || "N/A"}
           fullWidth
           margin="normal"
           focused
@@ -142,8 +144,8 @@ export const MaquinaDetalle = () => {
         />
 
         <TextField
-          label="En almacén"
-          value={maquina?.almacenada ? "Sí" : "No"}
+          label="Pasos de entrada"
+          value={recaudacion?.pasosEntrada || "N/A"}
           fullWidth
           margin="normal"
           focused
@@ -154,8 +156,8 @@ export const MaquinaDetalle = () => {
         />
 
         <TextField
-          label="En almacén desde"
-          value={maquina?.fechaAlmacenada || "N/A"}
+          label="Pasos de salida"
+          value={recaudacion?.pasosSalida || "N/A"}
           fullWidth
           margin="normal"
           focused
@@ -166,8 +168,32 @@ export const MaquinaDetalle = () => {
         />
 
         <TextField
-          label="Tipo"
-          value={maquina?.tipoMaquina || "N/A"}
+          label="Porcentaje de juego"
+          value={recaudacion?.porcentajeJuego || "N/A"}
+          fullWidth
+          margin="normal"
+          focused
+          InputProps={{
+            readOnly: true,
+            style: { color: "#FFFFFF" },
+          }}
+        />
+
+        <TextField
+          label="Tasa de recaudacion"
+          value={recaudacion?.tasaRecaudacion || "N/A"}
+          fullWidth
+          margin="normal"
+          focused
+          InputProps={{
+            readOnly: true,
+            style: { color: "#FFFFFF" },
+          }}
+        />
+
+        <TextField
+          label="Fecha"
+          value={recaudacion?.fecha || "N/A"}
           fullWidth
           margin="normal"
           focused
@@ -199,7 +225,7 @@ export const MaquinaDetalle = () => {
               variant="contained"
               color="warning"
               startIcon={<EditIcon />}
-              onClick={() => handleUpdate(maquina.id)}
+              onClick={() => handleUpdate(recaudacion.id)}
               style={{ marginRight: "5%", borderRadius: "5px" }}
             >
               Editar
@@ -208,7 +234,7 @@ export const MaquinaDetalle = () => {
               variant="contained"
               color="error"
               startIcon={<DeleteIcon />}
-              onClick={() => handleDelete(maquina.id)}
+              onClick={() => handleDelete(recaudacion.id)}
               style={{ borderRadius: "5px" }}
             >
               Eliminar
@@ -246,9 +272,7 @@ export const MaquinaDetalle = () => {
           flex: "1",
           padding: "20px",
         }}
-      >
-        <MaquinaRecaudaciones />
-      </div>
+      ></div>
     </div>
   );
 };

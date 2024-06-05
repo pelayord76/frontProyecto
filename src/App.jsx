@@ -13,6 +13,7 @@ import { Stats } from "./components/stats/Stats";
 import { ListaUsuario } from "./components/usuario/ListaUsuario";
 import { UsuarioAdd } from "./components/usuario/UsuarioAdd";
 import { UsuarioEdit } from "./components/usuario/UsuarioEdit";
+import { RecaudacionDetalle } from "./components/recaudacion/RecaudacionDetalle";
 // import { Error415 } from "./components/errores/Error415";
 
 function App() {
@@ -36,12 +37,12 @@ function App() {
           <Route path="/usuario" element={<ListaUsuario />} />
           <Route path="/usuario/:id" element={<ListaUsuario />} />
           <Route path="/usuario/add" element={<UsuarioAdd />} />
-          <Route path="/usuario/edit/:1" element={<UsuarioEdit />} />
+          <Route path="/usuario/edit/:id" element={<UsuarioEdit />} />
 
           <Route path="/cliente" element={<ListaCliente />} />
           <Route path="/cliente/:id" />
           <Route path="/cliente/add" />
-          <Route path="/cliente/edit/:1" />
+          <Route path="/cliente/edit/:id" />
 
           <Route path="/maquina" element={<Maquina />} />
           <Route path="/maquina/:id" element={<MaquinaDetalle />} />
@@ -49,14 +50,14 @@ function App() {
           <Route path="/maquina/edit/:id" element={<MaquinaUpdate />} />
 
           <Route path="/recaudacion" element={<ListaRecaudaciones />} />
-          <Route path="/recaudacion/:id" />
+          <Route path="/recaudacion/:id" element={<RecaudacionDetalle />} />
           <Route path="/recaudacion/add" />
-          <Route path="/recaudacion/edit/:1" />
+          <Route path="/recaudacion/edit/:id" />
 
           <Route path="/factura" element={<ListaFacturas />} />
           <Route path="/factura/:id" />
           <Route path="/factura/add" />
-          <Route path="/factura/edit/:1" />
+          <Route path="/factura/edit/:id" />
 
           <Route path="/perfil" element={<Index />} />
           <Route path="/ajustes" element={<Index />} />
