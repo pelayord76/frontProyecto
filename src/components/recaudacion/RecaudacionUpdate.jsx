@@ -91,6 +91,54 @@ export const RecaudacionUpdate = () => {
         Editar detalles de la recaudación
       </Typography>
 
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
+          label="Fecha"
+          format="DD-MM-YYYY"
+          autoFocus
+          value={fecha}
+          onChange={(newValue) => setFecha(newValue)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              margin="normal"
+              focused
+              InputProps={{
+                style: { color: "#FFFFFF" },
+              }}
+            />
+          )}
+          sx={{
+            marginTop: "2%",
+            color: "#FFFFFF",
+            "& .css-i4bv87-MuiSvgIcon-root": {
+              color: "#FFFFFF",
+            },
+            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+              color: "#FFFFFF",
+              borderColor: "#1976d2",
+            },
+            "& .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root": {
+              color: "#1976d2",
+            },
+            "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root": {
+              borderColor: "#FFFFFF",
+            },
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: "#1976d2",
+              },
+              "&:hover fieldset": {
+                borderColor: "#1976d2",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#1976d2",
+              },
+            },
+          }}
+        />
+      </LocalizationProvider>
+
       <TextField
         autoComplete="cantidadRecaudada"
         name="cantidadRecaudada"
@@ -165,26 +213,6 @@ export const RecaudacionUpdate = () => {
           style: { color: "#FFFFFF" },
         }}
       />
-
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker
-          label="Fecha"
-          format="DD-MM-YYYY"
-          value={fecha}
-          onChange={(newValue) => setFecha(newValue)}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              margin="normal"
-              focused
-              InputProps={{
-                style: { color: "#FFFFFF" },
-              }}
-            />
-          )}
-          sx={{ marginTop: "2%" }}
-        />
-      </LocalizationProvider>
 
       {/* <InputLabel
         id="local-label"

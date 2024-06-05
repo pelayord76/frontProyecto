@@ -81,7 +81,7 @@ export const MaquinaUpdate = () => {
           ? dayjs(result.fechaAlmacenada, "DD-MM-YYYY")
           : null;
         setFechaAlmacenada(parsedFechaA);
-        
+
         setTipoMaquina(result.tipoMaquina);
         if (result.cliente) {
           setIdCliente(result.cliente.id);
@@ -154,7 +154,34 @@ export const MaquinaUpdate = () => {
               }}
             />
           )}
-          sx={{ marginTop: "2%" }}
+          sx={{
+            marginTop: "2%",
+            color: "#FFFFFF",
+            "& .css-i4bv87-MuiSvgIcon-root": {
+              color: "#FFFFFF",
+            },
+            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+              color: "#FFFFFF",
+              borderColor: "#1976d2",
+            },
+            "& .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root": {
+              color: "#1976d2",
+            },
+            "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root": {
+              borderColor: "#FFFFFF",
+            },
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: "#1976d2",
+              },
+              "&:hover fieldset": {
+                borderColor: "#1976d2",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#1976d2",
+              },
+            },
+          }}
         />
       </LocalizationProvider>
 
@@ -192,7 +219,34 @@ export const MaquinaUpdate = () => {
               }}
             />
           )}
-          sx={{ marginTop: "2%" }}
+          sx={{
+            marginTop: "2%",
+            color: "#FFFFFF",
+            "& .css-i4bv87-MuiSvgIcon-root": {
+              color: "#FFFFFF",
+            },
+            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+              color: "#FFFFFF",
+              borderColor: "#1976d2",
+            },
+            "& .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root": {
+              color: "#1976d2",
+            },
+            "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root": {
+              borderColor: "#FFFFFF",
+            },
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: "#1976d2",
+              },
+              "&:hover fieldset": {
+                borderColor: "#1976d2",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#1976d2",
+              },
+            },
+          }}
         />
       </LocalizationProvider>
 
