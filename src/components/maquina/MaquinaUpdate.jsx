@@ -28,7 +28,6 @@ export const MaquinaUpdate = () => {
   const [fechaAlmacenada, setFechaAlmacenada] = useState(null);
   const [tipoMaquina, setTipoMaquina] = useState("");
   const [idCliente, setIdCliente] = useState("");
-  const [local, setLocal] = useState("");
   const [locales, setLocales] = useState([]);
 
   const handleBack = () => {
@@ -36,17 +35,18 @@ export const MaquinaUpdate = () => {
   };
 
   const handleSubmit = () => {
-    const data = {
+    const fechaFormateadaA = fechaAlmacenada
+      ? fechaAlmacenada.format("YYYY-MM-DD")
+      : null;
+    const fechaFormateadaV = fechaVencimientoLicencia
+      ? fechaVencimientoLicencia.format("YYYY-MM-DD")
+      : null;
+
+    var data = {
       nombre: nombre,
-      fechaVencimientoLicencia: fechaVencimientoLicencia
-        ? fechaVencimientoLicencia.toISOString()
-        : null,
+      fechaVencimientoLicencia: fechaFormateadaV,
       almacenada: almacenada,
-      fechaAlmacenada: almacenada
-        ? fechaAlmacenada
-          ? fechaAlmacenada.toISOString()
-          : null
-        : null,
+      fechaAlmacenada: fechaFormateadaA,
       tipoMaquina: tipoMaquina,
       idCliente: idCliente,
     };
@@ -69,19 +69,22 @@ export const MaquinaUpdate = () => {
       .then((res) => res.json())
       .then((result) => {
         setNombre(result.nombre);
-        setFechaVencimientoLicencia(
-          result.fechaVencimientoLicencia
-            ? dayjs(result.fechaVencimientoLicencia)
-            : null
-        );
+
+        const parsedFechaV = result.fechaVencimientoLicencia
+          ? dayjs(result.fechaVencimientoLicencia, "DD-MM-YYYY")
+          : null;
+        setFechaVencimientoLicencia(parsedFechaV);
+
         setAlmacenada(result.almacenada || false);
-        setFechaAlmacenada(
-          result.fechaAlmacenada ? dayjs(result.fechaAlmacenada) : null
-        );
+
+        const parsedFechaA = result.fechaAlmacenada
+          ? dayjs(result.fechaAlmacenada, "DD-MM-YYYY")
+          : null;
+        setFechaAlmacenada(parsedFechaA);
+        
         setTipoMaquina(result.tipoMaquina);
         if (result.cliente) {
           setIdCliente(result.cliente.id);
-          setLocal(result.cliente.local);
         }
       })
       .catch((error) => {
@@ -119,6 +122,7 @@ export const MaquinaUpdate = () => {
       >
         Editar detalles de la máquina
       </Typography>
+
       <TextField
         autoComplete="nombre"
         name="nombre"
@@ -133,9 +137,11 @@ export const MaquinaUpdate = () => {
           style: { color: "#FFFFFF" },
         }}
       />
+
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           label="Licencia hasta"
+          format="DD-MM-YYYY"
           value={fechaVencimientoLicencia}
           onChange={(newValue) => setFechaVencimientoLicencia(newValue)}
           renderInput={(params) => (
@@ -151,6 +157,7 @@ export const MaquinaUpdate = () => {
           sx={{ marginTop: "2%" }}
         />
       </LocalizationProvider>
+
       <FormControlLabel
         control={
           <Checkbox
@@ -164,12 +171,14 @@ export const MaquinaUpdate = () => {
           color: "#FFFFFF",
           margin: "normal",
           marginTop: "2%",
-          marginBottom:"1%"
+          marginBottom: "1%",
         }}
       />
+
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           label="En almacén desde"
+          format="DD-MM-YYYY"
           value={fechaAlmacenada}
           onChange={(newValue) => setFechaAlmacenada(newValue)}
           disabled={!almacenada}
@@ -186,6 +195,7 @@ export const MaquinaUpdate = () => {
           sx={{ marginTop: "2%" }}
         />
       </LocalizationProvider>
+
       <InputLabel
         id="tipoMaquina-label"
         sx={{ color: "#1976d2", marginTop: "2%", marginBottom: "1px" }}
@@ -211,6 +221,7 @@ export const MaquinaUpdate = () => {
         <MenuItem value={"BILLETES"}>Billetes</MenuItem>
         <MenuItem value={"MONEDAS"}>Monedas</MenuItem>
       </Select>
+
       <InputLabel
         id="local-label"
         sx={{ color: "#1976d2", marginTop: "2%", marginBottom: "1px" }}
@@ -237,6 +248,7 @@ export const MaquinaUpdate = () => {
           </MenuItem>
         ))}
       </Select>
+
       <div
         style={{
           display: "flex",

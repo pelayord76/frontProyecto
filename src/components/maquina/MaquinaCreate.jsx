@@ -29,11 +29,18 @@ export const MaquinaCreate = () => {
   const [locales, setLocales] = useState([]);
 
   const handleSubmit = () => {
+    const fechaFormateadaA = fechaAlmacenada
+      ? fechaAlmacenada.format("YYYY-MM-DD")
+      : null;
+    const fechaFormateadaV = fechaVencimientoLicencia
+      ? fechaVencimientoLicencia.format("YYYY-MM-DD")
+      : null;
+      
     var data = {
       nombre: nombre,
-      fechaVencimientoLicencia: fechaVencimientoLicencia,
+      fechaVencimientoLicencia: fechaFormateadaV,
       almacenada: almacenada,
-      fechaAlmacenada: fechaAlmacenada,
+      fechaAlmacenada: fechaFormateadaA,
       tipoMaquina: tipoMaquina,
       idCliente: idCliente,
     };
@@ -105,6 +112,7 @@ export const MaquinaCreate = () => {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           label="Licencia hasta"
+          format="DD-MM-YYYY"
           value={fechaVencimientoLicencia}
           onChange={(newValue) => setFechaVencimientoLicencia(newValue)}
           renderInput={(params) => (
@@ -139,6 +147,7 @@ export const MaquinaCreate = () => {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           label="En almacén desde"
+          format="DD-MM-YYYY"
           value={fechaAlmacenada}
           onChange={(newValue) => setFechaAlmacenada(newValue)}
           disabled={!almacenada}

@@ -135,12 +135,7 @@ export const MaquinaRecaudaciones = () => {
                     </Link>
                   </TableCell>
                   <TableCell style={cellStyle}>
-                    <Link
-                      to={`/recaudacion/${recaudacion.id}`}
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      {recaudacion.cantidadRecaudada}€
-                    </Link>
+                    {recaudacion.cantidadRecaudada}€
                   </TableCell>
                   <TableCell style={cellStyle}>
                     {recaudacion.porcentajeJuego}%

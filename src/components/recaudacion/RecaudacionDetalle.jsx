@@ -109,7 +109,7 @@ export const RecaudacionDetalle = () => {
 
         <TextField
           label="Local"
-          value={recaudacion?.maquina?.cliente || "N/A"}
+          value={recaudacion?.maquina.cliente?.l0cal || "N/A"}
           fullWidth
           margin="normal"
           focused
@@ -250,18 +250,22 @@ export const RecaudacionDetalle = () => {
               disabled={minId !== null && parseInt(id) === minId}
               variant="contained"
               color="secondary"
-              startIcon={<ArrowBackIcon />}
+              startIcon={
+                <ArrowBackIcon style={{ margin: "0", padding: "0" }} />
+              }
               onClick={handleAnterior}
-              style={{ borderRadius: "5px", padding: "0%", width: "5px" }}
+              style={{ borderRadius: "5px", padding: "0", width: "0" }}
             />
 
             <Button
               disabled={maxId !== null && parseInt(id) === maxId}
               variant="contained"
               color="secondary"
-              endIcon={<ArrowForwardIcon />}
+              endIcon={
+                <ArrowForwardIcon style={{ margin: "0", padding: "0" }} />
+              }
               onClick={handleSiguiente}
-              style={{ borderRadius: "5px", padding: "0%", width: "5px" }}
+              style={{ borderRadius: "5px", padding: "0", width: "0px" }}
             />
           </ButtonGroup>
         </div>

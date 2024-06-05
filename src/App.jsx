@@ -14,6 +14,8 @@ import { ListaUsuario } from "./components/usuario/ListaUsuario";
 import { UsuarioAdd } from "./components/usuario/UsuarioAdd";
 import { UsuarioEdit } from "./components/usuario/UsuarioEdit";
 import { RecaudacionDetalle } from "./components/recaudacion/RecaudacionDetalle";
+import { RecaudacionCreate } from "./components/recaudacion/RecaudacionCreate";
+import { RecaudacionUpdate } from "./components/recaudacion/RecaudacionUpdate";
 // import { Error415 } from "./components/errores/Error415";
 
 function App() {
@@ -51,8 +53,8 @@ function App() {
 
           <Route path="/recaudacion" element={<ListaRecaudaciones />} />
           <Route path="/recaudacion/:id" element={<RecaudacionDetalle />} />
-          <Route path="/recaudacion/add" />
-          <Route path="/recaudacion/edit/:id" />
+          <Route path="/recaudacion/add" element={<RecaudacionCreate />} />
+          <Route path="/recaudacion/edit/:id" element={<RecaudacionUpdate />} />
 
           <Route path="/factura" element={<ListaFacturas />} />
           <Route path="/factura/:id" />
