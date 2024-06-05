@@ -17,7 +17,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 export const ListaRecaudaciones = () => {
   const [recaudaciones, setRecaudaciones] = useState([]);
-  const [local, setLocal] = useState({});
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const navigate = useNavigate();
@@ -37,33 +36,6 @@ export const ListaRecaudaciones = () => {
     };
     fetchData();
   }, []);
-
-  useEffect(() => {
-    const fetchLocal = async (id) => {
-      try {
-        const response = await fetch(
-          `http://localhost:4040/rfsAdmin/recaudacion/${id}/local`,
-          {
-            headers: {
-              Accept: "application/json",
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Error al obtener el local");
-        }
-        const data = await response.json();
-        setLocal(data);
-      } catch (error) {
-        console.error("Error al obtener el local:", error);
-        setLocal({}); // Manejo de error: establecer local como un objeto vacío
-      }
-    };
-
-    recaudaciones.forEach((recaudacion) => {
-      fetchLocal(recaudacion.id);
-    });
-  }, [recaudaciones]);
 
   const handleCreateRecaudacion = () => {
     navigate(`/recaudacion/add`, { replace: true });
@@ -185,7 +157,16 @@ export const ListaRecaudaciones = () => {
                   </TableCell>
 
                   <TableCell style={cellStyle}>
-                    {local[recaudacion.id] ? local[recaudacion.id].local : ""}
+                    {recaudacion.maquina.cliente ? (
+                      <Link
+                        to={`/cliente/${recaudacion.maquina.cliente.id}`}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        {recaudacion.maquina.cliente.local}
+                      </Link>
+                    ) : (
+                      <span>{recaudacion.maquina.cliente?.local || "N/A"}</span>
+                    )}
                   </TableCell>
 
                   <TableCell style={cellStyle}>
