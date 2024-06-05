@@ -1,17 +1,19 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { ListaCliente } from "./components/cliente/ListaCliente";
+import { Error404 } from "./components/errores/Error404";
 import { ListaFacturas } from "./components/factura/ListaFacturas";
 import { Index } from "./components/inicio/Index";
 import { Maquina } from "./components/maquina/Maquina";
-import { MaquinaDetalle } from "./components/maquina/MaquinaDetalle";
 import { MaquinaCreate } from "./components/maquina/MaquinaCreate";
+import { MaquinaDetalle } from "./components/maquina/MaquinaDetalle";
 import { MaquinaUpdate } from "./components/maquina/MaquinaUpdate";
 import { ListaRecaudaciones } from "./components/recaudacion/ListaRecaudaciones";
 import { Stats } from "./components/stats/Stats";
 import { ListaUsuario } from "./components/usuario/ListaUsuario";
 import { UsuarioAdd } from "./components/usuario/UsuarioAdd";
 import { UsuarioEdit } from "./components/usuario/UsuarioEdit";
+// import { Error415 } from "./components/errores/Error415";
 
 function App() {
   console.log(
@@ -61,6 +63,8 @@ function App() {
           <Route path="/cerrarSesion" element={<Index />} />
 
           <Route path="/estadisticas" element={<Stats />} />
+
+          <Route path="/*" element={<Error404 />} />
         </Routes>
       </BrowserRouter>
     </>
