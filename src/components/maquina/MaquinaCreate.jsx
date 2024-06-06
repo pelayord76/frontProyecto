@@ -35,7 +35,7 @@ export const MaquinaCreate = () => {
     const fechaFormateadaV = fechaVencimientoLicencia
       ? fechaVencimientoLicencia.format("YYYY-MM-DD")
       : null;
-      
+
     var data = {
       nombre: nombre,
       fechaVencimientoLicencia: fechaFormateadaV,
@@ -45,16 +45,18 @@ export const MaquinaCreate = () => {
       idCliente: idCliente,
     };
 
-    fetch("https://localhost:4040/rfsAdmin/maquina", {
+    console.log(data);
+
+    fetch("http://localhost:4040/rfsAdmin/maquina", {
       method: "POST",
       headers: {
-        Accept: "application/form-data",
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
 
-    navigate("/maquina", { replace: true });
+    navigate("/maquina", { replace: true, state: { shouldReload: true } });
   };
 
   useEffect(() => {
@@ -67,11 +69,6 @@ export const MaquinaCreate = () => {
 
   const handleBack = () => {
     navigate("/maquina", { replace: true });
-  };
-
-  const handleClienteChange = (event) => {
-    const { value } = event.target;
-    setIdCliente(value);
   };
 
   return (
@@ -133,23 +130,13 @@ export const MaquinaCreate = () => {
             },
             "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
               color: "#FFFFFF",
-              borderColor: "#1976d2",
             },
             "& .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root": {
               color: "#1976d2",
             },
-            "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root": {
-              borderColor: "#FFFFFF",
-            },
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: "#1976d2",
-              },
-              "&:hover fieldset": {
-                borderColor: "#1976d2",
-              },
-              "&.Mui-focused fieldset": {
-                borderColor: "#1976d2",
+                border: "2px, solid, #1976d2",
               },
             },
           }}
@@ -206,13 +193,7 @@ export const MaquinaCreate = () => {
             },
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: "#1976d2",
-              },
-              "&:hover fieldset": {
-                borderColor: "#1976d2",
-              },
-              "&.Mui-focused fieldset": {
-                borderColor: "#1976d2",
+                border: "2px, solid, #1976d2",
               },
             },
           }}
@@ -225,7 +206,6 @@ export const MaquinaCreate = () => {
         Tipo
       </InputLabel>
       <Select
-        autoComplete="tipoMaquina"
         name="tipoMaquina"
         variant="outlined"
         required
@@ -245,13 +225,15 @@ export const MaquinaCreate = () => {
       </Select>
 
       <InputLabel
+        id="local-label"
         sx={{ color: "#1976d2", marginTop: "2%", marginBottom: "1px" }}
       >
         Local
       </InputLabel>
       <Select
+        labelId="local-label"
         value={idCliente}
-        onChange={handleClienteChange}
+        onChange={(e) => setIdCliente(e.target.value)}
         sx={{
           color: "#FFFFFF",
           marginBottom: "2%",

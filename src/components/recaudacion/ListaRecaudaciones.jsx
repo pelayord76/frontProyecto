@@ -41,6 +41,30 @@ export const ListaRecaudaciones = () => {
     navigate(`/recaudacion/add`, { replace: true });
   };
 
+  const handleUpdate = (id) => {
+    navigate(`/recaudacion/edit/` + id, { replace: true });
+  };
+
+  const handleDelete = (id) => {
+    fetch(`http://localhost:4040/rfsAdmin/recaudacion/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then(() => {
+        fetch("http://localhost:4040/rfsAdmin/recaudacion")
+          .then((res) => res.json())
+          .then((result) => {
+            setRecaudaciones(result);
+          });
+      })
+      .catch((error) => {
+        console.error("Error al eliminar la máquina:", error);
+      });
+  };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -156,26 +180,30 @@ export const ListaRecaudaciones = () => {
                   <TableCell style={cellStyle}>
                     {recaudacion.maquina ? (
                       <Link
-                        to={`/maquina/${recaudacion.maquina.id}`}
+                        to={`/maquina/${recaudacion?.maquina.id}`}
                         style={{ textDecoration: "none", color: "inherit" }}
                       >
-                        {recaudacion.maquina.nombre}
+                        {recaudacion?.maquina.nombre}
                       </Link>
                     ) : (
-                      <span>{recaudacion.maquina.cliente?.local || "N/A"}</span>
+                      <span>
+                        {recaudacion?.maquina?.cliente.local || "N/A"}
+                      </span>
                     )}
                   </TableCell>
 
                   <TableCell style={cellStyle}>
-                    {recaudacion.maquina.cliente ? (
+                    {recaudacion?.maquina?.cliente ? (
                       <Link
-                        to={`/cliente/${recaudacion.maquina.cliente.id}`}
+                        to={`/cliente/${recaudacion?.maquina?.cliente.id}`}
                         style={{ textDecoration: "none", color: "inherit" }}
                       >
-                        {recaudacion.maquina.cliente.local}
+                        {recaudacion?.maquina.cliente.local}
                       </Link>
                     ) : (
-                      <span>{recaudacion.maquina.cliente?.local || "N/A"}</span>
+                      <span>
+                        {recaudacion?.maquina?.cliente?.local || "N/A"}
+                      </span>
                     )}
                   </TableCell>
 
@@ -185,7 +213,7 @@ export const ListaRecaudaciones = () => {
                         aria-label="edit"
                         color="warning"
                         size="small"
-                        onClick={() => handleCreateRecaudacion}
+                        onClick={() => handleUpdate(recaudacion.id)}
                       >
                         <EditIcon />
                       </IconButton>
@@ -193,7 +221,7 @@ export const ListaRecaudaciones = () => {
                         aria-label="delete"
                         color="error"
                         size="small"
-                        onClick={() => handleCreateRecaudacion}
+                        onClick={() => handleDelete(recaudacion.id)}
                       >
                         <DeleteIcon />
                       </IconButton>

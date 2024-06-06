@@ -107,29 +107,33 @@ export const RecaudacionDetalle = () => {
           Detalles de la recaudación
         </Typography>
 
-        <TextField
-          label="Local"
-          value={recaudacion?.maquina.cliente?.l0cal || "N/A"}
-          fullWidth
-          margin="normal"
-          focused
-          InputProps={{
-            readOnly: true,
-            style: { color: "#FFFFFF" },
-          }}
-        />
+        <div style={{ display: "flex", gap: "2%" }}>
+          <TextField
+            label="Local"
+            value={recaudacion?.maquina?.cliente?.local || "N/A"}
+            fullWidth
+            margin="normal"
+            focused
+            InputProps={{
+              readOnly: true,
+              style: { color: "#FFFFFF" },
+            }}
+            style={{ flex: "1" }}
+          />
 
-        <TextField
-          label="Máquina"
-          value={recaudacion?.maquina?.nombre || "N/A"}
-          fullWidth
-          margin="normal"
-          focused
-          InputProps={{
-            readOnly: true,
-            style: { color: "#FFFFFF" },
-          }}
-        />
+          <TextField
+            label="Máquina"
+            value={recaudacion?.maquina?.nombre || "N/A"}
+            fullWidth
+            margin="normal"
+            focused
+            InputProps={{
+              readOnly: true,
+              style: { color: "#FFFFFF" },
+            }}
+            style={{ flex: "1" }}
+          />
+        </div>
 
         <TextField
           label="Cantidad recaudada"
@@ -143,29 +147,33 @@ export const RecaudacionDetalle = () => {
           }}
         />
 
-        <TextField
-          label="Pasos de entrada"
-          value={recaudacion?.pasosEntrada || "N/A"}
-          fullWidth
-          margin="normal"
-          focused
-          InputProps={{
-            readOnly: true,
-            style: { color: "#FFFFFF" },
-          }}
-        />
+        <div style={{ display: "flex", gap: "2%" }}>
+          <TextField
+            label="Pasos de entrada"
+            value={recaudacion?.pasosEntrada || "N/A"}
+            fullWidth
+            margin="normal"
+            focused
+            InputProps={{
+              readOnly: true,
+              style: { color: "#FFFFFF" },
+            }}
+            style={{ flex: "1" }}
+          />
 
-        <TextField
-          label="Pasos de salida"
-          value={recaudacion?.pasosSalida || "N/A"}
-          fullWidth
-          margin="normal"
-          focused
-          InputProps={{
-            readOnly: true,
-            style: { color: "#FFFFFF" },
-          }}
-        />
+          <TextField
+            label="Pasos de salida"
+            value={recaudacion?.pasosSalida || "N/A"}
+            fullWidth
+            margin="normal"
+            focused
+            InputProps={{
+              readOnly: true,
+              style: { color: "#FFFFFF" },
+            }}
+            style={{ flex: "1" }}
+          />
+        </div>
 
         <TextField
           label="Porcentaje de juego"

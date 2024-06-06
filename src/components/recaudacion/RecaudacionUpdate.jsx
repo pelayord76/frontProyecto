@@ -1,6 +1,14 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SaveIcon from "@mui/icons-material/Save";
-import { Button, ButtonGroup, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  ButtonGroup,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -11,6 +19,10 @@ import { useNavigate, useParams } from "react-router-dom";
 export const RecaudacionUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [idLocal, setIdLocal] = useState("");
+  const [locales, setLocales] = useState([]);
+  const [maquina, setMaquina] = useState("");
+  const [maquinas, setMaquinas] = useState([]);
   const [cantidadRecaudada, setCantidadRecaudada] = useState("");
   const [pasosEntrada, setPasosEntrada] = useState("");
   const [pasosSalida, setPasosSalida] = useState("");
@@ -25,12 +37,13 @@ export const RecaudacionUpdate = () => {
   const handleSubmit = () => {
     const fechaFormateada = fecha ? fecha.format("YYYY-MM-DD") : null;
     const data = {
+      maquina: maquina,
+      fecha: fechaFormateada,
       cantidadRecaudada: cantidadRecaudada,
       pasosEntrada: pasosEntrada,
       pasosSalida: pasosSalida,
       porcentajeJuego: porcentajeJuego,
       tasaRecaudacion: tasaRecaudacion,
-      fecha: fechaFormateada,
     };
 
     console.log(data);
@@ -42,14 +55,24 @@ export const RecaudacionUpdate = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    });
-    navigate("/recaudacion", { replace: true });
+    })
+      .then(() => {
+        navigate("/recaudacion", {
+          replace: true,
+          state: { shouldReload: true },
+        });
+      })
+      .catch((error) => {
+        console.error("Error al actualizar la recaudación:", error);
+      });
   };
 
   useEffect(() => {
     fetch(`http://localhost:4040/rfsAdmin/recaudacion/${id}`)
       .then((res) => res.json())
       .then((result) => {
+        setIdLocal(result.maquina?.cliente?.id || "");
+        setMaquina(result.maquina?.id || "");
         setCantidadRecaudada(result.cantidadRecaudada);
         setPasosEntrada(result.pasosEntrada);
         setPasosSalida(result.pasosSalida);
@@ -67,6 +90,30 @@ export const RecaudacionUpdate = () => {
         );
       });
   }, [id]);
+
+  useEffect(() => {
+    fetch("http://localhost:4040/rfsAdmin/cliente/clientes")
+      .then((res) => res.json())
+      .then((result) => {
+        setLocales(result);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los clientes:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (idLocal) {
+      fetch(`http://localhost:4040/rfsAdmin/maquina/cliente/${idLocal}`)
+        .then((res) => res.json())
+        .then((result) => {
+          setMaquinas(result);
+        })
+        .catch((error) => {
+          console.error("Error al obtener las máquinas:", error);
+        });
+    }
+  }, [idLocal]);
 
   return (
     <div
@@ -91,18 +138,90 @@ export const RecaudacionUpdate = () => {
         Editar detalles de la recaudación
       </Typography>
 
+      <div style={{ display: "flex", gap: "2%" }}>
+        <div style={{ display: "flex", flexDirection: "column", flex: "1" }}>
+          <InputLabel
+            id="local"
+            sx={{ color: "#1976d2", marginTop: "2%", marginBottom: "1px" }}
+          >
+            Local
+          </InputLabel>
+
+          <Select
+            autoComplete="local"
+            labelId="local"
+            value={idLocal}
+            onChange={(e) => {
+              setIdLocal(e.target.value);
+            }}
+            sx={{
+              color: "#FFFFFF",
+              marginBottom: "2%",
+              "& .MuiSvgIcon-root": {
+                color: "white",
+              },
+              "& .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input":
+                {
+                  border: "2px solid #1976d2",
+                },
+            }}
+          >
+            {locales.map((local) => (
+              <MenuItem key={local.id} value={local.id}>
+                {local.local}
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", flex: "1" }}>
+          <InputLabel
+            id="maquina"
+            sx={{ color: "#1976d2", marginTop: "2%", marginBottom: "1px" }}
+          >
+            Máquina
+          </InputLabel>
+
+          <Select
+            autoComplete="maquina"
+            labelId="maquina"
+            value={maquina}
+            onChange={(e) => setMaquina(e.target.value)}
+            sx={{
+              color: "#FFFFFF",
+              marginBottom: "2%",
+              "& .MuiSvgIcon-root": {
+                color: "white",
+              },
+              "& .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input":
+                {
+                  border: "2px solid #1976d2",
+                },
+            }}
+          >
+            {Array.isArray(maquinas) && maquinas.length > 0
+              ? maquinas.map((maquina) => (
+                  <MenuItem key={maquina.id} value={maquina.id}>
+                    {maquina.nombre}
+                  </MenuItem>
+                ))
+              : null}
+          </Select>
+        </div>
+      </div>
+
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           label="Fecha"
           format="DD-MM-YYYY"
-          autoFocus
           value={fecha}
           onChange={(newValue) => setFecha(newValue)}
-          renderInput={(params) => (
+          textField={(params) => (
             <TextField
               {...params}
               margin="normal"
               focused
+              required
               InputProps={{
                 style: { color: "#FFFFFF" },
               }}
@@ -126,13 +245,7 @@ export const RecaudacionUpdate = () => {
             },
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: "#1976d2",
-              },
-              "&:hover fieldset": {
-                borderColor: "#1976d2",
-              },
-              "&.Mui-focused fieldset": {
-                borderColor: "#1976d2",
+                border: "2px, solid, #1976d2",
               },
             },
           }}
@@ -154,35 +267,39 @@ export const RecaudacionUpdate = () => {
         }}
       />
 
-      <TextField
-        autoComplete="pasosEntrada"
-        name="pasosEntrada"
-        variant="outlined"
-        required
-        label="Pasos de entrada"
-        value={pasosEntrada}
-        onChange={(e) => setPasosEntrada(e.target.value)}
-        margin="normal"
-        focused
-        InputProps={{
-          style: { color: "#FFFFFF" },
-        }}
-      />
+      <div style={{ display: "flex", gap: "2%" }}>
+        <TextField
+          autoComplete="pasosEntrada"
+          name="pasosEntrada"
+          variant="outlined"
+          required
+          label="Pasos de entrada"
+          value={pasosEntrada}
+          onChange={(e) => setPasosEntrada(e.target.value)}
+          margin="normal"
+          focused
+          InputProps={{
+            style: { color: "#FFFFFF" },
+          }}
+          style={{ flex: "1" }}
+        />
 
-      <TextField
-        autoComplete="pasosSalida"
-        name="pasosSalida"
-        variant="outlined"
-        required
-        label="Pasos de salida"
-        value={pasosSalida}
-        onChange={(e) => setPasosSalida(e.target.value)}
-        margin="normal"
-        focused
-        InputProps={{
-          style: { color: "#FFFFFF" },
-        }}
-      />
+        <TextField
+          autoComplete="pasosSalida"
+          name="pasosSalida"
+          variant="outlined"
+          required
+          label="Pasos de salida"
+          value={pasosSalida}
+          onChange={(e) => setPasosSalida(e.target.value)}
+          margin="normal"
+          focused
+          InputProps={{
+            style: { color: "#FFFFFF" },
+          }}
+          style={{ flex: "1" }}
+        />
+      </div>
 
       <TextField
         autoComplete="porcentajeJuego"
@@ -213,33 +330,6 @@ export const RecaudacionUpdate = () => {
           style: { color: "#FFFFFF" },
         }}
       />
-
-      {/* <InputLabel
-        id="local-label"
-        sx={{ color: "#1976d2", marginTop: "2%", marginBottom: "1px" }}
-      >
-        Local
-      </InputLabel>
-       <Select
-        autoComplete="idCliente"
-        labelId="local-label"
-        value={idCliente}
-        onChange={(e) => setIdCliente(e.target.value)}
-        sx={{
-          color: "#FFFFFF",
-          marginBottom: "2%",
-          border: "2px solid #1976d2",
-          "& .MuiSvgIcon-root": {
-            color: "white",
-          },
-        }}
-      >
-        {locales.map((local) => (
-          <MenuItem key={local.id} value={local.id}>
-            {local.local}
-          </MenuItem>
-        ))}
-      </Select> */}
 
       <div
         style={{

@@ -35,11 +35,11 @@ export const MaquinaUpdate = () => {
   };
 
   const handleSubmit = () => {
-    const fechaFormateadaA = fechaAlmacenada
-      ? fechaAlmacenada.format("YYYY-MM-DD")
-      : null;
     const fechaFormateadaV = fechaVencimientoLicencia
       ? fechaVencimientoLicencia.format("YYYY-MM-DD")
+      : null;
+    const fechaFormateadaA = fechaAlmacenada
+      ? fechaAlmacenada.format("YYYY-MM-DD")
       : null;
 
     var data = {
@@ -61,7 +61,8 @@ export const MaquinaUpdate = () => {
       },
       body: JSON.stringify(data),
     });
-    navigate("/maquina", { replace: true });
+    
+    navigate("/maquina", { replace: true, state: { shouldReload: true } });
   };
 
   useEffect(() => {
@@ -144,7 +145,7 @@ export const MaquinaUpdate = () => {
           format="DD-MM-YYYY"
           value={fechaVencimientoLicencia}
           onChange={(newValue) => setFechaVencimientoLicencia(newValue)}
-          renderInput={(params) => (
+          textField={(params) => (
             <TextField
               {...params}
               margin="normal"
@@ -162,23 +163,13 @@ export const MaquinaUpdate = () => {
             },
             "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
               color: "#FFFFFF",
-              borderColor: "#1976d2",
             },
             "& .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root": {
               color: "#1976d2",
             },
-            "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root": {
-              borderColor: "#FFFFFF",
-            },
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: "#1976d2",
-              },
-              "&:hover fieldset": {
-                borderColor: "#1976d2",
-              },
-              "&.Mui-focused fieldset": {
-                borderColor: "#1976d2",
+                border: "2px, solid, #1976d2",
               },
             },
           }}
@@ -209,7 +200,7 @@ export const MaquinaUpdate = () => {
           value={fechaAlmacenada}
           onChange={(newValue) => setFechaAlmacenada(newValue)}
           disabled={!almacenada}
-          renderInput={(params) => (
+          textField={(params) => (
             <TextField
               {...params}
               margin="normal"
@@ -237,13 +228,7 @@ export const MaquinaUpdate = () => {
             },
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: "#1976d2",
-              },
-              "&:hover fieldset": {
-                borderColor: "#1976d2",
-              },
-              "&.Mui-focused fieldset": {
-                borderColor: "#1976d2",
+                border: "2px, solid, #1976d2",
               },
             },
           }}
@@ -266,10 +251,13 @@ export const MaquinaUpdate = () => {
         sx={{
           color: "#FFFFFF",
           marginBottom: "2%",
-          border: "2px solid #1976d2",
           "& .MuiSvgIcon-root": {
             color: "white",
           },
+          "& .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input":
+            {
+              border: "2px solid #1976d2",
+            },
         }}
       >
         <MenuItem value={"BILLETES"}>Billetes</MenuItem>
@@ -290,10 +278,13 @@ export const MaquinaUpdate = () => {
         sx={{
           color: "#FFFFFF",
           marginBottom: "2%",
-          border: "2px solid #1976d2",
           "& .MuiSvgIcon-root": {
             color: "white",
           },
+          "& .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input":
+            {
+              border: "2px solid #1976d2",
+            },
         }}
       >
         {locales.map((local) => (
