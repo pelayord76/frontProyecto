@@ -15,10 +15,10 @@ import Typography from "@mui/material/Typography";
 import { blue } from "@mui/material/colors";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import "../navbar.css";
+import "../../navbar.css";
 
 const paginas = ["Usuario", "Maquina", "Cliente", "Recaudacion", "Factura", "Estadisticas"];
-const settings = ["Perfil", "Ajustes", "Cerrar sesión"];
+const settings = ["Ajustes", "Cerrar sesión"];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);

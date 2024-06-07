@@ -1,3 +1,4 @@
+import { NavigationOutlined } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import {
@@ -16,18 +17,18 @@ import {
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-export const MaquinaRecaudaciones = () => {
+export const UsuarioMaquinas = () => {
   const { id } = useParams();
-  const [recaudaciones, setRecaudaciones] = useState([]);
+  const [maquinas, setMaquinas] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [maquina, setMaquina] = useState({});
+  const [usuario, setUsuario] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `http://localhost:4040/rfsAdmin/maquina/${id}/recaudacion`,
+        `http://localhost:4040/rfsAdmin/usuario/${id}/maquina`,
         {
           headers: {
             Accept: "application/json",
@@ -35,23 +36,26 @@ export const MaquinaRecaudaciones = () => {
         }
       );
       const data = await response.json();
-      setRecaudaciones(data);
+      setMaquinas(data);
 
       const maquinaResponse = await fetch(
-        `http://localhost:4040/rfsAdmin/maquina/${id}`
+        `http://localhost:4040/rfsAdmin/usuario/${id}`
       );
-      const maquinaData = await maquinaResponse.json();
-      setMaquina(maquinaData);
+      const usuarioData = await maquinaResponse.json();
+      setUsuario(usuarioData);
     };
     fetchData();
   }, [id]);
 
-  const handleCreateRecaudacion = () => {
-    navigate(`/recaudacion/add`, {
-      replace: true,
-      state: { idLocal: maquina.cliente.id, maquina: maquina.id },
-    });
+  const handleCreateMaquina = () => {
+    navigate(`/maquina/add`, { replace: true });
   };
+
+  const handleUpdate = (id) => {
+    navigate(`/maquina/edit(${id})`, { replace: true });
+  };
+
+  const handleDelete = (id) => {};
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -90,13 +94,13 @@ export const MaquinaRecaudaciones = () => {
             marginBottom: "10px",
           }}
         >
-          <Button variant="outlined" onClick={handleCreateRecaudacion}>
-            Añadir recaudación
+          <Button variant="outlined" onClick={handleCreateMaquina}>
+            Añadir máquina
           </Button>
-          <Typography>Recaudaciones de la máquina:</Typography>
+          <Typography>Máquinas del usuario:</Typography>
           <TablePagination
             rowsPerPageOptions={[5, 10, 15, 20]}
-            count={recaudaciones.length}
+            count={maquinas.length}
             rowsPerPage={rowsPerPage}
             page={page}
             labelRowsPerPage="Filas por página"
@@ -120,44 +124,40 @@ export const MaquinaRecaudaciones = () => {
           <TableHead>
             <TableRow style={{ backgroundColor: "#1E1E1E" }}>
               <TableCell style={headerCellStyle}>ID:</TableCell>
-              <TableCell style={headerCellStyle}>Total Recaudado:</TableCell>
-              <TableCell style={headerCellStyle}>% de juego:</TableCell>
-              <TableCell style={headerCellStyle}>Fecha:</TableCell>
+              <TableCell style={headerCellStyle}>Nombre:</TableCell>
+              <TableCell style={headerCellStyle}>Cliente:</TableCell>
               <TableCell style={headerCellStyle}>Acción:</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {recaudaciones
+            {maquinas
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((recaudacion) => (
+              .map((maquina) => (
                 <TableRow
-                  key={recaudacion.id}
+                  key={maquina.id}
                   style={{
                     backgroundColor: "#2E2E2E",
                   }}
                 >
                   <TableCell style={cellStyle}>
                     <Link
-                      to={`/recaudacion/${recaudacion.id}`}
+                      to={`/maquina/${maquina.id}`}
                       style={{ textDecoration: "none", color: "inherit" }}
                     >
-                      {recaudacion.id}
+                      {maquina?.id}
                     </Link>
                   </TableCell>
+                  <TableCell style={cellStyle}>{maquina?.nombre}</TableCell>
                   <TableCell style={cellStyle}>
-                    {recaudacion.cantidadRecaudada}€
+                    {maquina?.cliente?.local}
                   </TableCell>
-                  <TableCell style={cellStyle}>
-                    {recaudacion.porcentajeJuego}%
-                  </TableCell>
-                  <TableCell style={cellStyle}>{recaudacion.fecha}</TableCell>
                   <TableCell style={cellStyle}>
                     <ButtonGroup>
                       <IconButton
                         aria-label="edit"
                         color="warning"
                         size="small"
-                        onClick={() => handleCreateRecaudacion}
+                        onClick={() => handleUpdate(maquina.id)}
                       >
                         <EditIcon />
                       </IconButton>
@@ -165,7 +165,7 @@ export const MaquinaRecaudaciones = () => {
                         aria-label="delete"
                         color="error"
                         size="small"
-                        onClick={() => handleCreateRecaudacion}
+                        onClick={() => handleDelete(maquina.id)}
                       >
                         <DeleteIcon />
                       </IconButton>

@@ -1,87 +1,161 @@
 import DeleteIcon from "@mui/icons-material/Delete";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import EditIcon from "@mui/icons-material/Edit";
 import {
-  Avatar,
-  Grid,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Typography,
+  Button,
+  ButtonGroup,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
 } from "@mui/material";
-import Button from "@mui/material/Button";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export const ListaUsuario = () => {
-  const [usuarios, setusuarios] = useState([]);
+  const [usuarios, setUsuarios] = useState([]);
   const navigate = useNavigate();
-  const [dense, setDense] = React.useState(false);
 
-  // const handleAdd = () => {
-  //   navigate("/usuario/add", { replace: true });
-  // };
+  const handleCreate = () => {
+    navigate("/usuario/add", { replace: true });
+  };
 
-  //   const handleEdit = (id) => {
-  //     navigate("/usuario/edit/" + id, { replace: true });
-  //   };
+  const handleUpdate = (id) => {
+    navigate("/usuario/edit/" + id, { replace: true });
+  };
 
-  // const handleDelete = async (id) => {
-  //   var data = {
-  //     id: id,
-  //   };
-  //   await fetch("https://localhost:4040/rfsAdmin/usuario/del/" + id, {
-  //     method: "DELETE",
-  //     headers: {
-  //       Accept: "application/form-data",
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(data),
-  //   });
-  // };
-
-  // const handleUsuario = (id) => {
-  //   navigate("/usuario/" + id, { replace: true });
-  // };
+  const handleDelete = (id) => {
+    var data = {
+      id: id,
+    };
+    fetch(`http://localhost:4040/rfsAdmin/usuario/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/form-data",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then(() => {
+        fetch("http://localhost:4040/rfsAdmin/usuario")
+          .then((res) => res.json())
+          .then((result) => {
+            setUsuarios(result);
+          });
+      })
+      .catch((error) => {
+        console.error("Error al eliminar el usuario:", error);
+      });
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("http://localhost:4040/rfsAdmin/usuario", {
-        headers: {
-          Accept: "application/json",
-        },
+    fetch("http://localhost:4040/rfsAdmin/usuario")
+      .then((res) => res.json())
+      .then((result) => {
+        setUsuarios(result);
       });
-      const data = await response.json();
-      setusuarios(data);
-    };
-    fetchData();
   }, []);
 
+  const cellStyle = {
+    color: "#FFFFFF",
+    textAlign: "center",
+    verticalAlign: "middle",
+  };
+
+  const headerCellStyle = {
+    ...cellStyle,
+    fontWeight: "bold",
+  };
+
   return (
-    <Grid item xs={12} md={6} sx={{ mx: "auto", width: 700 }}>
-      <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-        Usuarios
-      </Typography>
-      <Button variant="outlined" startIcon={<PersonAddIcon />}>
-        Crear usuario
-      </Button>
-      <List dense={dense}>
-        {usuarios.map((usuario) => (
-          <ListItem
-            key={usuario.id}
-            secondaryAction={
-              <Button variant="outlined" startIcon={<DeleteIcon />}>
-                Borrar
-              </Button>
-            }
-          >
-            <ListItemAvatar>
-              <Avatar>{usuario.nombre.charAt(0).toUpperCase()}</Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={usuario.nombre} secondary={usuario.email} />
-          </ListItem>
-        ))}
-      </List>
-    </Grid>
+    <TableContainer
+      style={{
+        margin: "2%",
+        maxWidth: "96%",
+        overflowX: "auto",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "10px",
+        }}
+      >
+        <Button variant="outlined" onClick={handleCreate}>
+          Añadir usuario
+        </Button>
+      </div>
+      <Table
+        style={{
+          fontFamily: "sans-serif",
+          color: "#FFFFFF",
+          width: "100%",
+          tableLayout: "fixed",
+        }}
+      >
+        <TableHead>
+          <TableRow style={{ backgroundColor: "#1E1E1E" }}>
+            <TableCell style={headerCellStyle}>ID:</TableCell>
+            <TableCell style={headerCellStyle}>Nombre:</TableCell>
+            <TableCell style={headerCellStyle}>Correo</TableCell>
+            <TableCell style={headerCellStyle}>Acción:</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {usuarios
+            .map((usuario) => (
+              <TableRow
+                key={usuario.id}
+                style={{
+                  backgroundColor: "#2E2E2E",
+                }}
+              >
+                <TableCell style={cellStyle}>
+                  <Link
+                    to={`/usuario/${usuario.id}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    {usuario.id}
+                  </Link>
+                </TableCell>
+
+                <TableCell style={cellStyle}>
+                  <Link
+                    to={`/perfil/${usuario.id}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    {usuario.nombre}
+                  </Link>
+                </TableCell>
+                <TableCell style={cellStyle}>{usuario.email}</TableCell>
+                <TableCell style={cellStyle}>
+                  <ButtonGroup>
+                    <IconButton
+                      aria-label="edit"
+                      color="warning"
+                      size="small"
+                      onClick={() => handleUpdate(usuario.id)}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      aria-label="delete"
+                      color="error"
+                      size="small"
+                      onClick={() => handleDelete(usuario.id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </ButtonGroup>
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
