@@ -147,7 +147,14 @@ export const UsuarioMaquinas = () => {
                       {maquina?.id}
                     </Link>
                   </TableCell>
-                  <TableCell style={cellStyle}>{maquina?.nombre}</TableCell>
+                  <TableCell style={cellStyle}>
+                    <Link
+                      to={`/maquina/${maquina.id}`}
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      {maquina?.nombre}
+                    </Link>
+                  </TableCell>
                   <TableCell style={cellStyle}>
                     {maquina?.cliente?.local}
                   </TableCell>
