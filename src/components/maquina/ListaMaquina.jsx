@@ -192,19 +192,28 @@ export const ListaMaquina = () => {
                   {maquina.fechaAlmacenada || "N/A"}
                 </TableCell>
                 <TableCell style={cellStyle}>{maquina.tipoMaquina}</TableCell>
+
                 <TableCell style={cellStyle}>
-                  {maquina.cliente?.local || "N/A"}
-                  {maquina.cliente && (
-                    <IconButton
-                      aria-label="unlink"
-                      color="info"
-                      size="small"
-                      onClick={() => handleUnlink(maquina.id)}
+                  {maquina.cliente ? (
+                    <Link
+                      to={`/cliente/${maquina.cliente?.id}`}
+                      style={{ textDecoration: "none", color: "inherit" }}
                     >
-                      <UnlinkIcon />
-                    </IconButton>
+                      {maquina?.cliente?.local}
+                      <IconButton
+                        aria-label="unlink"
+                        color="info"
+                        size="small"
+                        onClick={() => handleUnlink(maquina.id)}
+                      >
+                        <UnlinkIcon />
+                      </IconButton>
+                    </Link>
+                  ) : (
+                    <span>{maquina?.cliente?.local || "N/A"}</span>
                   )}
                 </TableCell>
+                
                 <TableCell style={cellStyle}>
                   <ButtonGroup>
                     <IconButton
