@@ -4,9 +4,9 @@ import "./maquina.css";
 
 export const Maquina = () => {
   return (
-    <>
+    <div style={{ maxWidth: "100%" }}>
       <ListaMaquina />
       <DataMaquina />
-    </>
+    </div>
   );
 };
