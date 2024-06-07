@@ -11,8 +11,20 @@
   max-width: 600px;
 }
 
+.contenedorRecaudacionDetalle {
+    flex-direction: column;
+  }
+
 @media (max-width: 975px) {
   .contenedorMaquinaDetalle {
+    flex-direction: column;
+  }
+
+  .contenedorDetalle {
+    max-width: 100%;
+  }
+
+  .contenedorRecaudacionDetalle {
     flex-direction: column;
   }
 

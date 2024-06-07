@@ -75,7 +75,7 @@ export const RecaudacionDetalle = () => {
 
   return (
     <div
-      className="contenedorMaquinaDetalle"
+      className="contenedorRecaudacionDetalle"
       style={{
         display: "flex",
         marginRight: "2%",
@@ -84,9 +84,8 @@ export const RecaudacionDetalle = () => {
       }}
     >
       <div
-        className="contenedorDetalle"
+        className="contenedorDetalleR"
         style={{
-          flex: "1",
           padding: "20px",
           margin: "auto",
           backgroundColor: "#1E1E1E",
