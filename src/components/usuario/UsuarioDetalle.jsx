@@ -118,8 +118,8 @@ export const UsuarioDetalle = () => {
         />
 
         <TextField
-          label="Correo"
-          value={usuario?.email}
+          label="Usuario"
+          value={usuario?.username}
           fullWidth
           margin="normal"
           focused
@@ -130,8 +130,8 @@ export const UsuarioDetalle = () => {
         />
 
         <TextField
-          label="Contraseña"
-          value={usuario?.contrasenia || "*********"}
+          label="Correo"
+          value={usuario?.email}
           fullWidth
           margin="normal"
           focused

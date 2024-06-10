@@ -1,6 +1,4 @@
-import { NavigationOutlined } from "@mui/icons-material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
+import UnlinkIcon from "@mui/icons-material/LinkOff";
 import {
   Button,
   ButtonGroup,
@@ -51,11 +49,25 @@ export const UsuarioMaquinas = () => {
     navigate(`/maquina/add`, { replace: true });
   };
 
-  const handleUpdate = (id) => {
-    navigate(`/maquina/edit(${id})`, { replace: true });
+  const handleUnlink = (usuario, maquina) => {
+    fetch(`http://localhost:4040/rfsAdmin/tiene/${usuario}/${maquina}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then(() => {
+        fetch("http://localhost:4040/rfsAdmin/usuario/" + id + "/maquina")
+          .then((res) => res.json())
+          .then((result) => {
+            setMaquinas(result);
+          });
+      })
+      .catch((error) => {
+        console.error("Error al desvincular el cliente de la máquina:", error);
+      });
   };
-
-  const handleDelete = (id) => {};
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -126,7 +138,9 @@ export const UsuarioMaquinas = () => {
               <TableCell style={headerCellStyle}>ID:</TableCell>
               <TableCell style={headerCellStyle}>Nombre:</TableCell>
               <TableCell style={headerCellStyle}>Cliente:</TableCell>
-              <TableCell style={headerCellStyle}>Acción:</TableCell>
+              <TableCell style={headerCellStyle}>
+                Desvincular maquina de este usuario:
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -139,9 +153,7 @@ export const UsuarioMaquinas = () => {
                     backgroundColor: "#2E2E2E",
                   }}
                 >
-                  <TableCell style={cellStyle}>
-                      {maquina?.id}
-                  </TableCell>
+                  <TableCell style={cellStyle}>{maquina?.id}</TableCell>
                   <TableCell style={cellStyle}>
                     <Link
                       to={`/maquina/${maquina.id}`}
@@ -162,19 +174,11 @@ export const UsuarioMaquinas = () => {
                     <ButtonGroup>
                       <IconButton
                         aria-label="edit"
-                        color="warning"
+                        color="info"
                         size="small"
-                        onClick={() => handleUpdate(maquina.id)}
+                        onClick={() => handleUnlink(usuario.id, maquina.id)}
                       >
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton
-                        aria-label="delete"
-                        color="error"
-                        size="small"
-                        onClick={() => handleDelete(maquina.id)}
-                      >
-                        <DeleteIcon />
+                        <UnlinkIcon />
                       </IconButton>
                     </ButtonGroup>
                   </TableCell>

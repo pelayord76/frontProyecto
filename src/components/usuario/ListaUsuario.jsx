@@ -101,59 +101,69 @@ export const ListaUsuario = () => {
           <TableRow style={{ backgroundColor: "#1E1E1E" }}>
             <TableCell style={headerCellStyle}>ID:</TableCell>
             <TableCell style={headerCellStyle}>Nombre:</TableCell>
+            <TableCell style={headerCellStyle}>Usuario:</TableCell>
             <TableCell style={headerCellStyle}>Correo</TableCell>
             <TableCell style={headerCellStyle}>Acción:</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {usuarios
-            .map((usuario) => (
-              <TableRow
-                key={usuario.id}
-                style={{
-                  backgroundColor: "#2E2E2E",
-                }}
-              >
-                <TableCell style={cellStyle}>
-                  <Link
-                    to={`/usuario/${usuario.id}`}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    {usuario.id}
-                  </Link>
-                </TableCell>
+          {usuarios.map((usuario) => (
+            <TableRow
+              key={usuario.id}
+              style={{
+                backgroundColor: "#2E2E2E",
+              }}
+            >
+              <TableCell style={cellStyle}>
+                <Link
+                  to={`/usuario/${usuario.id}`}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  {usuario.id}
+                </Link>
+              </TableCell>
 
-                <TableCell style={cellStyle}>
-                  <Link
-                    to={`/perfil/${usuario.id}`}
-                    style={{ textDecoration: "none", color: "inherit" }}
+              <TableCell style={cellStyle}>
+                <Link
+                  to={`/perfil/${usuario.id}`}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  {usuario.nombre}
+                </Link>
+              </TableCell>
+
+              <TableCell style={cellStyle}>
+                <Link
+                  to={`/perfil/${usuario.id}`}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  {usuario.username}
+                </Link>
+              </TableCell>
+
+              <TableCell style={cellStyle}>{usuario.email}</TableCell>
+              <TableCell style={cellStyle}>
+                <ButtonGroup>
+                  <IconButton
+                    aria-label="edit"
+                    color="warning"
+                    size="small"
+                    onClick={() => handleUpdate(usuario.id)}
                   >
-                    {usuario.nombre}
-                  </Link>
-                </TableCell>
-                <TableCell style={cellStyle}>{usuario.email}</TableCell>
-                <TableCell style={cellStyle}>
-                  <ButtonGroup>
-                    <IconButton
-                      aria-label="edit"
-                      color="warning"
-                      size="small"
-                      onClick={() => handleUpdate(usuario.id)}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      aria-label="delete"
-                      color="error"
-                      size="small"
-                      onClick={() => handleDelete(usuario.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </ButtonGroup>
-                </TableCell>
-              </TableRow>
-            ))}
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    aria-label="delete"
+                    color="error"
+                    size="small"
+                    onClick={() => handleDelete(usuario.id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </ButtonGroup>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
