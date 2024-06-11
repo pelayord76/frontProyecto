@@ -1,10 +1,16 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ListaCliente } from "./components/cliente/ListaCliente";
 import { Configuracion } from "./components/default/Configuracion";
-import { Footer } from "./components/default/Footer";
-import { Perfil } from "./components/default/Perfil";
+// import { Footer } from "./components/default/Footer";
+import { Cliente } from "./components/cliente/Cliente";
+import { ClienteCreate } from "./components/cliente/ClienteCreate";
+import { ClienteDetalle } from "./components/cliente/ClienteDetalle";
+import { ClienteUpdate } from "./components/cliente/ClienteUpdate";
 import Navbar from "./components/default/Navbar";
+import { Perfil } from "./components/default/Perfil";
 import { Error404 } from "./components/errores/Error404";
+import { FacturaCreate } from "./components/factura/FacturaCreate";
+import { FacturaDetalle } from "./components/factura/FacturaDetalle";
+import { FacturaUpdate } from "./components/factura/FacturaUpdate";
 import { ListaFacturas } from "./components/factura/ListaFacturas";
 import { Index } from "./components/inicio/Index";
 import { Logout } from "./components/login-out/Logout";
@@ -48,10 +54,10 @@ function App() {
 
           <Route path="/perfil/:id" element={<Perfil />} />
 
-          <Route path="/cliente" element={<ListaCliente />} />
-          <Route path="/cliente/:id" />
-          <Route path="/cliente/add" />
-          <Route path="/cliente/edit/:id" />
+          <Route path="/cliente" element={<Cliente />} />
+          <Route path="/cliente/:id" element={<ClienteDetalle />} />
+          <Route path="/cliente/add" element={<ClienteCreate />} />
+          <Route path="/cliente/edit/:id" element={<ClienteUpdate />} />
 
           <Route path="/maquina" element={<Maquina />} />
           <Route path="/maquina/:id" element={<MaquinaDetalle />} />
@@ -64,9 +70,9 @@ function App() {
           <Route path="/recaudacion/edit/:id" element={<RecaudacionUpdate />} />
 
           <Route path="/factura" element={<ListaFacturas />} />
-          <Route path="/factura/:id" />
-          <Route path="/factura/add" />
-          <Route path="/factura/edit/:id" />
+          <Route path="/factura/:id" element={<FacturaDetalle />} />
+          <Route path="/factura/add" element={<FacturaCreate />} />
+          <Route path="/factura/edit/:id" element={<FacturaUpdate />} />
 
           <Route path="/ajustes" element={<Configuracion />} />
           <Route path="/cerrarSesion" element={<Logout />} />

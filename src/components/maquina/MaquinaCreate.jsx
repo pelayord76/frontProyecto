@@ -130,6 +130,7 @@ export const MaquinaCreate = () => {
       >
         Nueva máquina
       </Typography>
+      
       <form
         onSubmit={formik.handleSubmit}
         style={{ display: "flex", flexDirection: "column" }}
