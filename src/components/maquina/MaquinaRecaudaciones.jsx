@@ -47,10 +47,31 @@ export const MaquinaRecaudaciones = () => {
   }, [id]);
 
   const handleCreateRecaudacion = () => {
-    navigate(`/recaudacion/add`, {
-      replace: true,
-      state: { idLocal: maquina.cliente.id, maquina: maquina.id },
-    });
+    navigate(`/recaudacion/add`, { replace: true });
+  };
+
+  const handleUpdate = (id) => {
+    navigate(`/recaudacion/edit/` + id, { replace: true });
+  };
+
+  const handleDelete = (recaudacionId) => {
+    fetch(`http://localhost:4040/rfsAdmin/recaudacion/${recaudacionId}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then(() => {
+        fetch(`http://localhost:4040/rfsAdmin/maquina/${id}/recaudacion`)
+          .then((res) => res.json())
+          .then((result) => {
+            setRecaudaciones(result);
+          });
+      })
+      .catch((error) => {
+        console.error("Error al eliminar la recaudación:", error);
+      });
   };
 
   const handleChangePage = (event, newPage) => {
@@ -157,7 +178,7 @@ export const MaquinaRecaudaciones = () => {
                         aria-label="edit"
                         color="warning"
                         size="small"
-                        onClick={() => handleCreateRecaudacion}
+                        onClick={() => handleUpdate(recaudacion.id)}
                       >
                         <EditIcon />
                       </IconButton>
@@ -165,7 +186,7 @@ export const MaquinaRecaudaciones = () => {
                         aria-label="delete"
                         color="error"
                         size="small"
-                        onClick={() => handleCreateRecaudacion}
+                        onClick={() => handleDelete(recaudacion.id)}
                       >
                         <DeleteIcon />
                       </IconButton>
