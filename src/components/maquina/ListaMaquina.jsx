@@ -195,11 +195,13 @@ export const ListaMaquina = () => {
 
                 <TableCell style={cellStyle}>
                   {maquina.cliente ? (
-                    <Link
-                      to={`/cliente/${maquina.cliente?.id}`}
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      {maquina?.cliente?.local}
+                    <>
+                      <Link
+                        to={`/cliente/${maquina.cliente?.id}`}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        {maquina?.cliente?.local}
+                      </Link>
                       <IconButton
                         aria-label="unlink"
                         color="info"
@@ -208,12 +210,12 @@ export const ListaMaquina = () => {
                       >
                         <UnlinkIcon />
                       </IconButton>
-                    </Link>
+                    </>
                   ) : (
                     <span>{maquina?.cliente?.local || "N/A"}</span>
                   )}
                 </TableCell>
-                
+
                 <TableCell style={cellStyle}>
                   <ButtonGroup>
                     <IconButton

@@ -61,7 +61,7 @@ export const MaquinaUpdate = () => {
       },
       body: JSON.stringify(data),
     });
-    
+
     navigate("/maquina", { replace: true, state: { shouldReload: true } });
   };
 
@@ -287,6 +287,7 @@ export const MaquinaUpdate = () => {
             },
         }}
       >
+        <MenuItem value={" "}>N/A</MenuItem>
         {locales.map((local) => (
           <MenuItem key={local.id} value={local.id}>
             {local.local}

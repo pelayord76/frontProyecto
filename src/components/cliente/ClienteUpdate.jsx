@@ -62,7 +62,7 @@ export const ClienteUpdate = () => {
       .then((result) => {
         setLocal(result.local);
         setDuenio(result.duenio);
-        setTelefono(result.local);
+        setTelefono(result.telefono);
         setDireccion(result.direccion);
         setCif(result.cif);
 

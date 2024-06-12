@@ -25,29 +25,6 @@ const validationSchema = yup.object({
     .min(3, "El nombre debe tener un minimo de 3 caracteres")
     .max(100, "El nombre debe tener un maximo de 100 caracteres")
     .required("El nombre no puede estar vacío"),
-  fechaVencimientoLicencia: yup
-    .date()
-    .nullable()
-    .min(
-      new Date(),
-      "La fecha de vencimiento de la licencia debe ser una fecha futura"
-    ),
-  almacenada: yup
-    .boolean()
-    .required("Se debe indicar si la máquina está almacenada o no"),
-  fechaAlmacenada: yup
-    .date()
-    .nullable()
-    .when("almacenada", {
-      is: true,
-      then: yup
-        .date()
-        .required(
-          "La fecha de almacenaje es requerida si la máquina está almacenada"
-        ),
-    }),
-  tipoMaquina: yup.string().required("El tipo de máquina no puede estar vacío"),
-  idCliente: yup.number().nullable(),
 });
 
 export const MaquinaCreate = () => {
@@ -73,12 +50,17 @@ export const MaquinaCreate = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      const fechaFormateadaA = values.fechaAlmacenada
+      var fechaFormateadaA = values.fechaAlmacenada
         ? values.fechaAlmacenada.format("YYYY-MM-DD")
         : null;
       const fechaFormateadaV = values.fechaVencimientoLicencia
         ? values.fechaVencimientoLicencia.format("YYYY-MM-DD")
         : null;
+
+      var cliente = null;
+      if (values.idCliente != cliente) {
+        cliente = values.idCliente;
+      }
 
       const data = {
         nombre: values.nombre,
@@ -86,7 +68,7 @@ export const MaquinaCreate = () => {
         almacenada: values.almacenada,
         fechaAlmacenada: fechaFormateadaA,
         tipoMaquina: values.tipoMaquina,
-        idCliente: values.idCliente,
+        idCliente: cliente,
       };
 
       console.log(data);
@@ -130,7 +112,7 @@ export const MaquinaCreate = () => {
       >
         Nueva máquina
       </Typography>
-      
+
       <form
         onSubmit={formik.handleSubmit}
         style={{ display: "flex", flexDirection: "column" }}
@@ -159,7 +141,7 @@ export const MaquinaCreate = () => {
             onChange={(newValue) =>
               formik.setFieldValue("fechaVencimientoLicencia", newValue)
             }
-            renderInput={(params) => (
+            textfield={(params) => (
               <TextField
                 {...params}
                 margin="normal"
@@ -197,6 +179,7 @@ export const MaquinaCreate = () => {
             }}
           />
         </LocalizationProvider>
+
         <FormControlLabel
           control={
             <Checkbox
@@ -215,6 +198,7 @@ export const MaquinaCreate = () => {
             marginBottom: "1%",
           }}
         />
+
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label="En almacén desde"
@@ -224,7 +208,7 @@ export const MaquinaCreate = () => {
               formik.setFieldValue("fechaAlmacenada", newValue)
             }
             disabled={!formik.values.almacenada}
-            renderInput={(params) => (
+            textfield={(params) => (
               <TextField
                 {...params}
                 margin="normal"
@@ -314,6 +298,7 @@ export const MaquinaCreate = () => {
             },
           }}
         >
+          <MenuItem value={" "}>N/A</MenuItem>
           {locales.map((local) => (
             <MenuItem key={local.id} value={local.id}>
               {local.local}
