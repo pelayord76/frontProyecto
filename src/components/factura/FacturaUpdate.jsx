@@ -25,7 +25,7 @@ export const FacturaUpdate = () => {
   const [locales, setLocales] = useState([]);
 
   const handleBack = () => {
-    navigate(`/factura/${id}`, { replace: true });
+    navigate(-1);
   };
 
   const handleSubmit = () => {

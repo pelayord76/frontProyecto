@@ -43,7 +43,7 @@ export const FacturaDetalle = () => {
   };
 
   const handleBack = () => {
-    navigate(`/factura`, { replace: true });
+    navigate(-1);
   };
 
   const handleDelete = () => {

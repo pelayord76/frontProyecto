@@ -45,7 +45,7 @@ export const ClienteDetalle = () => {
   };
 
   const handleBack = () => {
-    navigate(`/cliente`, { replace: true });
+    navigate(-1);
   };
 
   const handleDelete = () => {

@@ -31,7 +31,7 @@ export const RecaudacionUpdate = () => {
   const [fecha, setFecha] = useState(null);
 
   const handleBack = () => {
-    navigate(`/recaudacion/${id}`, { replace: true });
+    navigate(-1);
   };
 
   const handleSubmit = () => {

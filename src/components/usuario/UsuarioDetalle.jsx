@@ -44,7 +44,7 @@ export const UsuarioDetalle = () => {
   };
 
   const handleBack = () => {
-    navigate(`/usuario`, { replace: true });
+    navigate(-1);
   };
 
   const handleDelete = () => {

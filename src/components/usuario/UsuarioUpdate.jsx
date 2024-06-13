@@ -51,7 +51,7 @@ export const UsuarioUpdate = () => {
   });
 
   const handleBack = () => {
-    navigate(`/usuario/${id}`, { replace: true });
+    navigate(-1);
   };
 
   useEffect(() => {

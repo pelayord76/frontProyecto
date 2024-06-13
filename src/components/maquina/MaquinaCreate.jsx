@@ -87,7 +87,7 @@ export const MaquinaCreate = () => {
   });
 
   const handleBack = () => {
-    navigate("/maquina", { replace: true });
+    navigate(-1);
   };
 
   return (

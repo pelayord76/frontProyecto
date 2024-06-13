@@ -67,7 +67,7 @@ export const UsuarioCreate = () => {
   });
 
   const handleBack = () => {
-    navigate("/usuario", { replace: true });
+    navigate(-1);
   };
 
   return (

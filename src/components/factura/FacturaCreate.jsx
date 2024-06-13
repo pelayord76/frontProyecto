@@ -76,7 +76,7 @@ export const FacturaCreate = () => {
   });
 
   const handleBack = () => {
-    navigate("/factura", { replace: true });
+    navigate(-1);
   };
 
   return (

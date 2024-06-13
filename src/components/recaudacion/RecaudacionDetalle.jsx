@@ -46,7 +46,7 @@ export const RecaudacionDetalle = () => {
   };
 
   const handleBack = () => {
-    navigate(`/recaudacion`, { replace: true });
+    navigate(-1);
   };
 
   const handleDelete = () => {

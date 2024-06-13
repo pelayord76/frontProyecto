@@ -96,7 +96,7 @@ export const ClienteCreate = () => {
   });
 
   const handleBack = () => {
-    navigate("/cliente", { replace: true });
+    navigate(-1);
   };
 
   return (

@@ -31,7 +31,7 @@ export const MaquinaUpdate = () => {
   const [locales, setLocales] = useState([]);
 
   const handleBack = () => {
-    navigate(`/maquina/${id}`, { replace: true });
+    navigate(-1);
   };
 
   const handleSubmit = () => {

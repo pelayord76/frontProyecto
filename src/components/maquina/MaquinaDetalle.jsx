@@ -44,7 +44,7 @@ export const MaquinaDetalle = () => {
   };
 
   const handleBack = () => {
-    navigate(`/maquina`, { replace: true });
+    navigate(-1);
   };
 
   const handleDelete = () => {

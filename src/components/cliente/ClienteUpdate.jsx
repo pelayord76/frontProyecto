@@ -25,7 +25,7 @@ export const ClienteUpdate = () => {
     useState(null);
 
   const handleBack = () => {
-    navigate(`/cliente/${id}`, { replace: true });
+    navigate(-1);
   };
 
   const handleSubmit = () => {

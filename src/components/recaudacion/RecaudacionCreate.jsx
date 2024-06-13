@@ -111,7 +111,7 @@ export const RecaudacionCreate = () => {
   });
 
   const handleBack = () => {
-    navigate("/recaudacion", { replace: true });
+    navigate(-1);
   };
 
   return (
