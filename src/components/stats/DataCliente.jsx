@@ -53,12 +53,11 @@ export function DataCliente() {
         }
       );
       const data = await response.json();
-      // Transforma los datos a la estructura correcta (array de arrays)
       const transformedData = data.map((item) => [
         item.local,
         item.cantidadRecaudada,
       ]);
-      setClientes([["Local", "Cantidad Recaudada"], ...transformedData]); // Limpia el estado antes de agregar los nuevos datos para que no se ejecute dos veces el fetch
+      setClientes([["Local", "Cantidad Recaudada"], ...transformedData]);
     };
     fetchData();
   }, []);

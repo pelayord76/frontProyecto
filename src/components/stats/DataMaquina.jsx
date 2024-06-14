@@ -53,12 +53,11 @@ export function DataMaquina() {
         }
       );
       const data = await response.json();
-      // Transforma los datos a la estructura correcta (array de arrays)
       const transformedData = data.map((item) => [
         item.nombre,
         item.cantidadRecaudada,
       ]);
-      setClientes([["Maquina", "Cantidad Recaudada"], ...transformedData]); // Limpia el estado antes de agregar los nuevos datos para que no se ejecute dos veces el fetch
+      setClientes([["Maquina", "Cantidad Recaudada"], ...transformedData]);
     };
     fetchData();
   }, []);
