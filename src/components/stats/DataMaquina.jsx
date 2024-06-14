@@ -70,6 +70,7 @@ export function DataMaquina() {
       options={options}
       width={"100%"}
       height={"400px"}
+      style={{ overflow: "hidden" }}
     />
   );
 }
