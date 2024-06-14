@@ -40,6 +40,7 @@ import { ListaUsuario } from "./components/usuario/ListaUsuario";
 import { UsuarioCreate } from "./components/usuario/UsuarioCreate";
 import { UsuarioDetalle } from "./components/usuario/UsuarioDetalle";
 import { UsuarioUpdate } from "./components/usuario/UsuarioUpdate";
+import { EnDesarrollo } from "./components/errores/EnDesarrollo";
 
 function App() {
   console.log(
@@ -55,7 +56,9 @@ function App() {
   return (
     <>
       <BrowserRouter>
+
         <Navbar />
+
         <Routes>
           <Route path="/" element={<Index />} />
 
@@ -97,9 +100,14 @@ function App() {
           <Route path="/*" element={<Error404 />} />
 
           <Route path="/denegado" element={<Error415 />} />
+
+          <Route path="/license" element={<EnDesarrollo />} />
+          <Route path="/policy" element={<EnDesarrollo />} />
+          <Route path="/contact" element={<EnDesarrollo />} />
         </Routes>
 
         <Footer />
+        
       </BrowserRouter>
     </>
   );

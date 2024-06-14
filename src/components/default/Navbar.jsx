@@ -15,10 +15,17 @@ import Typography from "@mui/material/Typography";
 import { blue } from "@mui/material/colors";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import "/navbar.css";
+import "./navbar.css";
 
-const paginas = ["Usuario", "Maquina", "Cliente", "Recaudacion", "Factura", "Estadisticas"];
-const settings = ["Ajustes", "Cerrar sesión"];
+const paginas = [
+  "Usuario",
+  "Maquina",
+  "Cliente",
+  "Recaudacion",
+  "Factura",
+  "Estadisticas",
+];
+const settings = ["Inicio", "Ajustes", "Cerrar sesión"];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -48,8 +55,12 @@ function Navbar() {
   const handleSettings = (setting) => {
     if (setting === "Cerrar sesión") {
       navigate("/cerrarSesion");
-    } else {
+    }
+    if (setting === "Ajustes") {
       navigate(`/${setting.toLowerCase()}`);
+    }
+    if (setting === "Inicio") {
+      navigate(`/`);
     }
     handleCloseUserMenu();
   };
@@ -154,7 +165,10 @@ function Navbar() {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={() => handleSettings(setting)}>
+                  <MenuItem
+                    key={setting}
+                    onClick={() => handleSettings(setting)}
+                  >
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}

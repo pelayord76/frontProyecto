@@ -1,91 +1,123 @@
-import { Copyright } from "@mui/icons-material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  CssBaseline,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+// import { useAuth } from "../authentication/AuthenticationContext";
 
 export const SignIn = () => {
-  const handleSubmit = () => {};
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  // const [setToken, setAuthPassword] = useAuth();
+  // const token = useAuth().getToken();
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (token) {
+  //     navigate("/");
+  //   }
+  // });
+
+  const handleSuccesfullLogin = () => {
+    navigate("/");
+  };
+
+  // const handleLogin = () => {
+  //   fetch("http://localhost:4040/rfsAdmin/sign/in", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       username: username,
+  //       password: password,
+  //     }),
+  //     credentials: "include",
+  //   })
+  //     .then(async (response) => {
+  //       if (!response.ok) {
+  //         const text = await response.text();
+  //         throw new Error(text);
+  //       }
+  //       return response.json;
+  //     })
+  //     .then((data) => {
+  //       setAuthPassword(password);
+  //       setToken(data.token);
+  //       handleSuccesfullLogin();
+  //     });
+  // };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleLogin();
+  };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 8,
+    <div
+      style={{
+        padding: "20px",
+        maxWidth: "600px",
+        margin: "auto",
+        backgroundColor: "#1E1E1E",
+        color: "#FFFFFF",
+        borderRadius: "8px",
+        marginTop: "5%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
+      <Typography
+        variant="h4"
+        gutterBottom
+        style={{ color: "#FFFFFF", marginTop: "1%" }}
+      >
+        Inicio de sesión
+      </Typography>
+
+      <TextField
+        name="nombre"
+        variant="outlined"
+        required
+        label="Usuario"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        margin="normal"
+        focused
+        InputProps={{
+          style: { color: "#FFFFFF" },
+        }}
+      />
+
+      <TextField
+        name="password"
+        variant="outlined"
+        required
+        label="Contraseña"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        margin="normal"
+        focused
+        InputProps={{
+          style: { color: "#FFFFFF" },
+        }}
+      />
+
+      <div
+        style={{
           display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          justifyContent: "space-between",
+          marginTop: "20px",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <AccountCircleIcon />
-        </Avatar>
-
-        <Typography component="h1" variant="h5">
-          Inicio de sesión
-        </Typography>
-
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Nombre de usuario"
-            name="email"
-            autoComplete="username"
-            autoFocus
-          />
-
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Contraseña"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Iniciar sesión
-          </Button>
-
-          <Grid container>
-            <Grid item xs>
-
-              <Link href="#" variant="body2">
-                ¿Has olvidado tu contraseña?
-              </Link>
-
-            </Grid>
-            <Grid item>
-
-              <Link href="#" variant="body2">
-                {"No tienes cuenta? Regístrate"}
-              </Link>
-
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-
-      <Copyright sx={{ mt: 8, mb: 4 }} />
-
-    </Container>
+        <Button
+          variant="contained"
+          color="info"
+          onClick={handleSubmit}
+          style={{ marginRight: "5%", borderRadius: "5px" }}
+        >
+          Iniciar sesión
+        </Button>
+      </div>
+    </div>
   );
 };
