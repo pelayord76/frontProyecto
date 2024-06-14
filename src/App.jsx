@@ -99,7 +99,7 @@ function App() {
           <Route path="/denegado" element={<Error415 />} />
         </Routes>
 
-        {/* <Footer/> */}
+        <Footer />
       </BrowserRouter>
     </>
   );

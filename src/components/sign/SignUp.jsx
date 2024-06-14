@@ -4,13 +4,13 @@ import {
   Container,
   CssBaseline,
   Typography,
-  LockOutlinedIcon,
   Button,
   Grid,
   Link,
   TextField,
 } from "@mui/material";
 import { Copyright } from "../default/Copyright";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export const SignUp = () => {
   const handleSubmit = () => {};
@@ -27,7 +27,7 @@ export const SignUp = () => {
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
+          <AccountCircleIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign up
