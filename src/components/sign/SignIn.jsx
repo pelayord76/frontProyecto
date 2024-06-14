@@ -10,41 +10,41 @@ export const SignIn = () => {
   // const token = useAuth().getToken();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (token) {
-  //     navigate("/");
-  //   }
-  // });
+  useEffect(() => {
+    //   if (token) {
+    //     navigate("/");
+    //   }
+  });
 
   const handleSuccesfullLogin = () => {
-    navigate("/");
+    // navigate("/");
   };
 
-  // const handleLogin = () => {
-  //   fetch("http://localhost:4040/rfsAdmin/sign/in", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       username: username,
-  //       password: password,
-  //     }),
-  //     credentials: "include",
-  //   })
-  //     .then(async (response) => {
-  //       if (!response.ok) {
-  //         const text = await response.text();
-  //         throw new Error(text);
-  //       }
-  //       return response.json;
-  //     })
-  //     .then((data) => {
-  //       setAuthPassword(password);
-  //       setToken(data.token);
-  //       handleSuccesfullLogin();
-  //     });
-  // };
+  const handleLogin = () => {
+    //   fetch("http://localhost:4040/rfsAdmin/sign/in", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       username: username,
+    //       password: password,
+    //     }),
+    //     credentials: "include",
+    //   })
+    //     .then(async (response) => {
+    //       if (!response.ok) {
+    //         const text = await response.text();
+    //         throw new Error(text);
+    //       }
+    //       return response.json;
+    //     })
+    //     .then((data) => {
+    //       setAuthPassword(password);
+    //       setToken(data.token);
+    handleSuccesfullLogin();
+    //     });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
