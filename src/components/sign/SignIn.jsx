@@ -14,7 +14,7 @@ export const SignIn = () => {
     if (token) {
       navigate("/");
     }
-  });
+  }, [token, navigate]);
 
   const handleSuccesfullLogin = () => {
     navigate("/");
@@ -37,12 +37,19 @@ export const SignIn = () => {
           const text = await response.text();
           throw new Error(text);
         }
-        return response.json;
+        return response.json();
       })
       .then((data) => {
-        setAuthPassword(password);
-        setToken(data.token);
-        handleSuccesfullLogin();
+        if (typeof data.token === "string") {
+          setAuthPassword(password);
+          setToken(data.token);
+          handleSuccesfullLogin();
+        } else {
+          throw new Error("Token inválido recibido");
+        }
+      })
+      .catch((error) => {
+        console.error("Error en la autenticación:", error);
       });
   };
 
