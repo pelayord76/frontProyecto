@@ -1,49 +1,49 @@
 import { Button, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { useAuth } from "../authentication/AuthenticationContext";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 export const SignIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [setToken, setAuthPassword] = useAuth();
-  // const token = useAuth().getToken();
+  const { setToken, setAuthPassword } = useAuth();
+  const token = useAuth().getToken();
   const navigate = useNavigate();
 
   useEffect(() => {
-    //   if (token) {
-    //     navigate("/");
-    //   }
+    if (token) {
+      navigate("/");
+    }
   });
 
   const handleSuccesfullLogin = () => {
-    // navigate("/");
+    navigate("/");
   };
 
   const handleLogin = () => {
-    //   fetch("http://localhost:4040/rfsAdmin/sign/in", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       username: username,
-    //       password: password,
-    //     }),
-    //     credentials: "include",
-    //   })
-    //     .then(async (response) => {
-    //       if (!response.ok) {
-    //         const text = await response.text();
-    //         throw new Error(text);
-    //       }
-    //       return response.json;
-    //     })
-    //     .then((data) => {
-    //       setAuthPassword(password);
-    //       setToken(data.token);
-    handleSuccesfullLogin();
-    //     });
+    fetch("http://localhost:4040/rfsAdmin/sign/in", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
+      credentials: "include",
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(text);
+        }
+        return response.json;
+      })
+      .then((data) => {
+        setAuthPassword(password);
+        setToken(data.token);
+        handleSuccesfullLogin();
+      });
   };
 
   const handleSubmit = (event) => {
@@ -79,6 +79,7 @@ export const SignIn = () => {
         variant="outlined"
         required
         label="Usuario"
+        type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         margin="normal"
@@ -93,6 +94,7 @@ export const SignIn = () => {
         variant="outlined"
         required
         label="Contraseña"
+        type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         margin="normal"

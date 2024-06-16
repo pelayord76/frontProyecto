@@ -42,7 +42,7 @@ import { UsuarioDetalle } from "./components/usuario/UsuarioDetalle";
 import { UsuarioUpdate } from "./components/usuario/UsuarioUpdate";
 import { EnDesarrollo } from "./components/errores/EnDesarrollo";
 
-function App() {
+export const App = () => {
   console.log(
     `%c\n\n██████╗ ███████╗███████╗ █████╗ ██████╗ ███╗   ███╗██╗███╗   ██╗
 ██╔══██╗██╔════╝██╔════╝██╔══██╗██╔══██╗████╗ ████║██║████╗  ██║
@@ -56,7 +56,6 @@ function App() {
   return (
     <>
       <BrowserRouter>
-
         <Navbar />
 
         <Routes>
@@ -106,11 +105,10 @@ function App() {
           <Route path="/contact" element={<EnDesarrollo />} />
         </Routes>
 
-        <Footer />
-        
+        {/* <Footer /> */}
       </BrowserRouter>
     </>
   );
-}
+};
 
 export default App;

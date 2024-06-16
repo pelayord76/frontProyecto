@@ -14,8 +14,10 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 export const ListaCliente = () => {
+  const token = useAuth().getToken();
   const [clientes, setClientes] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -54,12 +56,16 @@ export const ListaCliente = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:4040/rfsAdmin/cliente")
-      .then((res) => res.json())
-      .then((result) => {
-        setClientes(result);
-      });
-  }, []);
+    if (!token) {
+      navigate("/iniciarSesion");
+    } else {
+      fetch("http://localhost:4040/rfsAdmin/cliente")
+        .then((res) => res.json())
+        .then((result) => {
+          setClientes(result);
+        });
+    }
+  }, [navigate, token]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
