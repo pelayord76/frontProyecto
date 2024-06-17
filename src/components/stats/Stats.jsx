@@ -4,6 +4,7 @@ import { ClientesMasIngresos } from "./ClientesMasIngresos";
 import { ClientesMenosIngresos } from "./ClientesMenosIngresos";
 import { MaquinasQueVencen } from "./MaquinasQueVencen";
 import { ClientesQueVencen } from "./ClientesQueVencen";
+import "./stats.css";
 
 export const Stats = () => {
   return (
@@ -16,29 +17,17 @@ export const Stats = () => {
         flexDirection: "column",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-        }}
-      >
+      <div className="charts">
         <DataCliente />
         <DataMaquina />
       </div>
 
-      <div
-        style={{
-          display: "flex",
-        }}
-      >
+      <div className="clientes">
         <ClientesMasIngresos />
         <ClientesMenosIngresos />
       </div>
 
-      <div
-        style={{
-          display: "flex",
-        }}
-      >
+      <div className="fechas">
         <MaquinasQueVencen />
         <ClientesQueVencen />
       </div>

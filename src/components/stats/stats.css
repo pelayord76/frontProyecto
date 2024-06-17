@@ -1,0 +1,20 @@
+.charts {
+  display: flex;
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
+}
+
+.clientes {
+  display: flex;
+    @media (max-width: 543px) {
+    flex-direction: column;
+  }
+}
+
+.fechas {
+  display: flex;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
