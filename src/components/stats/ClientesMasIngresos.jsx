@@ -8,18 +8,25 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 export const ClientesMasIngresos = () => {
   const [clientes, setClientes] = useState([]);
-
+  const token = useAuth().getToken();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:4040/rfsAdmin/cliente/data/ingresos/max")
-      .then((res) => res.json())
-      .then((result) => {
-        setClientes(result);
-      });
-  }, []);
+    if (!token) {
+      navigate("/iniciarSesion");
+    } else {
+      fetch("http://localhost:4040/rfsAdmin/cliente/data/ingresos/max")
+        .then((res) => res.json())
+        .then((result) => {
+          setClientes(result);
+        });
+    }
+  }, [navigate, token]);
 
   const cellStyle = {
     color: "#FFFFFF",

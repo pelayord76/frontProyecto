@@ -10,10 +10,18 @@ import {
   Typography,
   Button,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 export const ClientesQueVencen = () => {
   const [clientes, setClientes] = useState([]);
   const [anio, setAnio] = useState("");
+  const token = useAuth().getToken();
+  const navigate = useNavigate();
+
+  if (!token) {
+    navigate("/iniciarSesion");
+  }
 
   const getclientes = () => {
     fetch(`http://localhost:4040/rfsAdmin/cliente/contrato/${anio}`)

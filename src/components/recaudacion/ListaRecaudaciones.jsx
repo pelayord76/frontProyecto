@@ -14,28 +14,34 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 export const ListaRecaudaciones = () => {
+  const token = useAuth().getToken();
   const [recaudaciones, setRecaudaciones] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(
-        `http://localhost:4040/rfsAdmin/recaudacion`,
-        {
-          headers: {
-            Accept: "application/json",
-          },
-        }
-      );
-      const data = await response.json();
-      setRecaudaciones(data);
-    };
-    fetchData();
-  }, []);
+    if (!token) {
+      navigate("/iniciarSesion");
+    } else {
+      const fetchData = async () => {
+        const response = await fetch(
+          `http://localhost:4040/rfsAdmin/recaudacion`,
+          {
+            headers: {
+              Accept: "application/json",
+            },
+          }
+        );
+        const data = await response.json();
+        setRecaudaciones(data);
+      };
+      fetchData();
+    }
+  }, [navigate, token]);
 
   const handleCreateRecaudacion = () => {
     navigate(`/recaudacion/add`, { replace: true });

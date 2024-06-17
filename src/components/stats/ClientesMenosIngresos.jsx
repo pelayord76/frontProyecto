@@ -8,17 +8,25 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useAuth } from "../authentication/AuthenticationContext";
+import { useNavigate } from "react-router-dom";
 
 export const ClientesMenosIngresos = () => {
   const [clientes, setClientes] = useState([]);
+  const token = useAuth().getToken();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:4040/rfsAdmin/cliente/data/ingresos/min")
-      .then((res) => res.json())
-      .then((result) => {
-        setClientes(result);
-      });
-  }, []);
+    if (!token) {
+      navigate("/iniciarSesion");
+    } else {
+      fetch("http://localhost:4040/rfsAdmin/cliente/data/ingresos/min")
+        .then((res) => res.json())
+        .then((result) => {
+          setClientes(result);
+        });
+    }
+  }, [navigate, token]);
 
   const cellStyle = {
     color: "#FFFFFF",

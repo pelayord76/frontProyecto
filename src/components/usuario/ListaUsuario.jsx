@@ -13,8 +13,10 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 export const ListaUsuario = () => {
+  const token = useAuth().getToken();
   const [usuarios, setUsuarios] = useState([]);
   const navigate = useNavigate();
 
@@ -51,12 +53,16 @@ export const ListaUsuario = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:4040/rfsAdmin/usuario")
-      .then((res) => res.json())
-      .then((result) => {
-        setUsuarios(result);
-      });
-  }, []);
+    if (!token) {
+      navigate("/iniciarSesion");
+    } else {
+      fetch("http://localhost:4040/rfsAdmin/usuario")
+        .then((res) => res.json())
+        .then((result) => {
+          setUsuarios(result);
+        });
+    }
+  }, [navigate, token]);
 
   const cellStyle = {
     color: "#FFFFFF",

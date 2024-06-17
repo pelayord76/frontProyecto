@@ -5,8 +5,17 @@ import { ClientesMenosIngresos } from "./ClientesMenosIngresos";
 import { MaquinasQueVencen } from "./MaquinasQueVencen";
 import { ClientesQueVencen } from "./ClientesQueVencen";
 import "./stats.css";
+import { useAuth } from "../authentication/AuthenticationContext";
+import { useNavigate } from "react-router-dom";
 
 export const Stats = () => {
+  const token = useAuth().getToken();
+  const navigate = useNavigate();
+
+  if (!token) {
+    navigate("/iniciarSesion");
+  }
+
   return (
     <div
       style={{

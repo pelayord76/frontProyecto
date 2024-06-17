@@ -15,8 +15,10 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 export const ListaFacturas = () => {
+  const token = useAuth().getToken();
   const [facturas, setFacturas] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -57,12 +59,16 @@ export const ListaFacturas = () => {
   const handleDownload = (id) => {};
 
   useEffect(() => {
-    fetch("http://localhost:4040/rfsAdmin/factura")
-      .then((res) => res.json())
-      .then((result) => {
-        setFacturas(result);
-      });
-  }, []);
+    if (!token) {
+      navigate("/iniciarSesion");
+    } else {
+      fetch("http://localhost:4040/rfsAdmin/factura")
+        .then((res) => res.json())
+        .then((result) => {
+          setFacturas(result);
+        });
+    }
+  }, [navigate, token]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

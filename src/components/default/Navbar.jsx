@@ -53,7 +53,10 @@ function Navbar() {
   };
 
   const handleLogout = () => {
-    fetch("http://localhost:4040/rfsAdmin/logout");
+    fetch("http://localhost:4040/rfsAdmin/logout", {
+      credentials: "include",
+      mode: "no-cors",
+    });
   };
 
   const handleSettings = (setting) => {

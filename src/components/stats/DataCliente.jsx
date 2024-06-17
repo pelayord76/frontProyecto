@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
+import { useAuth } from "../authentication/AuthenticationContext";
+import { useNavigate } from "react-router-dom";
 
 export function DataCliente() {
   const [clientes, setClientes] = useState([["Local", "Cantidad Recaudada"]]);
+  const token = useAuth().getToken();
+  const navigate = useNavigate();
 
   const options = {
     title: "Distribución de ingresos por cliente",
@@ -43,24 +47,28 @@ export function DataCliente() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(
-        "http://localhost:4040/rfsAdmin/cliente/data/ingresos",
-        {
-          headers: {
-            Accept: "application/json",
-          },
-        }
-      );
-      const data = await response.json();
-      const transformedData = data.map((item) => [
-        item.local,
-        item.cantidadRecaudada,
-      ]);
-      setClientes([["Local", "Cantidad Recaudada"], ...transformedData]);
-    };
-    fetchData();
-  }, []);
+    if (!token) {
+      navigate("/iniciarSesion");
+    } else {
+      const fetchData = async () => {
+        const response = await fetch(
+          "http://localhost:4040/rfsAdmin/cliente/data/ingresos",
+          {
+            headers: {
+              Accept: "application/json",
+            },
+          }
+        );
+        const data = await response.json();
+        const transformedData = data.map((item) => [
+          item.local,
+          item.cantidadRecaudada,
+        ]);
+        setClientes([["Local", "Cantidad Recaudada"], ...transformedData]);
+      };
+      fetchData();
+    }
+  }, [navigate, token]);
 
   return (
     <Chart

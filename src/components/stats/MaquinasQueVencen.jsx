@@ -10,10 +10,18 @@ import {
   Typography,
   Button,
 } from "@mui/material";
+import { useAuth } from "../authentication/AuthenticationContext";
+import { useNavigate } from "react-router-dom";
 
 export const MaquinasQueVencen = () => {
   const [maquinas, setMaquinas] = useState([]);
   const [anio, setAnio] = useState("");
+  const token = useAuth().getToken();
+  const navigate = useNavigate();
+
+  if(!token){
+    navigate("/iniciarSesion")
+  }
 
   const getMaquinas = () => {
     fetch(`http://localhost:4040/rfsAdmin/maquina/licencia/${anio}`)
