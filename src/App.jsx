@@ -5,8 +5,7 @@ import { ClienteCreate } from "./components/cliente/ClienteCreate";
 import { ClienteDetalle } from "./components/cliente/ClienteDetalle";
 import { ClienteUpdate } from "./components/cliente/ClienteUpdate";
 
-// import { Configuracion } from "./components/default/Configuracion";
-// import { Footer } from "./components/default/Footer";
+import { Footer } from "./components/default/Footer";
 import Navbar from "./components/default/Navbar";
 import { Perfil } from "./components/default/Perfil";
 
@@ -55,58 +54,67 @@ export const App = () => {
   return (
     <>
       <BrowserRouter>
+        
         <Navbar />
+        
+        <main>
+          
+          <Routes>
+            <Route path="/" element={<Index />} />
 
-        <Routes>
-          <Route path="/" element={<Index />} />
+            <Route path="/usuario" element={<ListaUsuario />} />
+            <Route path="/usuario/:id" element={<UsuarioDetalle />} />
+            <Route path="/usuario/add" element={<UsuarioCreate />} />
+            <Route path="/usuario/edit/:id" element={<UsuarioUpdate />} />
 
-          <Route path="/usuario" element={<ListaUsuario />} />
-          <Route path="/usuario/:id" element={<UsuarioDetalle />} />
-          <Route path="/usuario/add" element={<UsuarioCreate />} />
-          <Route path="/usuario/edit/:id" element={<UsuarioUpdate />} />
+            <Route path="/perfil/:id" element={<Perfil />} />
 
-          <Route path="/perfil/:id" element={<Perfil />} />
+            <Route path="/cliente" element={<Cliente />} />
+            <Route path="/cliente/:id" element={<ClienteDetalle />} />
+            <Route path="/cliente/add" element={<ClienteCreate />} />
+            <Route path="/cliente/edit/:id" element={<ClienteUpdate />} />
 
-          <Route path="/cliente" element={<Cliente />} />
-          <Route path="/cliente/:id" element={<ClienteDetalle />} />
-          <Route path="/cliente/add" element={<ClienteCreate />} />
-          <Route path="/cliente/edit/:id" element={<ClienteUpdate />} />
+            <Route path="/maquina" element={<Maquina />} />
+            <Route path="/maquina/:id" element={<MaquinaDetalle />} />
+            <Route path="/maquina/add" element={<MaquinaCreate />} />
+            <Route path="/maquina/edit/:id" element={<MaquinaUpdate />} />
 
-          <Route path="/maquina" element={<Maquina />} />
-          <Route path="/maquina/:id" element={<MaquinaDetalle />} />
-          <Route path="/maquina/add" element={<MaquinaCreate />} />
-          <Route path="/maquina/edit/:id" element={<MaquinaUpdate />} />
+            <Route path="/recaudacion" element={<ListaRecaudaciones />} />
+            <Route path="/recaudacion/:id" element={<RecaudacionDetalle />} />
+            <Route path="/recaudacion/add" element={<RecaudacionCreate />} />
+            <Route
+              path="/recaudacion/edit/:id"
+              element={<RecaudacionUpdate />}
+            />
 
-          <Route path="/recaudacion" element={<ListaRecaudaciones />} />
-          <Route path="/recaudacion/:id" element={<RecaudacionDetalle />} />
-          <Route path="/recaudacion/add" element={<RecaudacionCreate />} />
-          <Route path="/recaudacion/edit/:id" element={<RecaudacionUpdate />} />
+            <Route path="/factura" element={<ListaFacturas />} />
+            <Route path="/factura/:id" element={<FacturaDetalle />} />
+            <Route path="/factura/add" element={<FacturaCreate />} />
+            <Route path="/factura/edit/:id" element={<FacturaUpdate />} />
 
-          <Route path="/factura" element={<ListaFacturas />} />
-          <Route path="/factura/:id" element={<FacturaDetalle />} />
-          <Route path="/factura/add" element={<FacturaCreate />} />
-          <Route path="/factura/edit/:id" element={<FacturaUpdate />} />
+            <Route
+              path="/ajustes"
+              element={<EnDesarrollo /> /*<Configuracion />*/}
+            />
 
-          <Route
-            path="/ajustes"
-            element={<EnDesarrollo /> /*<Configuracion />*/}
-          />
+            <Route path="/iniciarSesion" element={<SignIn />} />
+            <Route path="/registrarse" element={<SignUp />} />
 
-          <Route path="/iniciarSesion" element={<SignIn />} />
-          <Route path="/registrarse" element={<SignUp />} />
+            <Route path="/estadisticas" element={<Stats />} />
 
-          <Route path="/estadisticas" element={<Stats />} />
+            <Route path="/*" element={<Error404 />} />
 
-          <Route path="/*" element={<Error404 />} />
+            <Route path="/denegado" element={<Error415 />} />
 
-          <Route path="/denegado" element={<Error415 />} />
+            <Route path="/licencia" element={/*<License/>*/ <EnDesarrollo />} />
+            <Route path="/politica" element={/*<Policy/>*/ <EnDesarrollo />} />
+            <Route path="/contacto" element={/*<Contact/>*/ <EnDesarrollo />} />
+          </Routes>
 
-          <Route path="/licencia" element={/*<License/>*/ <EnDesarrollo />} />
-          <Route path="/politica" element={/*<Policy/>*/ <EnDesarrollo />} />
-          <Route path="/contacto" element={/*<Contact/>*/ <EnDesarrollo />} />
-        </Routes>
-
-        {/* <Footer /> */}
+        </main>
+        
+        <Footer />
+      
       </BrowserRouter>
     </>
   );

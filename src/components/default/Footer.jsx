@@ -55,30 +55,30 @@ export const Footer = () => {
           >
             <Link
               href="/politica"
-              style={{
+              sx={{
                 textDecoration: "none",
                 color: "#FFFFFF",
-                fontFamily: "roboto",
+                fontFamily: "Roboto, sans-serif",
               }}
             >
               Política de privacidad
             </Link>
             <Link
               href="/licencia"
-              style={{
+              sx={{
                 textDecoration: "none",
                 color: "#FFFFFF",
-                fontFamily: "roboto",
+                fontFamily: "Roboto, sans-serif",
               }}
             >
               Licencia
             </Link>
             <Link
               href="/contacto"
-              style={{
+              sx={{
                 textDecoration: "none",
                 color: "#FFFFFF",
-                fontFamily: "roboto",
+                fontFamily: "Roboto, sans-serif",
               }}
             >
               Contacto
