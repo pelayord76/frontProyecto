@@ -30,7 +30,6 @@ import { RecaudacionCreate } from "./components/recaudacion/RecaudacionCreate";
 import { RecaudacionDetalle } from "./components/recaudacion/RecaudacionDetalle";
 import { RecaudacionUpdate } from "./components/recaudacion/RecaudacionUpdate";
 
-import { Logout } from "./components/sign/Logout";
 import { SignIn } from "./components/sign/SignIn";
 import { SignUp } from "./components/sign/SignUp";
 
@@ -92,7 +91,6 @@ export const App = () => {
 
           <Route path="/iniciarSesion" element={<SignIn />} />
           <Route path="/registrarse" element={<SignUp />} />
-          <Route path="/cerrarSesion" element={<Logout />} />
 
           <Route path="/estadisticas" element={<Stats />} />
 

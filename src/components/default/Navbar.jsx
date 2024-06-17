@@ -16,7 +16,6 @@ import { blue } from "@mui/material/colors";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import "./navbar.css";
-import { useAuth } from "../authentication/AuthenticationContext";
 
 const paginas = [
   "Usuario",
@@ -29,9 +28,6 @@ const paginas = [
 const settings = ["Inicio", "Ajustes", "Cerrar sesión"];
 
 function Navbar() {
-  const { getToken, getRol } = useAuth();
-  const token = getToken();
-  const rol = getRol();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
@@ -56,9 +52,13 @@ function Navbar() {
     handleCloseNavMenu();
   };
 
+  const handleLogout = () => {
+    fetch("http://localhost:4040/rfsAdmin/logout");
+  };
+
   const handleSettings = (setting) => {
     if (setting === "Cerrar sesión") {
-      navigate("/cerrarSesion");
+      handleLogout();
     }
     if (setting === "Ajustes") {
       navigate(`/${setting.toLowerCase()}`);
