@@ -54,7 +54,7 @@ export const Footer = () => {
             }}
           >
             <Link
-              href="/policy"
+              href="/politica"
               style={{
                 textDecoration: "none",
                 color: "#FFFFFF",
@@ -64,7 +64,7 @@ export const Footer = () => {
               Política de privacidad
             </Link>
             <Link
-              href="/license"
+              href="/licencia"
               style={{
                 textDecoration: "none",
                 color: "#FFFFFF",
@@ -74,7 +74,7 @@ export const Footer = () => {
               Licencia
             </Link>
             <Link
-              href="/contact"
+              href="/contacto"
               style={{
                 textDecoration: "none",
                 color: "#FFFFFF",

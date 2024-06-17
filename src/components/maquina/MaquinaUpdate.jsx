@@ -69,7 +69,7 @@ export const MaquinaUpdate = () => {
 
   useEffect(() => {
     if (!token) {
-      navigate("/inicarSesion");
+      navigate("/iniciarSesion");
     } else {
       fetch(`http://localhost:4040/rfsAdmin/maquina/${id}`)
         .then((res) => res.json())

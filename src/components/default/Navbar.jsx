@@ -54,6 +54,7 @@ function Navbar() {
 
   const handleLogout = () => {
     fetch("http://localhost:4040/rfsAdmin/logout", {
+      mode: "no-cors",
       credentials: "include",
     })
       .then((response) => {

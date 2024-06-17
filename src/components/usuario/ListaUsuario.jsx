@@ -131,7 +131,7 @@ export const ListaUsuario = () => {
 
               <TableCell style={cellStyle}>
                 <Link
-                  to={`/perfil/${usuario.id}`}
+                  to={`/usuario/${usuario.id}`}
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   {usuario.nombre}

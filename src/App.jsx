@@ -5,8 +5,8 @@ import { ClienteCreate } from "./components/cliente/ClienteCreate";
 import { ClienteDetalle } from "./components/cliente/ClienteDetalle";
 import { ClienteUpdate } from "./components/cliente/ClienteUpdate";
 
-import { Configuracion } from "./components/default/Configuracion";
-import { Footer } from "./components/default/Footer";
+// import { Configuracion } from "./components/default/Configuracion";
+// import { Footer } from "./components/default/Footer";
 import Navbar from "./components/default/Navbar";
 import { Perfil } from "./components/default/Perfil";
 
@@ -87,7 +87,10 @@ export const App = () => {
           <Route path="/factura/add" element={<FacturaCreate />} />
           <Route path="/factura/edit/:id" element={<FacturaUpdate />} />
 
-          <Route path="/ajustes" element={<Configuracion />} />
+          <Route
+            path="/ajustes"
+            element={<EnDesarrollo /> /*<Configuracion />*/}
+          />
 
           <Route path="/iniciarSesion" element={<SignIn />} />
           <Route path="/registrarse" element={<SignUp />} />
@@ -98,9 +101,9 @@ export const App = () => {
 
           <Route path="/denegado" element={<Error415 />} />
 
-          <Route path="/license" element={<EnDesarrollo />} />
-          <Route path="/policy" element={<EnDesarrollo />} />
-          <Route path="/contact" element={<EnDesarrollo />} />
+          <Route path="/licencia" element={/*<License/>*/ <EnDesarrollo />} />
+          <Route path="/politica" element={/*<Policy/>*/ <EnDesarrollo />} />
+          <Route path="/contacto" element={/*<Contact/>*/ <EnDesarrollo />} />
         </Routes>
 
         {/* <Footer /> */}

@@ -9,8 +9,8 @@ export const EnDesarrollo = () => {
   };
   return (
     <div style={{ marginLeft: "2%", marginTop: "2%" }}>
-      <h1>... vaya</h1>
-      <h3>Aún estamos trabajando en esto</h3>
+      <h1>...</h1>
+      <h3>Aún se está trabajando en esto</h3>
       <Button color="primary" onClick={handleBack}>
         Volver
       </Button>
