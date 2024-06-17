@@ -15,6 +15,7 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 const validationSchema = yup.object({
   iva: yup.number().required("El IVA no puede ser nulo"),
@@ -24,9 +25,13 @@ const validationSchema = yup.object({
 
 export const FacturaCreate = () => {
   const navigate = useNavigate();
-
+  const token = useAuth().getToken();
   const [idLocal, setIdLocal] = useState("");
   const [locales, setLocales] = useState([]);
+
+  if (!token) {
+    navigate("/iniciarSesion");
+  }
 
   useEffect(() => {
     fetch("http://localhost:4040/rfsAdmin/cliente/clientes")

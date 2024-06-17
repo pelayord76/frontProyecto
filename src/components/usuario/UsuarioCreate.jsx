@@ -4,6 +4,7 @@ import { Button, ButtonGroup, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 const validationSchema = yup.object({
   nombre: yup
@@ -41,6 +42,11 @@ const validationSchema = yup.object({
 
 export const UsuarioCreate = () => {
   const navigate = useNavigate();
+  const token = useAuth().getToken();
+
+  if (!token) {
+    navigate("/iniciarSesion");
+  }
 
   const formik = useFormik({
     initialValues: {

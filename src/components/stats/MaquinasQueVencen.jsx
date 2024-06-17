@@ -1,5 +1,6 @@
-import { useState } from "react";
+import SearchIcon from "@mui/icons-material/Search";
 import {
+  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -8,10 +9,10 @@ import {
   TableRow,
   TextField,
   Typography,
-  Button,
 } from "@mui/material";
-import { useAuth } from "../authentication/AuthenticationContext";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 export const MaquinasQueVencen = () => {
   const [maquinas, setMaquinas] = useState([]);
@@ -19,8 +20,8 @@ export const MaquinasQueVencen = () => {
   const token = useAuth().getToken();
   const navigate = useNavigate();
 
-  if(!token){
-    navigate("/iniciarSesion")
+  if (!token) {
+    navigate("/iniciarSesion");
   }
 
   const getMaquinas = () => {
@@ -77,9 +78,14 @@ export const MaquinasQueVencen = () => {
             }}
           />
 
-          <Button variant="contained" color="primary" onClick={handleClick}>
-            Buscar
-          </Button>
+          <IconButton
+            aria-label="search"
+            color="info"
+            size="small"
+            onClick={handleClick}
+          >
+            <SearchIcon/>
+          </IconButton>
         </div>
       </div>
       <Table

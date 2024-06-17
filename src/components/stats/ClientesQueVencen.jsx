@@ -1,5 +1,6 @@
-import { useState } from "react";
+import SearchIcon from "@mui/icons-material/Search";
 import {
+  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -8,8 +9,8 @@ import {
   TableRow,
   TextField,
   Typography,
-  Button,
 } from "@mui/material";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../authentication/AuthenticationContext";
 
@@ -77,9 +78,14 @@ export const ClientesQueVencen = () => {
             }}
           />
 
-          <Button variant="contained" color="primary" onClick={handleClick}>
-            Buscar
-          </Button>
+          <IconButton
+            aria-label="search"
+            color="info"
+            size="small"
+            onClick={handleClick}
+          >
+            <SearchIcon/>
+          </IconButton>
         </div>
       </div>
       <Table

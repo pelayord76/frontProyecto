@@ -15,6 +15,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 export const FacturaUpdate = () => {
   const { id } = useParams();
@@ -23,6 +24,11 @@ export const FacturaUpdate = () => {
   const [fechaEmision, setFechaEmision] = useState(null);
   const [iva, setIva] = useState("");
   const [locales, setLocales] = useState([]);
+  const token = useAuth().getToken();
+
+  if (!token) {
+    navigate("/iniciarSesion");
+  }
 
   const handleBack = () => {
     navigate(-1);

@@ -17,6 +17,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 export const MaquinaUpdate = () => {
   const { id } = useParams();
@@ -29,6 +30,7 @@ export const MaquinaUpdate = () => {
   const [tipoMaquina, setTipoMaquina] = useState("");
   const [idCliente, setIdCliente] = useState("");
   const [locales, setLocales] = useState([]);
+  const token = useAuth().getToken();
 
   const handleBack = () => {
     navigate(-1);
@@ -66,32 +68,36 @@ export const MaquinaUpdate = () => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:4040/rfsAdmin/maquina/${id}`)
-      .then((res) => res.json())
-      .then((result) => {
-        setNombre(result.nombre);
+    if (!token) {
+      navigate("/inicarSesion");
+    } else {
+      fetch(`http://localhost:4040/rfsAdmin/maquina/${id}`)
+        .then((res) => res.json())
+        .then((result) => {
+          setNombre(result.nombre);
 
-        const parsedFechaV = result.fechaVencimientoLicencia
-          ? dayjs(result.fechaVencimientoLicencia, "DD-MM-YYYY")
-          : null;
-        setFechaVencimientoLicencia(parsedFechaV);
+          const parsedFechaV = result.fechaVencimientoLicencia
+            ? dayjs(result.fechaVencimientoLicencia, "DD-MM-YYYY")
+            : null;
+          setFechaVencimientoLicencia(parsedFechaV);
 
-        setAlmacenada(result.almacenada || false);
+          setAlmacenada(result.almacenada || false);
 
-        const parsedFechaA = result.fechaAlmacenada
-          ? dayjs(result.fechaAlmacenada, "DD-MM-YYYY")
-          : null;
-        setFechaAlmacenada(parsedFechaA);
+          const parsedFechaA = result.fechaAlmacenada
+            ? dayjs(result.fechaAlmacenada, "DD-MM-YYYY")
+            : null;
+          setFechaAlmacenada(parsedFechaA);
 
-        setTipoMaquina(result.tipoMaquina);
-        if (result.cliente) {
-          setIdCliente(result.cliente.id);
-        }
-      })
-      .catch((error) => {
-        console.error("Error al obtener los detalles de la máquina:", error);
-      });
-  }, [id]);
+          setTipoMaquina(result.tipoMaquina);
+          if (result.cliente) {
+            setIdCliente(result.cliente.id);
+          }
+        })
+        .catch((error) => {
+          console.error("Error al obtener los detalles de la máquina:", error);
+        });
+    }
+  }, [id, navigate, token]);
 
   useEffect(() => {
     fetch("http://localhost:4040/rfsAdmin/cliente/clientes")

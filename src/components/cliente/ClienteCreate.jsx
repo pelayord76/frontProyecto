@@ -1,17 +1,13 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SaveIcon from "@mui/icons-material/Save";
-import {
-  Button,
-  ButtonGroup,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, ButtonGroup, TextField, Typography } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 const validationSchema = yup.object({
   local: yup
@@ -55,6 +51,11 @@ const validationSchema = yup.object({
 
 export const ClienteCreate = () => {
   const navigate = useNavigate();
+  const token = useAuth().getToken();
+
+  if (!token) {
+    navigate("/iniciarSesion");
+  }
 
   const formik = useFormik({
     initialValues: {

@@ -15,6 +15,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 export const RecaudacionUpdate = () => {
   const { id } = useParams();
@@ -29,6 +30,7 @@ export const RecaudacionUpdate = () => {
   const [porcentajeJuego, setPorcentajeJuego] = useState("");
   const [tasaRecaudacion, setTasaRecaudacion] = useState("");
   const [fecha, setFecha] = useState(null);
+  const token = useAuth().getToken();
 
   const handleBack = () => {
     navigate(-1);
@@ -68,28 +70,32 @@ export const RecaudacionUpdate = () => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:4040/rfsAdmin/recaudacion/${id}`)
-      .then((res) => res.json())
-      .then((result) => {
-        setIdLocal(result.maquina?.cliente?.id || "");
-        setMaquina(result.maquina?.id || "");
-        setCantidadRecaudada(result.cantidadRecaudada);
-        setPasosEntrada(result.pasosEntrada);
-        setPasosSalida(result.pasosSalida);
-        setPorcentajeJuego(result.porcentajeJuego);
-        setTasaRecaudacion(result.tasaRecaudacion);
-        const parsedFecha = result.fecha
-          ? dayjs(result.fecha, "DD-MM-YYYY")
-          : null;
-        setFecha(parsedFecha);
-      })
-      .catch((error) => {
-        console.error(
-          "Error al obtener los detalles de la recaudación:",
-          error
-        );
-      });
-  }, [id]);
+    if (!token) {
+      navigate("/iniciarSesion");
+    } else {
+      fetch(`http://localhost:4040/rfsAdmin/recaudacion/${id}`)
+        .then((res) => res.json())
+        .then((result) => {
+          setIdLocal(result.maquina?.cliente?.id || "");
+          setMaquina(result.maquina?.id || "");
+          setCantidadRecaudada(result.cantidadRecaudada);
+          setPasosEntrada(result.pasosEntrada);
+          setPasosSalida(result.pasosSalida);
+          setPorcentajeJuego(result.porcentajeJuego);
+          setTasaRecaudacion(result.tasaRecaudacion);
+          const parsedFecha = result.fecha
+            ? dayjs(result.fecha, "DD-MM-YYYY")
+            : null;
+          setFecha(parsedFecha);
+        })
+        .catch((error) => {
+          console.error(
+            "Error al obtener los detalles de la recaudación:",
+            error
+          );
+        });
+    }
+  }, [id, navigate, token]);
 
   useEffect(() => {
     fetch("http://localhost:4040/rfsAdmin/cliente/clientes")

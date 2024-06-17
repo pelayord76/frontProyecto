@@ -15,9 +15,12 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 const validationSchema = yup.object({
-  maquina: yup.string().required("La referencia a la máquina no puede ser nula"),
+  maquina: yup
+    .string()
+    .required("La referencia a la máquina no puede ser nula"),
   fecha: yup.date().required("La fecha de recaudacion no puede ser nula"),
   cantidadRecaudada: yup
     .number("Debe ser un número")
@@ -36,10 +39,14 @@ const validationSchema = yup.object({
 
 export const RecaudacionCreate = () => {
   const navigate = useNavigate();
-
+  const token = useAuth().getToken();
   const [idLocal, setIdLocal] = useState("");
   const [locales, setLocales] = useState([]);
   const [maquinas, setMaquinas] = useState([]);
+
+  if (!token) {
+    navigate("/iniciarSesion");
+  }
 
   useEffect(() => {
     fetch("http://localhost:4040/rfsAdmin/cliente/clientes")
@@ -141,11 +148,8 @@ export const RecaudacionCreate = () => {
         onSubmit={formik.handleSubmit}
         style={{ display: "flex", flexDirection: "column" }}
       >
-
         <div style={{ display: "flex", flexDirection: "row", gap: "1%" }}>
-
           <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-
             <InputLabel
               id="local-label"
               sx={{ color: "#1976d2", marginTop: "2%", marginBottom: "1px" }}
@@ -178,11 +182,9 @@ export const RecaudacionCreate = () => {
                 </MenuItem>
               ))}
             </Select>
-
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-            
             <InputLabel
               id="maquina-label"
               sx={{ color: "#1976d2", marginTop: "2%", marginBottom: "1px" }}
@@ -213,9 +215,7 @@ export const RecaudacionCreate = () => {
                 </MenuItem>
               ))}
             </Select>
-
           </div>
-
         </div>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -229,9 +229,7 @@ export const RecaudacionCreate = () => {
                 {...params}
                 margin="normal"
                 focused
-                error={
-                  formik.touched.fecha && Boolean(formik.errors.fecha)
-                }
+                error={formik.touched.fecha && Boolean(formik.errors.fecha)}
                 helperText={formik.touched.fecha && formik.errors.fecha}
                 InputProps={{
                   style: { color: "#FFFFFF" },
@@ -295,8 +293,7 @@ export const RecaudacionCreate = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={
-              formik.touched.pasosEntrada &&
-              Boolean(formik.errors.pasosEntrada)
+              formik.touched.pasosEntrada && Boolean(formik.errors.pasosEntrada)
             }
             helperText={
               formik.touched.pasosEntrada && formik.errors.pasosEntrada

@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import "../maquina/maquina.css";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 const validationSchema = yup.object({
   nombre: yup
@@ -27,7 +28,11 @@ const validationSchema = yup.object({
 export const UsuarioUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const token = useAuth().getToken();
+
+  if (!token) {
+    navigate("/iniciarSesion");
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -63,17 +68,11 @@ export const UsuarioUpdate = () => {
           username: result.username,
           email: result.email,
         });
-        setLoading(false);
       })
       .catch((error) => {
         console.error("Error al obtener los detalles del usuario:", error);
-        setLoading(false);
       });
-  }, [id]);
-
-  if (loading) {
-    return <div>Cargando...</div>;
-  }
+  }, [id, formik]);
 
   return (
     <div
@@ -106,7 +105,7 @@ export const UsuarioUpdate = () => {
           gutterBottom
           style={{ color: "#FFFFFF", marginTop: "1%" }}
         >
-          Detalles del usuario
+          Editar detalles del usuario
         </Typography>
 
         <form

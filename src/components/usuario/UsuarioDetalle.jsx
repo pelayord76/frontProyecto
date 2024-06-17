@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { UsuarioMaquinas } from "./UsuarioMaquinas";
 import "../maquina/maquina.css";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 export const UsuarioDetalle = () => {
   const { id } = useParams();
@@ -14,17 +15,22 @@ export const UsuarioDetalle = () => {
   const [minId, setMinId] = useState(null);
   const [maxId, setMaxId] = useState(null);
   const navigate = useNavigate();
+  const token = useAuth().getToken();
 
   useEffect(() => {
-    fetch(`http://localhost:4040/rfsAdmin/usuario/${id}`)
-      .then((res) => res.json())
-      .then((result) => {
-        setUsuario(result);
-      })
-      .catch((error) => {
-        console.error("Error al obtener los detalles del usuario:", error);
-      });
-  }, [id]);
+    if (!token) {
+      navigate("/iniciarSesion");
+    } else {
+      fetch(`http://localhost:4040/rfsAdmin/usuario/${id}`)
+        .then((res) => res.json())
+        .then((result) => {
+          setUsuario(result);
+        })
+        .catch((error) => {
+          console.error("Error al obtener los detalles del usuario:", error);
+        });
+    }
+  }, [id, navigate, token]);
 
   useEffect(() => {
     fetch("http://localhost:4040/rfsAdmin/usuario")
@@ -132,18 +138,6 @@ export const UsuarioDetalle = () => {
         <TextField
           label="Correo"
           value={usuario?.email}
-          fullWidth
-          margin="normal"
-          focused
-          InputProps={{
-            readOnly: true,
-            style: { color: "#FFFFFF" },
-          }}
-        />
-
-        <TextField
-          label="roles"
-          value={usuario?.roles || "a implementar"}
           fullWidth
           margin="normal"
           focused

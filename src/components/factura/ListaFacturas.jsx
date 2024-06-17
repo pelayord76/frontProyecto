@@ -18,11 +18,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../authentication/AuthenticationContext";
 
 export const ListaFacturas = () => {
-  const token = useAuth().getToken();
   const [facturas, setFacturas] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const navigate = useNavigate();
+  const token = useAuth().getToken();
 
   const handleCreate = () => {
     navigate("/factura/add", { replace: true });

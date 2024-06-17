@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { MaquinaRecaudaciones } from "./MaquinaRecaudaciones";
 import "./maquina.css";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 export const MaquinaDetalle = () => {
   const { id } = useParams();
@@ -14,17 +15,22 @@ export const MaquinaDetalle = () => {
   const [minId, setMinId] = useState(null);
   const [maxId, setMaxId] = useState(null);
   const navigate = useNavigate();
+  const token = useAuth().getToken();
 
   useEffect(() => {
-    fetch(`http://localhost:4040/rfsAdmin/maquina/${id}`)
-      .then((res) => res.json())
-      .then((result) => {
-        setMaquina(result);
-      })
-      .catch((error) => {
-        console.error("Error al obtener los detalles de la máquina:", error);
-      });
-  }, [id]);
+    if (!token) {
+      navigate("/iniciarSesion");
+    } else {
+      fetch(`http://localhost:4040/rfsAdmin/maquina/${id}`)
+        .then((res) => res.json())
+        .then((result) => {
+          setMaquina(result);
+        })
+        .catch((error) => {
+          console.error("Error al obtener los detalles de la máquina:", error);
+        });
+    }
+  }, [id, navigate, token]);
 
   useEffect(() => {
     fetch("http://localhost:4040/rfsAdmin/maquina")

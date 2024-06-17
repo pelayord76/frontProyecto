@@ -6,6 +6,7 @@ import { Button, ButtonGroup, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../maquina/maquina.css";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 export const RecaudacionDetalle = () => {
   const { id } = useParams();
@@ -13,20 +14,25 @@ export const RecaudacionDetalle = () => {
   const [minId, setMinId] = useState(null);
   const [maxId, setMaxId] = useState(null);
   const navigate = useNavigate();
+  const token = useAuth().getToken();
 
   useEffect(() => {
-    fetch(`http://localhost:4040/rfsAdmin/recaudacion/${id}`)
-      .then((res) => res.json())
-      .then((result) => {
-        setRecaudacion(result);
-      })
-      .catch((error) => {
-        console.error(
-          "Error al obtener los detalles de la recaudación:",
-          error
-        );
-      });
-  }, [id]);
+    if (!token) {
+      navigate("/iniciarSesion");
+    } else {
+      fetch(`http://localhost:4040/rfsAdmin/recaudacion/${id}`)
+        .then((res) => res.json())
+        .then((result) => {
+          setRecaudacion(result);
+        })
+        .catch((error) => {
+          console.error(
+            "Error al obtener los detalles de la recaudación:",
+            error
+          );
+        });
+    }
+  }, [id, navigate, token]);
 
   useEffect(() => {
     fetch("http://localhost:4040/rfsAdmin/recaudacion")

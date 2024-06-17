@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "../maquina/maquina.css";
 import { ClienteMaquinas } from "./ClienteMaquinas";
 import { ClienteFacturas } from "./ClienteFacturas";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 export const ClienteDetalle = () => {
   const { id } = useParams();
@@ -15,17 +16,22 @@ export const ClienteDetalle = () => {
   const [minId, setMinId] = useState(null);
   const [maxId, setMaxId] = useState(null);
   const navigate = useNavigate();
+  const token = useAuth().getToken();
 
   useEffect(() => {
-    fetch(`http://localhost:4040/rfsAdmin/cliente/${id}`)
-      .then((res) => res.json())
-      .then((result) => {
-        setCliente(result);
-      })
-      .catch((error) => {
-        console.error("Error al obtener los detalles del cliente:", error);
-      });
-  }, [id]);
+    if (!token) {
+      navigate("/iniciarSesion");
+    } else {
+      fetch(`http://localhost:4040/rfsAdmin/cliente/${id}`)
+        .then((res) => res.json())
+        .then((result) => {
+          setCliente(result);
+        })
+        .catch((error) => {
+          console.error("Error al obtener los detalles del cliente:", error);
+        });
+    }
+  }, [id, navigate, token]);
 
   useEffect(() => {
     fetch("http://localhost:4040/rfsAdmin/cliente")

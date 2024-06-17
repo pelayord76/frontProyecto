@@ -18,6 +18,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 const validationSchema = yup.object({
   nombre: yup
@@ -30,6 +31,11 @@ const validationSchema = yup.object({
 export const MaquinaCreate = () => {
   const navigate = useNavigate();
   const [locales, setLocales] = useState([]);
+  const token = useAuth().getToken();
+
+  if (!token) {
+    navigate("/iniciarSesion");
+  }
 
   useEffect(() => {
     fetch("http://localhost:4040/rfsAdmin/cliente/clientes")

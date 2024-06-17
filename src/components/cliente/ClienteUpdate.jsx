@@ -1,21 +1,18 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SaveIcon from "@mui/icons-material/Save";
-import {
-  Button,
-  ButtonGroup,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, ButtonGroup, TextField, Typography } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 export const ClienteUpdate = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const token = useAuth().getToken();
   const [local, setLocal] = useState("");
   const [duenio, setDuenio] = useState("");
   const [telefono, setTelefono] = useState("");
@@ -57,24 +54,28 @@ export const ClienteUpdate = () => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:4040/rfsAdmin/cliente/${id}`)
-      .then((res) => res.json())
-      .then((result) => {
-        setLocal(result.local);
-        setDuenio(result.duenio);
-        setTelefono(result.telefono);
-        setDireccion(result.direccion);
-        setCif(result.cif);
+    if (!token) {
+      navigate("/iniciarSesion");
+    } else {
+      fetch(`http://localhost:4040/rfsAdmin/cliente/${id}`)
+        .then((res) => res.json())
+        .then((result) => {
+          setLocal(result.local);
+          setDuenio(result.duenio);
+          setTelefono(result.telefono);
+          setDireccion(result.direccion);
+          setCif(result.cif);
 
-        const parsedFecha = result.fechaVencimientoContrato
-          ? dayjs(result.fechaVencimientoContrato, "DD-MM-YYYY")
-          : null;
-        setFechaVencimientoContrato(parsedFecha);
-      })
-      .catch((error) => {
-        console.error("Error al obtener los detalles del cliente:", error);
-      });
-  }, [id]);
+          const parsedFecha = result.fechaVencimientoContrato
+            ? dayjs(result.fechaVencimientoContrato, "DD-MM-YYYY")
+            : null;
+          setFechaVencimientoContrato(parsedFecha);
+        })
+        .catch((error) => {
+          console.error("Error al obtener los detalles del cliente:", error);
+        });
+    }
+  }, [id, navigate, token]);
 
   return (
     <div

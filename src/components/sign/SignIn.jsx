@@ -1,6 +1,18 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { Copyright } from "@mui/icons-material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import {
+  Avatar,
+  Box,
+  Button,
+  Grid,
+  TextField,
+  Tooltip,
+  Typography,
+  Zoom,
+} from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../authentication/AuthenticationContext";
 
 export const SignIn = () => {
@@ -59,74 +71,81 @@ export const SignIn = () => {
   };
 
   return (
-    <div
-      style={{
-        padding: "20px",
-        maxWidth: "600px",
-        margin: "auto",
-        backgroundColor: "#1E1E1E",
-        color: "#FFFFFF",
-        borderRadius: "8px",
-        marginTop: "5%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
+    <Container
+      component="main"
+      maxWidth="xs"
+      style={{ backgroundColor: "#1E1E1E", borderRadius: "10px" }}
     >
-      <Typography
-        variant="h4"
-        gutterBottom
-        style={{ color: "#FFFFFF", marginTop: "1%" }}
-      >
-        Inicio de sesión
-      </Typography>
-
-      <TextField
-        name="nombre"
-        variant="outlined"
-        required
-        label="Usuario"
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        margin="normal"
-        focused
-        InputProps={{
-          style: { color: "#FFFFFF" },
-        }}
-      />
-
-      <TextField
-        name="password"
-        variant="outlined"
-        required
-        label="Contraseña"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        margin="normal"
-        focused
-        InputProps={{
-          style: { color: "#FFFFFF" },
-        }}
-      />
-
-      <div
-        style={{
+      <Box
+        sx={{
+          marginTop: 8,
           display: "flex",
-          justifyContent: "space-between",
-          marginTop: "20px",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        <Button
-          variant="contained"
-          color="info"
-          onClick={handleSubmit}
-          style={{ marginRight: "5%", borderRadius: "5px" }}
-        >
-          Iniciar sesión
-        </Button>
-      </div>
-    </div>
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <AccountCircleIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Regístrate
+        </Typography>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                name="username"
+                variant="outlined"
+                required
+                label="Usuario"
+                type="text"
+                focused
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                InputProps={{
+                  style: { color: "#FFFFFF" },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                name="password"
+                variant="outlined"
+                required
+                label="Contraseña"
+                type="password"
+                margin="normal"
+                focused
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                InputProps={{
+                  style: { color: "#FFFFFF" },
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Iniciar Sesión
+          </Button>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Tooltip title="Regístrate" arrow TransitionComponent={Zoom}>
+                <Link href="/registrarse" variant="body2">
+                  ¿Aún no tienes una cuenta?
+                </Link>
+              </Tooltip>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+      <Copyright sx={{ mt: 5 }} />
+    </Container>
   );
 };

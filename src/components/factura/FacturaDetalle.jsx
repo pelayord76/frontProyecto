@@ -6,6 +6,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import { Button, ButtonGroup, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../authentication/AuthenticationContext";
 
 export const FacturaDetalle = () => {
   const { id } = useParams();
@@ -13,17 +14,22 @@ export const FacturaDetalle = () => {
   const [minId, setMinId] = useState(null);
   const [maxId, setMaxId] = useState(null);
   const navigate = useNavigate();
+  const token = useAuth().getToken();
 
   useEffect(() => {
-    fetch(`http://localhost:4040/rfsAdmin/factura/${id}`)
-      .then((res) => res.json())
-      .then((result) => {
-        setFactura(result);
-      })
-      .catch((error) => {
-        console.error("Error al obtener los detalles de la factura:", error);
-      });
-  }, [id]);
+    if (!token) {
+      navigate("/iniciarSesion");
+    } else {
+      fetch(`http://localhost:4040/rfsAdmin/factura/${id}`)
+        .then((res) => res.json())
+        .then((result) => {
+          setFactura(result);
+        })
+        .catch((error) => {
+          console.error("Error al obtener los detalles de la factura:", error);
+        });
+    }
+  }, [id, navigate, token]);
 
   useEffect(() => {
     fetch("http://localhost:4040/rfsAdmin/factura")
