@@ -10,7 +10,9 @@ import {
   MenuItem,
   Select,
   TextField,
+  Tooltip,
   Typography,
+  Zoom,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -185,9 +187,11 @@ export const SignUp = () => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/iniciarSesion" variant="body2">
-                ¿Ya tienes una cuenta?
-              </Link>
+              <Tooltip title="Inicia sesión" arrow TransitionComponent={Zoom}>
+                <Link href="/iniciarSesion" variant="body2">
+                  ¿Ya tienes una cuenta?
+                </Link>
+              </Tooltip>
             </Grid>
           </Grid>
         </Box>

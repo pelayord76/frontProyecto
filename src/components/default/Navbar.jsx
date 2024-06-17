@@ -55,8 +55,17 @@ function Navbar() {
   const handleLogout = () => {
     fetch("http://localhost:4040/rfsAdmin/logout", {
       credentials: "include",
-      mode: "no-cors",
-    });
+    })
+      .then((response) => {
+        if (response.ok) {
+          navigate("/iniciarSesion");
+        } else {
+          console.error("Cierre de sesión fallido");
+        }
+      })
+      .catch((error) => {
+        console.error("Error de cierre de sesión: ", error);
+      });
   };
 
   const handleSettings = (setting) => {

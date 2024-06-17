@@ -1,19 +1,20 @@
-import { Copyright } from "@mui/icons-material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {
   Avatar,
   Box,
   Button,
+  Container,
   Grid,
+  Link,
   TextField,
   Tooltip,
   Typography,
   Zoom,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../authentication/AuthenticationContext";
+import { Copyright } from "../default/Copyright";
 
 export const SignIn = () => {
   const [username, setUsername] = useState("");
@@ -88,11 +89,11 @@ export const SignIn = () => {
           <AccountCircleIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Regístrate
+          Inicia sesión
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 fullWidth
                 name="username"
