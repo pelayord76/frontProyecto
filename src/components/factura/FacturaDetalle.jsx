@@ -68,7 +68,33 @@ export const FacturaDetalle = () => {
       });
   };
 
-  const handleDownload = () => {};
+  const handleDownload = async (id) => {
+    const response = await fetch(
+      `http://localhost:4040/rfsAdmin/factura/${id}/pdf`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/pdf",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Error al obtener el pdf de la factura");
+    }
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(new Blob([blob]));
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "factura_report.pdf");
+    link.style.display = "none";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const handleSiguiente = () => {
     navigate(`/factura/${parseInt(id) + 1}`, { replace: true });
@@ -170,7 +196,7 @@ export const FacturaDetalle = () => {
               variant="contained"
               color="primary"
               startIcon={<DownloadIcon />}
-              onClick={() => handleDownload()}
+              onClick={() => handleDownload(id)}
               style={{ marginRight: "5%", borderRadius: "5px" }}
             >
               Descargar
