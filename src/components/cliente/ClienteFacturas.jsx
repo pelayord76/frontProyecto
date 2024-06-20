@@ -34,7 +34,7 @@ export const ClienteFacturas = () => {
           }
         );
         const data = await response.json();
-        setFacturas(Array.isArray(data) ? data : []);
+        setFacturas(Array.isArray(data.data) ? data.data : []);
       } catch (error) {
         console.error("Error al cargar los datos:", error);
       }
@@ -60,13 +60,13 @@ export const ClienteFacturas = () => {
         Accept: "application/form-data",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data.data),
     })
       .then(() => {
         fetch("http://localhost:4040/rfsAdmin/factura")
           .then((res) => res.json())
           .then((result) => {
-            setFacturas(result);
+            setFacturas(result.data);
           });
       })
       .catch((error) => {
@@ -74,7 +74,40 @@ export const ClienteFacturas = () => {
       });
   };
 
-  const handleDownload = (id) => {};
+  const handleDownload = async (id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:4040/rfsAdmin/factura/${id}/pdf`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/pdf",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error al obtener el pdf de la factura");
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `factura_${id}.pdf`;
+      link.style.display = "none";
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error(error);
+      alert("Hubo un problema al abrir la factura.");
+    }
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

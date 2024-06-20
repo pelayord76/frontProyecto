@@ -63,15 +63,15 @@ export const FacturaUpdate = () => {
     fetch(`http://localhost:4040/rfsAdmin/factura/${id}`)
       .then((res) => res.json())
       .then((result) => {
-        if (result.cliente) {
-          setIdCliente(result.cliente.id);
+        if (result.data.cliente) {
+          setIdCliente(result.data.cliente.id);
         }
-        const parsedFecha = result.fechaEmision
-          ? dayjs(result.fechaEmision, "DD-MM-YYYY")
+        const parsedFecha = result.data.fechaEmision
+          ? dayjs(result.data.fechaEmision, "DD-MM-YYYY")
           : null;
         setFechaEmision(parsedFecha);
 
-        setIva(result.iva);
+        setIva(result.data.iva);
       })
       .catch((error) => {
         console.error("Error al obtener los detalles de la factura:", error);
@@ -82,7 +82,7 @@ export const FacturaUpdate = () => {
     fetch("http://localhost:4040/rfsAdmin/cliente/clientes")
       .then((res) => res.json())
       .then((result) => {
-        setLocales(result);
+        setLocales(result.data);
       });
   }, []);
 

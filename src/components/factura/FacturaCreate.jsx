@@ -37,7 +37,7 @@ export const FacturaCreate = () => {
     fetch("http://localhost:4040/rfsAdmin/cliente/clientes")
       .then((res) => res.json())
       .then((result) => {
-        setLocales(result);
+        setLocales(result.data);
       })
       .catch((error) => {
         console.error("Error al obtener los clientes:", error);

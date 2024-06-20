@@ -76,15 +76,15 @@ export const RecaudacionUpdate = () => {
       fetch(`http://localhost:4040/rfsAdmin/recaudacion/${id}`)
         .then((res) => res.json())
         .then((result) => {
-          setIdLocal(result.maquina?.cliente?.id || "");
-          setMaquina(result.maquina?.id || "");
-          setCantidadRecaudada(result.cantidadRecaudada);
-          setPasosEntrada(result.pasosEntrada);
-          setPasosSalida(result.pasosSalida);
-          setPorcentajeJuego(result.porcentajeJuego);
-          setTasaRecaudacion(result.tasaRecaudacion);
-          const parsedFecha = result.fecha
-            ? dayjs(result.fecha, "DD-MM-YYYY")
+          setIdLocal(result.data.maquina?.cliente?.id || "");
+          setMaquina(result.data.maquina?.id || "");
+          setCantidadRecaudada(result.data.cantidadRecaudada);
+          setPasosEntrada(result.data.pasosEntrada);
+          setPasosSalida(result.data.pasosSalida);
+          setPorcentajeJuego(result.data.porcentajeJuego);
+          setTasaRecaudacion(result.data.tasaRecaudacion);
+          const parsedFecha = result.data.fecha
+            ? dayjs(result.data.fecha, "DD-MM-YYYY")
             : null;
           setFecha(parsedFecha);
         })
@@ -101,7 +101,7 @@ export const RecaudacionUpdate = () => {
     fetch("http://localhost:4040/rfsAdmin/cliente/clientes")
       .then((res) => res.json())
       .then((result) => {
-        setLocales(result);
+        setLocales(result.data);
       })
       .catch((error) => {
         console.error("Error al obtener los clientes:", error);
@@ -113,7 +113,7 @@ export const RecaudacionUpdate = () => {
       fetch(`http://localhost:4040/rfsAdmin/maquina/cliente/${idLocal}`)
         .then((res) => res.json())
         .then((result) => {
-          setMaquinas(result);
+          setMaquinas(result.data);
         })
         .catch((error) => {
           console.error("Error al obtener las máquinas:", error);

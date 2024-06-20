@@ -60,7 +60,7 @@ export function DataMaquina() {
           }
         );
         const data = await response.json();
-        const transformedData = data.map((item) => [
+        const transformedData = data.data.map((item) => [
           item.nombre,
           item.cantidadRecaudada,
         ]);

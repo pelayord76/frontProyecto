@@ -23,7 +23,7 @@ export const ClientesMenosIngresos = () => {
       fetch("http://localhost:4040/rfsAdmin/cliente/data/ingresos/min")
         .then((res) => res.json())
         .then((result) => {
-          setClientes(result);
+          setClientes(result.data);
         });
     }
   }, [navigate, token]);

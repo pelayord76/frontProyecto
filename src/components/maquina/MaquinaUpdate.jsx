@@ -74,23 +74,23 @@ export const MaquinaUpdate = () => {
       fetch(`http://localhost:4040/rfsAdmin/maquina/${id}`)
         .then((res) => res.json())
         .then((result) => {
-          setNombre(result.nombre);
+          setNombre(result.data.nombre);
 
-          const parsedFechaV = result.fechaVencimientoLicencia
-            ? dayjs(result.fechaVencimientoLicencia, "DD-MM-YYYY")
+          const parsedFechaV = result.data.fechaVencimientoLicencia
+            ? dayjs(result.data.fechaVencimientoLicencia, "DD-MM-YYYY")
             : null;
           setFechaVencimientoLicencia(parsedFechaV);
 
-          setAlmacenada(result.almacenada || false);
+          setAlmacenada(result.data.almacenada || false);
 
-          const parsedFechaA = result.fechaAlmacenada
-            ? dayjs(result.fechaAlmacenada, "DD-MM-YYYY")
+          const parsedFechaA = result.data.fechaAlmacenada
+            ? dayjs(result.data.fechaAlmacenada, "DD-MM-YYYY")
             : null;
           setFechaAlmacenada(parsedFechaA);
 
-          setTipoMaquina(result.tipoMaquina);
-          if (result.cliente) {
-            setIdCliente(result.cliente.id);
+          setTipoMaquina(result.data.tipoMaquina);
+          if (result.data.cliente) {
+            setIdCliente(result.data.cliente.id);
           }
         })
         .catch((error) => {
@@ -103,7 +103,7 @@ export const MaquinaUpdate = () => {
     fetch("http://localhost:4040/rfsAdmin/cliente/clientes")
       .then((res) => res.json())
       .then((result) => {
-        setLocales(result);
+        setLocales(result.data);
       });
   }, []);
 

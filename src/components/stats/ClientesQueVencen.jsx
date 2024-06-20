@@ -28,7 +28,7 @@ export const ClientesQueVencen = () => {
     fetch(`http://localhost:4040/rfsAdmin/cliente/contrato/${anio}`)
       .then((res) => res.json())
       .then((result) => {
-        setClientes(result);
+        setClientes(result.data);
       });
   };
 

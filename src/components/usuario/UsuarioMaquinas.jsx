@@ -34,13 +34,13 @@ export const UsuarioMaquinas = () => {
         }
       );
       const data = await response.json();
-      setMaquinas(data);
+      setMaquinas(data.data);
 
       const maquinaResponse = await fetch(
         `http://localhost:4040/rfsAdmin/usuario/${id}`
       );
       const usuarioData = await maquinaResponse.json();
-      setUsuario(usuarioData);
+      setUsuario(usuarioData.data);
     };
     fetchData();
   }, [id]);
@@ -61,7 +61,7 @@ export const UsuarioMaquinas = () => {
         fetch("http://localhost:4040/rfsAdmin/usuario/" + id + "/maquina")
           .then((res) => res.json())
           .then((result) => {
-            setMaquinas(result);
+            setMaquinas(result.data);
           });
       })
       .catch((error) => {

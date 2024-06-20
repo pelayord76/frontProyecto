@@ -44,7 +44,7 @@ export const ListaUsuario = () => {
         fetch("http://localhost:4040/rfsAdmin/usuario")
           .then((res) => res.json())
           .then((result) => {
-            setUsuarios(result);
+            setUsuarios(result.data);
           });
       })
       .catch((error) => {
@@ -59,7 +59,7 @@ export const ListaUsuario = () => {
       fetch("http://localhost:4040/rfsAdmin/usuario")
         .then((res) => res.json())
         .then((result) => {
-          setUsuarios(result);
+          setUsuarios(result.data);
         });
     }
   }, [navigate, token]);

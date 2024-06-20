@@ -28,7 +28,7 @@ export const MaquinasQueVencen = () => {
     fetch(`http://localhost:4040/rfsAdmin/maquina/licencia/${anio}`)
       .then((res) => res.json())
       .then((result) => {
-        setMaquinas(result);
+        setMaquinas(result.data);
       });
   };
 

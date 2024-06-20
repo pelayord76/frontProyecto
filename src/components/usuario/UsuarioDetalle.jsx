@@ -24,7 +24,7 @@ export const UsuarioDetalle = () => {
       fetch(`http://localhost:4040/rfsAdmin/usuario/${id}`)
         .then((res) => res.json())
         .then((result) => {
-          setUsuario(result);
+          setUsuario(result.data);
         })
         .catch((error) => {
           console.error("Error al obtener los detalles del usuario:", error);
@@ -36,7 +36,7 @@ export const UsuarioDetalle = () => {
     fetch("http://localhost:4040/rfsAdmin/usuario")
       .then((res) => res.json())
       .then((result) => {
-        const ids = result.map((m) => m.id);
+        const ids = result.data.map((m) => m.id);
         setMinId(Math.min(...ids));
         setMaxId(Math.max(...ids));
       })

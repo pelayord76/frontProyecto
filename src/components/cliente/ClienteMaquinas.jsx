@@ -33,7 +33,7 @@ export const ClienteMaquinas = () => {
           }
         );
         const data = await response.json();
-        setMaquinas(Array.isArray(data) ? data : []); // Verificación de array
+        setMaquinas(Array.isArray(data.data) ? data.data : []); // Verificación de array
 
         const maquinaResponse = await fetch(
           `http://localhost:4040/rfsAdmin/cliente/${id}`

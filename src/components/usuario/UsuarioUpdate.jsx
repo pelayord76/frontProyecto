@@ -64,9 +64,9 @@ export const UsuarioUpdate = () => {
       .then((res) => res.json())
       .then((result) => {
         formik.setValues({
-          nombre: result.nombre,
-          username: result.username,
-          email: result.email,
+          nombre: result.data.nombre,
+          username: result.data.username,
+          email: result.data.email,
         });
       })
       .catch((error) => {

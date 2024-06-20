@@ -47,7 +47,7 @@ export const ClienteUpdate = () => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data.data),
     });
 
     navigate("/cliente", { replace: true, state: { shouldReload: true } });
@@ -60,14 +60,14 @@ export const ClienteUpdate = () => {
       fetch(`http://localhost:4040/rfsAdmin/cliente/${id}`)
         .then((res) => res.json())
         .then((result) => {
-          setLocal(result.local);
-          setDuenio(result.duenio);
-          setTelefono(result.telefono);
-          setDireccion(result.direccion);
-          setCif(result.cif);
+          setLocal(result.data.local);
+          setDuenio(result.data.duenio);
+          setTelefono(result.data.telefono);
+          setDireccion(result.data.direccion);
+          setCif(result.data.cif);
 
-          const parsedFecha = result.fechaVencimientoContrato
-            ? dayjs(result.fechaVencimientoContrato, "DD-MM-YYYY")
+          const parsedFecha = result.data.fechaVencimientoContrato
+            ? dayjs(result.data.fechaVencimientoContrato, "DD-MM-YYYY")
             : null;
           setFechaVencimientoContrato(parsedFecha);
         })

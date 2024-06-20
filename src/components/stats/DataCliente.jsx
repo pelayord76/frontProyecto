@@ -60,7 +60,7 @@ export function DataCliente() {
           }
         );
         const data = await response.json();
-        const transformedData = data.map((item) => [
+        const transformedData = data.data.map((item) => [
           item.local,
           item.cantidadRecaudada,
         ]);

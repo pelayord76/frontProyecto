@@ -41,7 +41,7 @@ export const MaquinaCreate = () => {
     fetch("http://localhost:4040/rfsAdmin/cliente/clientes")
       .then((res) => res.json())
       .then((result) => {
-        setLocales(result);
+        setLocales(result.data);
       });
   }, []);
 

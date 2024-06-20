@@ -24,7 +24,7 @@ export const MaquinaDetalle = () => {
       fetch(`http://localhost:4040/rfsAdmin/maquina/${id}`)
         .then((res) => res.json())
         .then((result) => {
-          setMaquina(result);
+          setMaquina(result.data);
         })
         .catch((error) => {
           console.error("Error al obtener los detalles de la máquina:", error);
@@ -36,7 +36,7 @@ export const MaquinaDetalle = () => {
     fetch("http://localhost:4040/rfsAdmin/maquina")
       .then((res) => res.json())
       .then((result) => {
-        const ids = result.map((m) => m.id);
+        const ids = result.data.map((m) => m.id);
         setMinId(Math.min(...ids));
         setMaxId(Math.max(...ids));
       })

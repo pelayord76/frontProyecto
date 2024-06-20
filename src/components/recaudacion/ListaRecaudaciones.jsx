@@ -37,7 +37,7 @@ export const ListaRecaudaciones = () => {
           }
         );
         const data = await response.json();
-        setRecaudaciones(data);
+        setRecaudaciones(data.data);
       };
       fetchData();
     }
@@ -63,7 +63,7 @@ export const ListaRecaudaciones = () => {
         fetch("http://localhost:4040/rfsAdmin/recaudacion")
           .then((res) => res.json())
           .then((result) => {
-            setRecaudaciones(result);
+            setRecaudaciones(result.data);
           });
       })
       .catch((error) => {

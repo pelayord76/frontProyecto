@@ -23,7 +23,7 @@ export const ClientesMasIngresos = () => {
       fetch("http://localhost:4040/rfsAdmin/cliente/data/ingresos/max")
         .then((res) => res.json())
         .then((result) => {
-          setClientes(result);
+          setClientes(result.data);
         });
     }
   }, [navigate, token]);

@@ -47,7 +47,7 @@ export const ListaCliente = () => {
         fetch("http://localhost:4040/rfsAdmin/cliente")
           .then((res) => res.json())
           .then((result) => {
-            setClientes(result);
+            setClientes(result.data);
           });
       })
       .catch((error) => {
@@ -62,7 +62,7 @@ export const ListaCliente = () => {
       fetch("http://localhost:4040/rfsAdmin/cliente")
         .then((res) => res.json())
         .then((result) => {
-          setClientes(result);
+          setClientes(result.data);
         });
     }
   }, [navigate, token]);

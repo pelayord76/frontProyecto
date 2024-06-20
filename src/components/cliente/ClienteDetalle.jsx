@@ -25,7 +25,7 @@ export const ClienteDetalle = () => {
       fetch(`http://localhost:4040/rfsAdmin/cliente/${id}`)
         .then((res) => res.json())
         .then((result) => {
-          setCliente(result);
+          setCliente(result.data);
         })
         .catch((error) => {
           console.error("Error al obtener los detalles del cliente:", error);
@@ -37,7 +37,7 @@ export const ClienteDetalle = () => {
     fetch("http://localhost:4040/rfsAdmin/cliente")
       .then((res) => res.json())
       .then((result) => {
-        const ids = result.map((m) => m.id);
+        const ids = result.data.map((m) => m.id);
         setMinId(Math.min(...ids));
         setMaxId(Math.max(...ids));
       })

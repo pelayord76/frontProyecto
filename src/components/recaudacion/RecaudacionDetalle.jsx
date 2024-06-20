@@ -23,7 +23,7 @@ export const RecaudacionDetalle = () => {
       fetch(`http://localhost:4040/rfsAdmin/recaudacion/${id}`)
         .then((res) => res.json())
         .then((result) => {
-          setRecaudacion(result);
+          setRecaudacion(result.data);
         })
         .catch((error) => {
           console.error(
@@ -38,7 +38,7 @@ export const RecaudacionDetalle = () => {
     fetch("http://localhost:4040/rfsAdmin/recaudacion")
       .then((res) => res.json())
       .then((result) => {
-        const ids = result.map((m) => m.id);
+        const ids = result.data.map((m) => m.id);
         setMinId(Math.min(...ids));
         setMaxId(Math.max(...ids));
       })

@@ -35,13 +35,13 @@ export const MaquinaRecaudaciones = () => {
         }
       );
       const data = await response.json();
-      setRecaudaciones(data);
+      setRecaudaciones(data.data);
 
       const maquinaResponse = await fetch(
         `http://localhost:4040/rfsAdmin/maquina/${id}`
       );
       const maquinaData = await maquinaResponse.json();
-      setMaquina(maquinaData);
+      setMaquina(maquinaData.data);
     };
     fetchData();
   }, [id]);
@@ -66,7 +66,7 @@ export const MaquinaRecaudaciones = () => {
         fetch(`http://localhost:4040/rfsAdmin/maquina/${id}/recaudacion`)
           .then((res) => res.json())
           .then((result) => {
-            setRecaudaciones(result);
+            setRecaudaciones(result.data);
           });
       })
       .catch((error) => {

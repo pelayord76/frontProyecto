@@ -48,7 +48,7 @@ export const ListaMaquina = () => {
         fetch("http://localhost:4040/rfsAdmin/maquina")
           .then((res) => res.json())
           .then((result) => {
-            setMaquinas(result);
+            setMaquinas(result.data);
           });
       })
       .catch((error) => {
@@ -68,7 +68,7 @@ export const ListaMaquina = () => {
         fetch("http://localhost:4040/rfsAdmin/maquina")
           .then((res) => res.json())
           .then((result) => {
-            setMaquinas(result);
+            setMaquinas(result.data);
           });
       })
       .catch((error) => {
@@ -83,7 +83,7 @@ export const ListaMaquina = () => {
       fetch("http://localhost:4040/rfsAdmin/maquina")
         .then((res) => res.json())
         .then((result) => {
-          setMaquinas(result);
+          setMaquinas(result.data);
         });
     }
   }, [navigate, token]);

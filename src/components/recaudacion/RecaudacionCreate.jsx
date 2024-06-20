@@ -64,7 +64,7 @@ export const RecaudacionCreate = () => {
       fetch(`http://localhost:4040/rfsAdmin/maquina/cliente/${idLocal}`)
         .then((res) => res.json())
         .then((result) => {
-          setMaquinas(result);
+          setMaquinas(result.data);
         })
         .catch((error) => {
           console.error("Error al obtener las máquinas:", error);
